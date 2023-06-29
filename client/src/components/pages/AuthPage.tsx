@@ -1,4 +1,6 @@
 import React from 'react';
+import { ReactComponent as GoogleLogo } from '../../assets/icons8-google.svg';
+
 import {
   Box,
   Button,
@@ -11,7 +13,7 @@ import {
   OutlinedInput,
   Modal,
 } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff, Google } from '@mui/icons-material'
 import { useParams } from 'react-router-dom';
 import useFormHook from '../../hooks/useFormHook';
 
@@ -51,7 +53,13 @@ export default function AuthPage(): JSX.Element {
           <Box
             component="form"
             onSubmit={type === 'signup' ? signUpHandler : signInHandler}
-            sx={style}
+            sx={{
+              ...style,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
             <h2>Welcome</h2>
             {type === 'signup' && (
@@ -112,6 +120,7 @@ export default function AuthPage(): JSX.Element {
                 width: '30ch',
                 borderRadius: '20px',
               }}
+              startIcon={<Google />}
               variant="outlined"
             >
               Войти через Google
@@ -122,9 +131,10 @@ export default function AuthPage(): JSX.Element {
                 width: '30ch',
                 borderRadius: '20px',
               }}
+              
               variant="outlined"
               type="submit"
-              onClick={handleClose} // Добавлен обработчик для закрытия модального окна
+              onClick={handleClose} 
             >
               Войти
             </Button>
