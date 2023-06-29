@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       title: DataTypes.STRING,
       body: DataTypes.TEXT,
+      img: DataTypes.STRING,
       date: DataTypes.DATE,
       time: DataTypes.TIME,
       count_user: DataTypes.INTEGER,
