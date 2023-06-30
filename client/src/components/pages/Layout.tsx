@@ -4,5 +4,6 @@ import MapPage from './MapPage';
 import EventMap from '../ui/EventMap';
 
 export default function Layout(): JSX.Element {
+  // привет роимашка
   return <EventMap />;
 }
