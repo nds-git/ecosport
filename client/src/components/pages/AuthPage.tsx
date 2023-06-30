@@ -17,13 +17,17 @@ import { Visibility, VisibilityOff, Google } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
 import useFormHook from '../../hooks/useFormHook';
 import '../css/auth.css'
+import { useAppSelector, useAppDispatch } from '../../features/redux/reduxHooks';
+import { userLogoutThunk } from '../../features/thunkActions';
 
 export default function AuthPage(): JSX.Element {
+  const user = useAppSelector((state) => state.user);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const { type } = useParams();
+  const dispatch = useAppDispatch()
 
   const style = {
     position: 'absolute' as const,
@@ -36,6 +40,7 @@ export default function AuthPage(): JSX.Element {
     boxShadow: 24,
     p: 4,
   };
+console.log(user);
 
   const handleClickShowPassword = (): void => setShowPassword((show) => !show);
 
@@ -43,10 +48,13 @@ export default function AuthPage(): JSX.Element {
 
   return (
     <>
+    {user.status === 'success' ? (<span className="nav-link">Привет, {user.data.name}</span>) : null}
+    <br />
+    <br />
     <ButtonGroup className="button-group">
 <Button variant='contained' onClick={handleOpen}>Создать событие</Button>
 <Button variant='contained' onClick={handleOpen}>Войти</Button>
-<Button variant='contained' onClick={handleOpen}>Выйти</Button>
+<Button variant='contained' onClick={() => dispatch(userLogoutThunk())}>Выйти</Button>
     </ButtonGroup>
       {/* <Button onClick={handleOpen}>Создать событие</Button> */}
       <Modal

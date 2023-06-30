@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/pages/Layout';
 import MapPage from './components/pages/MapPage';
 import AuthPage from './components/pages/AuthPage';
 import AccountPage from './components/pages/AccountPage';
+import { useAppDispatch } from './features/redux/reduxHooks';
+import { userCheckThunk } from './features/thunkActions';
+
 
 function App(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(userCheckThunk())
+  }, [])
   return (
     <Routes>
       <Route element={<Layout />}>

@@ -2,7 +2,7 @@ import type React from 'react';
 import type { UserSingInType, UserSingUpType } from '../types';
 import { useAppDispatch } from '../features/redux/reduxHooks';
 import { userSignInThunk, userSignUpThunk } from '../features/thunkActions';
-import { log } from 'console';
+
 
 export type SubmitHandler = (e: React.FormEvent<HTMLFormElement>) => void;
 
