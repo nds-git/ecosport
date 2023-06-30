@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   Box,
   Button,
@@ -12,13 +11,16 @@ import {
   InputLabel,
   OutlinedInput,
   Modal,
+  Tabs,
+  Tab,
 } from '@mui/material';
 import { Visibility, VisibilityOff, Google } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
 import useFormHook from '../../hooks/useFormHook';
-import '../css/auth.css'
+import '../css/auth.css';
 import { useAppSelector, useAppDispatch } from '../../features/redux/reduxHooks';
 import { userLogoutThunk } from '../../features/thunkActions';
+import ColorTabs from '../ui/Auth/ColorTab';
 
 export default function AuthPage(): JSX.Element {
   const user = useAppSelector((state) => state.user);
@@ -27,7 +29,7 @@ export default function AuthPage(): JSX.Element {
   const handleClose = () => setOpen(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const { type } = useParams();
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const style = {
     position: 'absolute' as const,
@@ -40,7 +42,6 @@ export default function AuthPage(): JSX.Element {
     boxShadow: 24,
     p: 4,
   };
-console.log(user);
 
   const handleClickShowPassword = (): void => setShowPassword((show) => !show);
 
@@ -48,14 +49,22 @@ console.log(user);
 
   return (
     <>
-    {user.status === 'success' ? (<span className="nav-link">Привет, {user.data.name}</span>) : null}
-    <br />
-    <br />
-    <ButtonGroup className="button-group">
-<Button variant='contained' onClick={handleOpen}>Создать событие</Button>
-<Button variant='contained' onClick={handleOpen}>Войти</Button>
-<Button variant='contained' onClick={() => dispatch(userLogoutThunk())}>Выйти</Button>
-    </ButtonGroup>
+      {user.status === 'success' ? (
+        <span className="nav-link">Привет, {user.data.name}</span>
+      ) : null}
+      <br />
+      <br />
+      <ButtonGroup className="button-group">
+        <Button variant="contained" onClick={handleOpen}>
+          Создать событие
+        </Button>
+        <Button variant="contained" onClick={handleOpen}>
+          Войти
+        </Button>
+        <Button variant="contained" onClick={() => dispatch(userLogoutThunk())}>
+          Выйти
+        </Button>
+      </ButtonGroup>
       {/* <Button onClick={handleOpen}>Создать событие</Button> */}
       <Modal
         open={open}
@@ -63,7 +72,9 @@ console.log(user);
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
+        
         <Container maxWidth="sm">
+          
           <Box
             component="form"
             onSubmit={type === 'signup' ? signUpHandler : signInHandler}
@@ -75,6 +86,7 @@ console.log(user);
               justifyContent: 'center',
             }}
           >
+            <ColorTabs />
             <h2>Welcome</h2>
             {type === 'signup' && (
               <TextField
