@@ -1,5 +1,4 @@
 import React from 'react';
-import { ReactComponent as GoogleLogo } from '../../assets/icons8-google.svg';
 
 import {
   Box,
@@ -13,9 +12,10 @@ import {
   OutlinedInput,
   Modal,
 } from '@mui/material';
-import { Visibility, VisibilityOff, Google } from '@mui/icons-material'
+import { Visibility, VisibilityOff, Google } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
 import useFormHook from '../../hooks/useFormHook';
+import { useAppDispatch } from '../../features/redux/reduxHooks';
 
 export default function AuthPage(): JSX.Element {
   const [open, setOpen] = React.useState(false);
@@ -131,10 +131,9 @@ export default function AuthPage(): JSX.Element {
                 width: '30ch',
                 borderRadius: '20px',
               }}
-              
               variant="outlined"
               type="submit"
-              onClick={handleClose} 
+              // onClick={handleClose}
             >
               Войти
             </Button>
