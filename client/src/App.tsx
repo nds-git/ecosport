@@ -1,7 +1,5 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
 import { Route, Routes } from 'react-router-dom';
-import AuthPage from './components/pages/AuthPage';
 import Layout from './components/pages/Layout';
 import PostsPage from './components/pages/PostsPage';
 import { useAppDispatch } from './features/redux/reduxHooks';
@@ -17,7 +15,6 @@ function App(): JSX.Element {
           {/* <Route path="/auth/:type" element={<AuthPage />} /> */}
         {/* </Route> */}
       </Routes>
-
   );
 }
 
