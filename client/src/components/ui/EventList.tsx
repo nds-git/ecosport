@@ -6,7 +6,7 @@ import useEventHook from '../../hooks/useEventHook';
 
 export default function EventList(): JSX.Element {
   const events = useAppSelector((state) => state.events);
-  
+
   return (
     <Grid container spacing={3}>
       {events.data.map((event) => (
