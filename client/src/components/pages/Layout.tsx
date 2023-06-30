@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import MapPage from './MapPage';
-import { Outlet } from 'react-router-dom';
+import EventMap from '../ui/EventMap';
 
 export default function Layout(): JSX.Element {
-  return (
-    <Outlet />
-  )
+  return <EventMap />;
 }
