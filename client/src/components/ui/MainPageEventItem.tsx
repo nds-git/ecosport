@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 
 import { assert } from 'console';
 import type { EventType } from '../../types';
+import { Link } from 'react-router-dom';
 
 export type EventProps = {
   event: EventType;
@@ -38,15 +39,11 @@ export default function MainPageEventItem({ event }: EventProps): JSX.Element {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button
-          href={`./events/${event.id}`}
-          color="success"
-          variant="contained"
-          sx={{ marginLeft: 1 }}
-          size="small"
-        >
-          Посмотреть
-        </Button>
+      <Link to={`./events/${event.id}`}>
+          <Button color="success" variant="contained" sx={{ marginLeft: 1 }} size="small">
+            Посмотреть
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );

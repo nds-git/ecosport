@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { EventFormType, EventType } from '../../types';
 
-import { createEvent, deleteEvent, getAllEvents, getEvents, updateEvent } from '../../services';
+import { createEvent, deleteEvent, getAllEvents, getEvent, getEvents, updateEvent } from '../../services';
 
 export const getAllEventToMainPageThunk = createAsyncThunk<EventType[]>('/events', async () =>
   getAllEvents()
