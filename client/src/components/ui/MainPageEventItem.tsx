@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-import { assert } from 'console';
+import { Link } from 'react-router-dom';
 import type { EventType } from '../../types';
 
 export type EventProps = {
@@ -38,15 +38,11 @@ export default function MainPageEventItem({ event }: EventProps): JSX.Element {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button
-          href={`./events/${event.id}`}
-          color="success"
-          variant="contained"
-          sx={{ marginLeft: 1 }}
-          size="small"
-        >
-          Посмотреть
-        </Button>
+        <Link to={`./events/${event.id}`}>
+          <Button color="success" variant="contained" sx={{ marginLeft: 1 }} size="small">
+            Посмотреть
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );

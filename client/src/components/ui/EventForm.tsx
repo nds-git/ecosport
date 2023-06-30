@@ -18,7 +18,6 @@ export default function EventForm(): JSX.Element {
 
   const changeGeo = (): void => {
     setValue(coordinate.geo.join(' '));
-    console.log('did update', value);
   };
 
   useEffect(() => changeGeo(), [coordinate]);
