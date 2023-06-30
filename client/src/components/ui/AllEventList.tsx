@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react';
 import { Grid } from '@mui/material';
-import { useAppSelector } from '../../features/redux/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 
 import useEventHook from '../../hooks/useEventHook';
 import MainPageEventItem from './MainPageEventItem';
+import { getAllEventToMainPageThunk } from '../../features/thunkActions/eventThunkActions';
 
 export default function AllEventList(): JSX.Element {
-  useEventHook();
+  // useEventHook();
+  const dispatch = useAppDispatch();
+    useEffect(() => {
+    void dispatch(getAllEventToMainPageThunk());
+    
+  }, []);
 
   const events = useAppSelector((state) => state.events);
   console.log('-->', events.data);
