@@ -7,6 +7,7 @@ import {
   getAllEventThunk,
   addEventThunk,
   updateEventThunk,
+  getAllEventToMainPageThunk,
   getOneEventThunk,
 } from '../features/thunkActions/eventThunkActions';
 
@@ -24,6 +25,11 @@ export default function useEventHook(id: string): EventHandler {
   }, []);
   useEffect(() => {
     dispatch(getOneEventThunk(id));
+  }, []);
+
+  useEffect(() => {
+    void dispatch(getAllEventToMainPageThunk());
+    
   }, []);
 
   const addHandler = (e: React.FormEvent<HTMLFormElement & EventFormType>): void => {
