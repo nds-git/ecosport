@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import MapPage from './MapPage';
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router';
 
 export default function Layout(): JSX.Element {
-  return (
-    <Outlet />
-  )
+  // привет роимашка
+  return <Outlet />;
 }

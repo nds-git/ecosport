@@ -1,9 +1,21 @@
 import type { EventType } from '../types';
 import apiInstance from './apiConfig';
 
+export const getAllEvents = (): Promise<EventType[]> =>
+  apiInstance
+    .get<EventType[]>('/api/events')
+    .then((response) => response.data)
+    .catch((error) => Promise.reject(error));
+
 export const getEvents = (): Promise<EventType[]> =>
   apiInstance
     .get<EventType[]>('/api/events/account')
+    .then((response) => response.data)
+    .catch((error) => Promise.reject(error));
+
+export const getEvent = (id: number): Promise<EventType> =>
+  apiInstance
+    .get<EventType>(`/api/events/${id}`)
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 
@@ -19,7 +31,7 @@ export const deleteEvent = (id: number): Promise<EventType['id']> =>
     .then(() => id)
     .catch((error) => Promise.reject(error));
 
-export const updateEvent = ({data, id}:{data: FormData, id: number}): Promise<EventType> =>
+export const updateEvent = ({ data, id }: { data: FormData; id: number }): Promise<EventType> =>
   apiInstance
     .patch<EventType>(`/api/events/${id}`, data)
     .then((response) => response.data)

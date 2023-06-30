@@ -4,11 +4,34 @@ const sharp = require('sharp');
 const { Event } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
-// Роут на личный кабинет - события одного организатора
-apiEventRouter.get('/account', async (req, res) => {
+// Роут на все события
+apiEventRouter.get('/', async (req, res) => {
   try {
     const events = await Event.findAll();
     res.json(events);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Роут на личный кабинет - события одного организатора
+apiEventRouter.get('/account', async (req, res) => {
+  try {
+    const events = await Event.findAll({ where: { manager_id: req.session.user.id } });
+    res.json(events);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Роут на получение одного события
+apiEventRouter.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const event = await Event.findOne({ where: { id } });
+    console.log(event);
+    res.json(event);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Server error' });
@@ -17,7 +40,6 @@ apiEventRouter.get('/account', async (req, res) => {
 
 // Роут на добавление нового события
 apiEventRouter.post('/new', upload.single('file'), async (req, res) => {
-  console.log(req.body);
   if (!req.file) {
     res.status(400).json({ message: 'No file uploaded' });
     return;
@@ -41,7 +63,7 @@ apiEventRouter.post('/new', upload.single('file'), async (req, res) => {
       geo,
       img: name,
       count_user,
-      manager_id: 1,
+      manager_id: req.session.user.id,
       event_status: true,
     });
     // отправляем пост
