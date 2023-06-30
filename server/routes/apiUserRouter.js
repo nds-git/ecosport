@@ -1,6 +1,6 @@
 const apiAuthRouter = require('express').Router();
 const bcrypt = require('bcrypt');
-const { User } = require('../db/models');
+const { Manager } = require('../db/models');
 
 apiAuthRouter.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
@@ -8,7 +8,7 @@ apiAuthRouter.post('/signup', async (req, res) => {
     res.status(400).json({ message: 'no user full data' });
     return;
   }
-  const searchEmail = await User.findOne({
+  const searchEmail = await Manager.findOne({
     where: { email },
   });
   if (searchEmail) {
@@ -16,10 +16,11 @@ apiAuthRouter.post('/signup', async (req, res) => {
     return;
   }
   const hashPass = await bcrypt.hash(password, 10);
-  const newUser = await User.create({
+  const newUser = await Manager.create({
     name,
     email,
     password: hashPass,
+    roles_id: 2,
   });
 
   req.session.user = { id: newUser.id, name: newUser.name, email: newUser.email };
@@ -33,7 +34,7 @@ apiAuthRouter.post('/signin', async (req, res) => {
     res.status(400).json({ message: 'no user full data' });
     return;
   }
-  const currentUser = await User.findOne({
+  const currentUser = await Manager.findOne({
     where: { email },
   });
   if (!currentUser || !(await bcrypt.compare(password, currentUser.password))) {
