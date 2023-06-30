@@ -15,7 +15,6 @@ export default function AllEventList(): JSX.Element {
   }, []);
 
   const events = useAppSelector((state) => state.events);
-  console.log('-->', events.data);
 
   return (
     <Grid container spacing={3}>

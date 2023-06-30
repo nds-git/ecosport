@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { UserStateType } from '../../../types';
 import {
   userCheckThunk,
+  userLogoutThunk,
   userSignInThunk,
   userSignUpThunk,
 } from '../../thunkActions/userThunkActions';
@@ -31,6 +32,9 @@ const userSlice = createSlice({
     builder.addCase(userSignInThunk.fulfilled, (state, action) => ({
       status: 'success',
       data: action.payload,
+    }));
+    builder.addCase(userLogoutThunk.fulfilled, (state, action) => ({
+      status: 'guest'
     }));
   },
 });

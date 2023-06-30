@@ -23,16 +23,14 @@ export default function useEventHook(id: string): EventHandler {
   useEffect(() => {
     void dispatch(getAllEventThunk());
   }, []);
-
-  
   useEffect(() => {
     dispatch(getOneEventThunk(id));
   }, []);
 
-  // useEffect(() => {
-  //   void dispatch(getAllEventToMainPageThunk());
-    
-  // }, []);
+  useEffect(() => {
+    void dispatch(getAllEventToMainPageThunk());
+
+  }, []);
 
   const addHandler = (e: React.FormEvent<HTMLFormElement & EventFormType>): void => {
     e.preventDefault();

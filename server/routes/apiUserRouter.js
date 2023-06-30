@@ -57,7 +57,7 @@ apiAuthRouter.get('/check', (req, res) => {
   res.json(req.session.user);
 });
 
-apiAuthRouter.get('/logout', (req, res) => {
+apiAuthRouter.delete('/logout', (req, res) => {
   req.session.destroy();
   res.clearCookie('sId');
   res.sendStatus(200);

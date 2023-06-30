@@ -7,6 +7,13 @@ export const checkUser = (): Promise<UserType> =>
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 
+    export const logoutUser = (): Promise<void> =>
+  apiInstanse
+    .delete('/api/auth/logout')
+    .then((response) => response)
+    .catch(console.log);
+
+
 export const signUpUser = (data: UserSingUpType): Promise<UserType> =>
   apiInstanse
     .post<UserType>('/api/auth/signup', data)

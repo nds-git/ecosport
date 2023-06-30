@@ -39,7 +39,11 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 export default function OneEventPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  useEventHook(id);
+  // useEventHook(id);
+
+  useEffect(() => {
+    dispatch(getOneEventThunk(id));
+  }, []);
 
   const event = useAppSelector((state) => state.events.event);
 
@@ -87,10 +91,10 @@ export default function OneEventPage(): JSX.Element {
             {/* <ShareIcon /> */}
             <Typography paragraph> Время: {event.time}</Typography>
           </IconButton>
-          
+
           <ExpandMore
             expand={expanded}
-            onClick={handleExpandClick}
+            onClick={ handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
           >
