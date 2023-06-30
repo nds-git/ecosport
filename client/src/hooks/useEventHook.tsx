@@ -17,19 +17,11 @@ export type EventHandler = {
   updateHandler: (e: React.FormEvent<HTMLFormElement & EventFormType>, id: EventType['id']) => void;
 };
 
-export default function useEventHook(id: string): EventHandler {
+export default function useEventHook(): EventHandler {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     void dispatch(getAllEventThunk());
-  }, []);
-  useEffect(() => {
-    dispatch(getOneEventThunk(id));
-  }, []);
-
-  useEffect(() => {
-    void dispatch(getAllEventToMainPageThunk());
-
   }, []);
 
   const addHandler = (e: React.FormEvent<HTMLFormElement & EventFormType>): void => {
