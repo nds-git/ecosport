@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { EventFormType, EventType } from '../../types';
+
 import { createEvent, deleteEvent, getAllEvents, getEvents, updateEvent } from '../../services';
 
 export const getAllEventToMainPageThunk = createAsyncThunk<EventType[]>('/events', async () =>
@@ -10,6 +11,11 @@ export const getAllEventToMainPageThunk = createAsyncThunk<EventType[]>('/events
 
 export const getAllEventThunk = createAsyncThunk<EventType[]>('events/getAll', async () =>
   getEvents()
+    .then((response) => response)
+    .catch((error) => Promise.reject(error)),
+);
+export const getOneEventThunk = createAsyncThunk<EventType, EventType['id']>('events/getOne', async (data) =>
+  getEvent(data)
     .then((response) => response)
     .catch((error) => Promise.reject(error)),
 );

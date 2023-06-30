@@ -13,6 +13,12 @@ export const getEvents = (): Promise<EventType[]> =>
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 
+export const getEvent = (id: number): Promise<EventType> =>
+  apiInstance
+    .get<EventType>(`/api/events/${id}`)
+    .then((response) => response.data)
+    .catch((error) => Promise.reject(error));
+
 export const createEvent = (data: FormData): Promise<EventType> =>
   apiInstance
     .post<EventType>('/api/events/new', data)

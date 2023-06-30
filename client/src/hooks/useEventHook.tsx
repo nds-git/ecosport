@@ -8,6 +8,7 @@ import {
   addEventThunk,
   updateEventThunk,
   getAllEventToMainPageThunk,
+  getOneEventThunk,
 } from '../features/thunkActions/eventThunkActions';
 
 export type EventHandler = {
@@ -16,11 +17,14 @@ export type EventHandler = {
   updateHandler: (e: React.FormEvent<HTMLFormElement & EventFormType>, id: EventType['id']) => void;
 };
 
-export default function useEventHook(): EventHandler {
+export default function useEventHook(id: string): EventHandler {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     void dispatch(getAllEventThunk());
+  }, []);
+  useEffect(() => {
+    dispatch(getOneEventThunk(id));
   }, []);
 
   useEffect(() => {
