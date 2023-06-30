@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/pages/Layout';
 import MapPage from './components/pages/MapPage';
 import AuthPage from './components/pages/AuthPage';
 import AccountPage from './components/pages/AccountPage';
+
+import { useAppDispatch } from './features/redux/reduxHooks';
+import { userCheckThunk } from './features/thunkActions';
+
 import AppNavBar from './components/ui/AppNavBar';
 import OneEventPage from './components/pages/OneEventPage';
 import MainPage from './components/pages/MainPage';
 
+
 function App(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(userCheckThunk())
+  }, [])
   return (
     <>
       <AppNavBar />
