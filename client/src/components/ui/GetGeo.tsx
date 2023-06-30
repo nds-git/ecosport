@@ -1,9 +1,26 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
+import { useAppDispatch } from '../../features/redux/reduxHooks';
+import { setCoord } from '../../features/redux/slices/eventCreateSlice';
+import { EventCoordType } from '../../types';
 
-export default function GetGeo(): JSX.Element {
+type GetGeoProps = {
+  setOpen: boolean;
+};
+
+export default function GetGeo({ setOpen }: GetGeoProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   // Чтобы быть уверенным, что компоненты загружены и готовы к использованию,
   //  необходимо использовать функцию ready или параметр загрузки onload.
 
@@ -70,8 +87,9 @@ export default function GetGeo(): JSX.Element {
         myPlacemark.properties.set('iconCaption', 'поиск...');
         ymaps.geocode(coords).then((res) => {
           const firstGeoObject = res.geoObjects.get(0);
+          console.log('-myPlacemark->', myPlacemark);
 
-          setCoordToView(myPlacemark.properties._data.coordinates);
+          setCoordToView(myPlacemark.geometry._coordinates);
           setAdressToView(myPlacemark.properties._data.balloonContent);
 
           myPlacemark.properties.set({
@@ -94,11 +112,15 @@ export default function GetGeo(): JSX.Element {
       }
     } // fin func init
   }, []);
-
+  // const getGeoHandler = () => {};
+  const getGeoHandler = (coordinate: number[], address: string | null) => {
+    dispatch(setCoord({ geo: coordinate, address }));
+    setOpen(false);
+  };
   return (
     <>
       <Typography component="p" mt={2}>
-        <b>Координаты точки сбора:</b> {coordToView.map((el) => `${el.toFixed(6)} `)}
+        <b>Координаты точки сбора:</b> {coordToView.map((el) => `${el} `)}
         <br />
         <b>Адрес точки сбора:</b> {adressToView}
         <br />
@@ -111,7 +133,9 @@ export default function GetGeo(): JSX.Element {
           height: 450,
         }}
       />
-      <Button variant="contained">Text</Button>
+      <Button variant="contained" onClick={() => getGeoHandler(coordToView, adressToView)}>
+        Сохранить
+      </Button>
     </>
   );
 }

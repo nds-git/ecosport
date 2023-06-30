@@ -22,6 +22,7 @@ export default function Point(): JSX.Element {
   const [open, setOpen] = React.useState(false);
   const handleOpen = (): void => setOpen(true);
   const handleClose = (): void => setOpen(false);
+
   return (
     <>
       <Button onClick={handleOpen} variant="contained" endIcon={<AdsClickIcon />}>
@@ -38,7 +39,7 @@ export default function Point(): JSX.Element {
             Поставьте точку
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <GetGeo />
+            <GetGeo setOpen={setOpen} />
           </Typography>
         </Box>
       </Modal>
