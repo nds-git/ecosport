@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import type { EventType } from '../../types';
 import useEventHook from '../../hooks/useEventHook';
 import ModalEdit from './ModalEdit';
+import { Link } from 'react-router-dom';
 
 export type EventProps = {
   event: EventType;
@@ -21,7 +22,7 @@ export default function EventItem({ event }: EventProps): JSX.Element {
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.3 }}
       >
         <CardMedia sx={{ height: 140 }} image={`http://localhost:3001/img/${event.img}`} />
         <CardContent>
@@ -55,6 +56,16 @@ export default function EventItem({ event }: EventProps): JSX.Element {
           >
             Delete
           </Button>
+          <Link to={`/events/${event.id}`}>
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
+            sx={{ marginLeft: 1 }}
+          >
+            More Info
+          </Button>
+          </Link>
         </CardActions>
       </motion.div>
     </Card>

@@ -4,15 +4,18 @@ import {
   addEventThunk,
   deleteEventThunk,
   getAllEventThunk,
+  getOneEventThunk,
   updateEventThunk,
 } from '../../thunkActions/eventThunkActions';
 
 export type InitialState = {
   data: EventType[];
+  event: EventType;
 };
 
 const initialState: InitialState = {
   data: [],
+  event: {} as EventType,
 };
 
 const eventSlice = createSlice({
@@ -32,6 +35,9 @@ const eventSlice = createSlice({
     builder.addCase(updateEventThunk.fulfilled, (state, action) => {
       state.data = state.data.map((el) => el.id === action.payload.id ? action.payload : el);
     });
+    builder.addCase(getOneEventThunk.fulfilled, (state, action) => {
+      state.event = action.payload
+    })
   },
 });
 
