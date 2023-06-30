@@ -5,6 +5,7 @@ import {
   deleteEventThunk,
   getAllEventThunk,
   updateEventThunk,
+  getAllEventToMainPageThunk,
 } from '../../thunkActions/eventThunkActions';
 
 export type InitialState = {
@@ -20,6 +21,9 @@ const eventSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getAllEventToMainPageThunk.fulfilled, (state, action) => {
+      state.data = action.payload;
+    });
     builder.addCase(getAllEventThunk.fulfilled, (state, action) => {
       state.data = action.payload;
     });
@@ -30,7 +34,7 @@ const eventSlice = createSlice({
       state.data = state.data.filter((el) => el.id !== action.payload);
     });
     builder.addCase(updateEventThunk.fulfilled, (state, action) => {
-      state.data = state.data.map((el) => el.id === action.payload.id ? action.payload : el);
+      state.data = state.data.map((el) => (el.id === action.payload.id ? action.payload : el));
     });
   },
 });

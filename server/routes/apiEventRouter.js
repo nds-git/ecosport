@@ -4,6 +4,16 @@ const sharp = require('sharp');
 const { Event } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
+// Роут на все события
+apiEventRouter.get('/', async (req, res) => {
+  try {
+    const events = await Event.findAll();
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Роут на личный кабинет - события одного организатора
 apiEventRouter.get('/account', async (req, res) => {
   try {
