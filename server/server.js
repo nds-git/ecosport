@@ -5,6 +5,7 @@ const apiPostRouter = require('./routes/apiPostRouter');
 const sessionParser = require('./middlewares/sessionMiddle');
 const apiAuthRouter = require('./routes/apiUserRouter');
 const apiEventRouter = require('./routes/apiEventRouter');
+const apiSponsorRouter = require('./routes/apiSponsorRouter');
 
 const PORT = process.env.PORT || 3001;
 
@@ -20,6 +21,7 @@ app.use(sessionParser);
 app.use('/api/posts', apiPostRouter);
 app.use('/api/auth', apiAuthRouter);
 app.use('/api/events', apiEventRouter);
+app.use('/api/sponsor', apiSponsorRouter);
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}!`);
