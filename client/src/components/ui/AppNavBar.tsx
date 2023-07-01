@@ -25,9 +25,6 @@ export default function AppNavBar(): JSX.Element {
                 <Button color="inherit">SignIn</Button>
               </Box>
 
-              <Box color="inherit" component={NavLink} to="/account">
-                <Button color="inherit">Account</Button>
-              </Box>
               {user.status === 'success' &&
               <Typography sx={{ color: 'yellow' }}>{user && `Hello, ${user.data.name}`}</Typography>
               }
