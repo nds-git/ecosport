@@ -8,7 +8,7 @@ export type SponsorType = {
   logo: string;
 };
 
-export type SponsorTypeFormType = {
+export type SponsorFormType = {
   id: HTMLInputElement;
   title: HTMLInputElement;
   name: HTMLInputElement;

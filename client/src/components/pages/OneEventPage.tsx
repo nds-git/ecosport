@@ -51,7 +51,6 @@ export default function OneEventPage(): JSX.Element {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  console.log('-->event', event);
   return (
     <Container>
       <Card sx={{ maxWidth: 1000 }}>
