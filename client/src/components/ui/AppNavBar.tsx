@@ -7,68 +7,55 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Container } from '@mui/system';
 import { useAppSelector } from '../../features/redux/reduxHooks';
+import '../../style.css';
 
 export default function AppNavBar(): JSX.Element {
   const user = useAppSelector((state) => state.user);
   return (
-    <Box sx={{ flexGrow: 1, marginBottom: '2rem' }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography color="inherit" variant="h6" component={NavLink} to="/" sx={{ flexGrow: 1 }}>
-            NAVBAR
-          </Typography>
-              <Box color="inherit" component={NavLink} to="/auth/signup">
-                <Button color="inherit">SignUp</Button>
-              </Box>
-              <Box color="inherit" component={NavLink} to="/auth/signin">
-                <Button color="inherit">SignIn</Button>
-              </Box>
-
-              <Box color="inherit" component={NavLink} to="/account">
-                <Button color="inherit">Account</Button>
-              </Box>
-              {user.status === 'success' &&
-              <Typography sx={{ color: 'yellow' }}>{user && `Hello, ${user.data.name}`}</Typography>
-              }
-              <Button color="inherit">
-                Logout
+    <Container>
+      <Box sx={{ flexGrow: 1, marginBottom: '2rem' }}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography
+              color="inherit"
+              variant="h6"
+              component={NavLink}
+              to="/"
+              sx={{ fontFamily: 'FuturaBookC', flexGrow: 1, textDecoration: 0 }}
+            >
+              <p className="logo">
+                <a href="/" title="эко спорт" className="no_href">
+                  <img src="../logo.png" alt="logo" /> ЭКО | Спорт{' '}
+                </a>
+              </p>
+            </Typography>
+            <Box color="inherit" component={NavLink} to="/auth/signup">
+              <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
+                SignUp
               </Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
+            </Box>
+            <Box color="inherit" component={NavLink} to="/auth/signin">
+              <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
+                SignIn
+              </Button>
+            </Box>
+
+            <Box color="inherit" component={NavLink} to="/account">
+              <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
+                Account
+              </Button>
+            </Box>
+            {user.status === 'success' && (
+              <Typography sx={{ color: 'yellow' }}>{user && `Hello, ${user.data.name}`}</Typography>
+            )}
+            <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
+              Logout
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </Container>
   );
 }
-
-{/* <Navbar bg="dark" data-bs-theme="dark">
-<Container>
-  <NavLink className="navbar-brand" to="/">
-    Tigers App
-  </NavLink>
-  <Nav className="me-auto flex-grow-1">
-    <NavLink className="nav-link" to="/">
-      Home
-    </NavLink>
-  </Nav>
-  <Nav className="me-auto">
-    {user.status !== 'success' && (
-      <>
-        <NavLink className="nav-link" to="/auth/signup">
-          signUp
-        </NavLink>
-        <NavLink className="nav-link" to="/auth/signin">
-          signIn
-        </NavLink>
-      </>
-    )}
-    {user.status === 'success' && (
-      <>
-        <span className="nav-link">Привет, {user.data.name}</span>
-        <Button className="nav-link" variant="warning">
-          Logout
-        </Button>
-      </>
-    )}
-  </Nav>
-</Container>
-</Navbar> */}

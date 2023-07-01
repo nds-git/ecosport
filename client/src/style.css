@@ -1,0 +1,91 @@
+@font-face {
+  font-family: 'FuturaBookC';
+  src: url(fonts/LUI33EU5.ttf), url(fonts/futurabookc.otf);
+}
+@font-face {
+  font-family: 'FranklinGothic';
+  src: url(fonts/nfChNLKi.ttf);
+}
+@font-face {
+  font-family: 'FuturaDemiC';
+  src: url(fonts/cJ2Sjj4O.ttf), url(fonts/futurademic.otf);
+}
+@font-face {
+  font-family: 'CormorantInfant-Medium';
+  src: url(fonts/CormorantInfant-Medium.ttf), url(fonts/CormorantInfant-Medium.otf);
+}
+@font-face {
+  font-family: 'ChunkFive';
+  src: url(fonts/Chunkfive.otf);
+}
+@font-face {
+  font-family: 'ChunkFiveEx';
+  src: url(fonts/ChunkFiveEx.ttf);
+  /*src: url('fonts/ChunkFiveEx.eot?#iefix') format('embedded-opentype'),
+       url('fonts/ChunkFiveEx.woff') format('woff'),
+       url('fonts/ChunkFiveEx.ttf') format('truetype');*/
+}
+@font-face {
+  font-family: 'FuturaFuturisC';
+  src: url(fonts/futurafuturisc.otf);
+}
+@font-face {
+  font-family: 'HeliosCond';
+  src: url(fonts/IhVk748C.otf);
+}
+@font-face {
+  font-family: 'Myriad Pro Regular';
+  src: url('fonts/MyriadPro-Regular.eot');
+  src: url('fonts/MyriadPro-Regular.eot?#iefix') format('embedded-opentype'),
+    url('fonts/MyriadPro-Regular.woff') format('woff'),
+    url('fonts/MyriadPro-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.root {
+  font-family: 'FuturaBookC';
+  src: url(fonts/LUI33EU5.ttf), url(fonts/futurabookc.otf);
+}
+.logo {
+  height: 55px;
+  font-size: 32px;
+}
+.logo IMG {
+  height: 55px;
+}
+.logo a {
+  color: aliceblue !important;
+  text-decoration: none !important;
+}
+.logo a:hover {
+  color: aliceblue;
+  text-decoration: none !important;
+}
+
+.no_href a {
+  text-decoration: none;
+}
+.no_href a:hover {
+  text-decoration: none;
+}
+
+.bg-main {
+  background: url('./i/banner-main-page-2.png') no-repeat;
+  margin: 0 auto;
+  height: 500px;
+  width: 100%;
+  border: 2px solid green;
+  display: flex;
+  justify-content: center;
+}
+
+.bg-footer {
+  height: 190px;
+  border: 2px solid green;
+}
+.br {
+  border: 1px solid red;
+}
+.bg {
+  border: 1px solid green;
+}
