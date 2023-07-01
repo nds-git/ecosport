@@ -1,20 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/pages/Layout';
-import PostsPage from './components/pages/PostsPage';
-import { useAppDispatch } from './features/redux/reduxHooks';
-import { userCheckThunk } from './features/thunkActions';
+import MapPage from './components/pages/MapPage';
+import AuthPage from './components/pages/AuthPage';
 import AccountPage from './components/pages/AccountPage';
 
+import { useAppDispatch } from './features/redux/reduxHooks';
+import { userCheckThunk } from './features/thunkActions';
+
+import AppNavBar from './components/ui/AppNavBar';
+import OneEventPage from './components/pages/OneEventPage';
+import MainPage from './components/pages/MainPage';
+import './style.css';
+import Footer from './components/ui/Footer';
+
+
 function App(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(userCheckThunk())
+  }, [])
   return (
+    <>
+      <AppNavBar />
       <Routes>
-        <Route path="/account" element={<AccountPage />} />
-        {/* <Route element={<Layout />}> */}
-          {/* <Route path="/" element={<PostsPage />} /> */}
-          {/* <Route path="/auth/:type" element={<AuthPage />} /> */}
-        {/* </Route> */}
+        <Route element={<Layout />}>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/auth/:type" element={<AuthPage />} />
+          <Route path="/account" element={<AccountPage />} />
+          <Route path="/events/:id" element={<OneEventPage />} />
+        </Route>
       </Routes>
+      <Footer />
+    </>
   );
 }
 

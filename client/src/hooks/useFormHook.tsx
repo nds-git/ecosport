@@ -3,6 +3,7 @@ import type { UserSingInType, UserSingUpType } from '../types';
 import { useAppDispatch } from '../features/redux/reduxHooks';
 import { userSignInThunk, userSignUpThunk } from '../features/thunkActions';
 
+
 export type SubmitHandler = (e: React.FormEvent<HTMLFormElement>) => void;
 
 export type AuthHookReturnedType = {
@@ -16,7 +17,9 @@ export default function useFormHook(): AuthHookReturnedType {
   const signUpHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(e.currentTarget)) as UserSingUpType;
-    void dispatch(userSignUpThunkz);
+    console.log(formData);
+    
+    void dispatch(userSignUpThunk(formData));
   };
 
   const signInHandler = (e: React.FormEvent<HTMLFormElement>): void => {

@@ -1,37 +1,171 @@
 import React from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  TextField,
+  Container,
+  InputAdornment,
+  IconButton,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  Modal,
+  Tabs,
+  Tab,
+} from '@mui/material';
+import { Visibility, VisibilityOff, Google } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
 import useFormHook from '../../hooks/useFormHook';
+import '../css/auth.css';
+import { useAppSelector, useAppDispatch } from '../../features/redux/reduxHooks';
+import { userLogoutThunk } from '../../features/thunkActions';
+import ColorTabs from '../ui/Auth/ColorTab';
 
 export default function AuthPage(): JSX.Element {
+  const user = useAppSelector((state) => state.user);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [showPassword, setShowPassword] = React.useState(false);
   const { type } = useParams();
+  const dispatch = useAppDispatch();
+
+  const style = {
+    position: 'absolute' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const handleClickShowPassword = (): void => setShowPassword((show) => !show);
 
   const { signInHandler, signUpHandler } = useFormHook();
 
   return (
-    <Row className="mt-3">
-      <Col>
-        <Form  onSubmit={type === 'signup' ? signUpHandler : signInHandler}>
-          {type === 'signup' && (
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Name</Form.Label>
-              <Form.Control type="text" name="name" placeholder="name@example.com" />
-            </Form.Group>
-          )}
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" name="email" placeholder="name@example.com" />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" name="password" placeholder="name@example.com" />
-          </Form.Group>
-          <Button type="submit">ok</Button>
-        </Form>
-      </Col>
-    </Row>
+    <>
+      {user.status === 'success' ? (
+        <span className="nav-link">Привет, {user.data.name}</span>
+      ) : null}
+      <br />
+      <br />
+      <ButtonGroup className="button-group">
+        <Button variant="contained" onClick={handleOpen}>
+          Создать событие
+        </Button>
+        <Button variant="contained" onClick={handleOpen}>
+          Войти
+        </Button>
+        <Button variant="contained" onClick={() => dispatch(userLogoutThunk())}>
+          Выйти
+        </Button>
+      </ButtonGroup>
+      {/* <Button onClick={handleOpen}>Создать событие</Button> */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        
+        <Container maxWidth="sm">
+          
+          <Box
+            component="form"
+            onSubmit={type === 'signup' ? signUpHandler : signInHandler}
+            sx={{
+              ...style,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <ColorTabs />
+            <h2>Welcome</h2>
+            {type === 'signup' && (
+              <TextField
+                sx={{ m: 1, width: '30ch' }}
+                margin="normal"
+                name="name"
+                label="Name"
+                placeholder="Enter your name"
+                variant="outlined"
+                InputProps={{
+                  sx: {
+                    borderRadius: '20px',
+                  },
+                }}
+              />
+            )}
+            <TextField
+              sx={{ m: 1, width: '30ch' }}
+              margin="normal"
+              name="email"
+              label="Email address"
+              type="email"
+              placeholder="name@example.com"
+              variant="outlined"
+              InputProps={{
+                sx: {
+                  borderRadius: '20px',
+                },
+              }}
+            />
+            <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+                sx={{
+                  borderRadius: '20px',
+                }}
+              />
+            </FormControl>
+            <Button
+              sx={{
+                m: 1,
+                width: '30ch',
+                borderRadius: '20px',
+              }}
+              startIcon={<Google />}
+              variant="outlined"
+            >
+              Войти через Google
+            </Button>
+            <Button
+              sx={{
+                m: 1,
+                width: '30ch',
+                borderRadius: '20px',
+              }}
+              variant="outlined"
+              type="submit"
+              // onClick={handleClose}
+            >
+              Войти
+            </Button>
+          </Box>
+        </Container>
+      </Modal>
+    </>
   );
 }

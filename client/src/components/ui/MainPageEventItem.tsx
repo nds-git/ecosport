@@ -5,25 +5,19 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { motion } from 'framer-motion';
+
 import { Link } from 'react-router-dom';
+import { Container } from '@mui/system';
 import type { EventType } from '../../types';
-import useEventHook from '../../hooks/useEventHook';
-import ModalEdit from './ModalEdit';
 
 export type EventProps = {
   event: EventType;
 };
 
-export default function EventItem({ event }: EventProps): JSX.Element {
-  const { deleteHandler } = useEventHook();
+export default function MainPageEventItem({ event }: EventProps): JSX.Element {
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3 }}
-      >
+    <Container>
+      <Card sx={{ maxWidth: 345 }}>
         <CardMedia sx={{ height: 140 }} image={`http://localhost:3001/img/${event.img}`} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -46,23 +40,13 @@ export default function EventItem({ event }: EventProps): JSX.Element {
           </Typography>
         </CardContent>
         <CardActions>
-          <ModalEdit event={event} />
-          <Button
-            onClick={() => deleteHandler(event.id)}
-            size="small"
-            variant="outlined"
-            color="error"
-            sx={{ marginLeft: 1 }}
-          >
-            Delete
-          </Button>
-          <Link to={`/events/${event.id}`}>
-            <Button size="small" variant="contained" color="secondary" sx={{ marginLeft: 1 }}>
-              More Info
+          <Link to={`./events/${event.id}`}>
+            <Button color="success" variant="contained" sx={{ marginLeft: 1 }} size="small">
+              Посмотреть
             </Button>
           </Link>
         </CardActions>
-      </motion.div>
-    </Card>
+      </Card>
+    </Container>
   );
 }

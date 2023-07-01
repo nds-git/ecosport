@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import MapPage from './MapPage';
-import EventMap from '../ui/EventMap';
+import { Outlet } from 'react-router';
 
 export default function Layout(): JSX.Element {
-  return <EventMap />;
+  // привет роимашка
+  return <Outlet />;
 }

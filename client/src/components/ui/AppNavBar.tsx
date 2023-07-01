@@ -1,45 +1,61 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
 import { NavLink } from 'react-router-dom';
-import Nav from 'react-bootstrap/Nav';
-import Button from 'react-bootstrap/Button';
-import Navbar from 'react-bootstrap/Navbar';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Container } from '@mui/system';
 import { useAppSelector } from '../../features/redux/reduxHooks';
+import '../../style.css';
 
 export default function AppNavBar(): JSX.Element {
   const user = useAppSelector((state) => state.user);
   return (
-    <Navbar bg="dark" data-bs-theme="dark">
-      <Container>
-        <NavLink className="navbar-brand" to="/">
-          Tigers App
-        </NavLink>
-        <Nav className="me-auto flex-grow-1">
-          <NavLink className="nav-link" to="/">
-            Home
-          </NavLink>
-        </Nav>
-        <Nav className="me-auto">
-          {user.status !== 'success' && (
-            <>
-              <NavLink className="nav-link" to="/auth/signup">
-                signUp
-              </NavLink>
-              <NavLink className="nav-link" to="/auth/signin">
-                signIn
-              </NavLink>
-            </>
-          )}
-          {user.status === 'success' && (
-            <>
-              <span className="nav-link">Привет, {user.data.name}</span>
-              <Button className="nav-link" variant="warning">
-                Logout
+    <Container>
+      <Box sx={{ flexGrow: 1, marginBottom: '2rem' }}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography
+              color="inherit"
+              variant="h6"
+              component={NavLink}
+              to="/"
+              sx={{ fontFamily: 'FuturaBookC', flexGrow: 1, textDecoration: 0 }}
+            >
+              <p className="logo">
+                <a href="/" title="эко спорт" className="no_href">
+                  <img src="../logo.png" alt="logo" /> ЭКО | Спорт{' '}
+                </a>
+              </p>
+            </Typography>
+            <Box color="inherit" component={NavLink} to="/auth/signup">
+              <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
+                SignUp
               </Button>
-            </>
-          )}
-        </Nav>
-      </Container>
-    </Navbar>
+            </Box>
+            <Box color="inherit" component={NavLink} to="/auth/signin">
+              <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
+                SignIn
+              </Button>
+            </Box>
+
+            <Box color="inherit" component={NavLink} to="/account">
+              <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
+                Account
+              </Button>
+            </Box>
+            {user.status === 'success' && (
+              <Typography sx={{ color: 'yellow' }}>{user && `Hello, ${user.data.name}`}</Typography>
+            )}
+            <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
+              Logout
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </Container>
   );
 }

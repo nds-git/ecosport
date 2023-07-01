@@ -1,0 +1,15 @@
+.button-group {
+    background-color: #e0e0e0; /* Цвет фона */
+    padding: 10px; /* Отступы вокруг кнопок */
+  }
+  
+  .button-group .MuiButton-root {
+    background-color: #c37ad0; /* Цвет фона кнопки */
+    color: #ffffff; /* Цвет текста кнопки */
+    margin: 0 5px; /* Отступы между кнопками */
+  }
+  
+  .button-group .MuiButton-root:hover {
+    background-color: #c143b4; /* Цвет фона кнопки при наведении */
+  }
+  
