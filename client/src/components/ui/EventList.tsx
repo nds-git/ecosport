@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 import { Container } from '@mui/system';
-import { useAppSelector } from '../../features/redux/reduxHooks';
 import EventItem from './EventItem';
 import useEventHook from '../../hooks/useEventHook';
+import { getAllEventThunk } from '../../features/thunkActions/eventThunkActions';
 
 export default function EventList(): JSX.Element {
   const events = useAppSelector((state) => state.events);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    void dispatch(getAllEventThunk());
+  }, []);
 
   return (
     <Container>

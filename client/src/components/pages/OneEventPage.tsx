@@ -46,7 +46,7 @@ export default function OneEventPage(): JSX.Element {
   }, []);
 
   const event = useAppSelector((state) => state.events.event);
-
+  
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);

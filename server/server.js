@@ -7,7 +7,6 @@ const apiAuthRouter = require('./routes/apiUserRouter');
 const apiEventRouter = require('./routes/apiEventRouter');
 
 const PORT = process.env.PORT || 3001;
-
 const app = express();
 
 app.use(express.json());

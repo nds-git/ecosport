@@ -17,11 +17,27 @@ apiEventRouter.get('/', async (req, res) => {
 // Роут на личный кабинет - события одного организатора
 apiEventRouter.get('/account', async (req, res) => {
   try {
-    const events = await Event.findAll({ where: { manager_id: req.session.user.id } });
+    const events = await Event.findAll({
+      where: { manager_id: req.session.user.id, event_archive: false },
+    });
     res.json(events);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+apiEventRouter.get('/archive', async (req, res) => {
+  console.log('--->>>>');
+  try {
+    const events = await Event.findAll({
+      where: { manager_id: req.session.user.id, event_archive: true },
+    });
+    console.log(events);
+    res.json(events);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error archive' });
   }
 });
 
@@ -126,6 +142,27 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
     );
     const event = await Event.findOne({ where: { id } });
     res.json(event);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+apiEventRouter.patch('/:id/archive', async (req, res) => {
+  const { id } = req.params;
+  if (!id || Number.isNaN(Number(id))) {
+    res.status(400).json({ message: 'Bad request id' });
+    return;
+  }
+  try {
+    const event = await Event.findOne({ where: { id } });
+    if (!event) {
+      res.status(400).json({ message: 'event not found' });
+      return;
+    }
+    event.event_archive = true;
+    await event.save();
+    res.json({ message: 'event status archived' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Server error' });

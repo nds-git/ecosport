@@ -42,9 +42,12 @@ export default function AppNavBar(): JSX.Element {
               </Button>
             </Box>
 
-            <Box color="inherit" component={NavLink} to="/account">
+              {user.status === 'success' &&
+              <Typography sx={{ color: 'yellow' }}>{user && `Hello, ${user.data.name}`}</Typography>
+              }
               <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
-                Account
+                Logout
+
               </Button>
             </Box>
             {user.status === 'success' && (

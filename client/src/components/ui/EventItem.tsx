@@ -16,7 +16,7 @@ export type EventProps = {
 };
 
 export default function EventItem({ event }: EventProps): JSX.Element {
-  const { deleteHandler } = useEventHook();
+  const { archiveHandler } = useEventHook();
   return (
     <Card sx={{ maxWidth: 345 }}>
       <motion.div
@@ -47,20 +47,20 @@ export default function EventItem({ event }: EventProps): JSX.Element {
         </CardContent>
         <CardActions>
           <ModalEdit event={event} />
-          <Button
-            onClick={() => deleteHandler(event.id)}
-            size="small"
-            variant="outlined"
-            color="error"
-            sx={{ marginLeft: 1 }}
-          >
-            Delete
-          </Button>
           <Link to={`/events/${event.id}`}>
             <Button size="small" variant="contained" color="secondary" sx={{ marginLeft: 1 }}>
               More Info
             </Button>
           </Link>
+          <Button
+            onClick={() => archiveHandler(event.id)}
+            size="small"
+            variant="outlined"
+            color="secondary"
+            sx={{ marginLeft: 1 }}
+          >
+            Archive
+          </Button>
         </CardActions>
       </motion.div>
     </Card>
