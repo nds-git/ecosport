@@ -51,7 +51,7 @@ export default function OneEventPage(): JSX.Element {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  console.log('-->event', event);
   return (
     <Container>
       <Card sx={{ maxWidth: 1000 }}>
@@ -94,7 +94,7 @@ export default function OneEventPage(): JSX.Element {
 
           <ExpandMore
             expand={expanded}
-            onClick={ handleExpandClick}
+            onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
           >
