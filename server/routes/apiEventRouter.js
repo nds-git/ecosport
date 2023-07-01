@@ -1,3 +1,5 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable camelcase */
 const apiEventRouter = require('express').Router();
 const fs = require('fs').promises;
 const sharp = require('sharp');
