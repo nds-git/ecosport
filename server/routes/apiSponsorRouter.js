@@ -3,14 +3,23 @@
 const apiSponsorRouter = require('express').Router();
 const fs = require('fs').promises;
 const sharp = require('sharp');
-const { Sponsor, EventsSponsors } = require('../db/models');
+const { Sponsor, Event, EventsSponsors } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
 // Роут вытащить конкретных спонсоров для конкретного события
-apiSponsorRouter.get('/', async (req, res) => {
+apiSponsorRouter.get('/:id', async (req, res) => {
+  const { id } = req.params; // id конкретного события
+
   try {
-    const sponsor = await Sponsor.findAll();
-    res.json(sponsor);
+    const sponsorsByEvent = await Sponsor.findAll({
+      include: {
+        model: Event,
+        through: { model: EventsSponsors, where: { event_id: id } },
+      },
+    });
+    console.log('sponsorsByEvent-->', sponsorsByEvent);
+
+    res.json(sponsorsByEvent);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
@@ -32,7 +41,7 @@ apiSponsorRouter.post('/new', upload.single('file'), async (req, res) => {
     // создаем пост в бд
 
     const { title, name, body, message, email } = req.body;
-
+    console.log('-req.bo->', req.body);
     const sponsor = await Sponsor.create({
       title,
       name,

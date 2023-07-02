@@ -1,4 +1,7 @@
+import type { SponsorType } from './sponsorType';
+
 export type EventType = {
+  Sponsors: SponsorType[];
   id: number;
   title: string;
   body: string;
@@ -19,5 +22,5 @@ export type EventFormType = {
   time: HTMLInputElement;
   count_user: HTMLInputElement;
   geo: HTMLInputElement;
-  file: HTMLInputElement & {files: FileList};
+  file: HTMLInputElement & { files: FileList };
 };
