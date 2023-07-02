@@ -3,7 +3,7 @@
 const apiSponsorRouter = require('express').Router();
 const fs = require('fs').promises;
 const sharp = require('sharp');
-const { Sponsor } = require('../db/models');
+const { Sponsor, EventsSponsors } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
 // Роут вытащить конкретных спонсоров для конкретного события
@@ -39,9 +39,19 @@ apiSponsorRouter.post('/new', upload.single('file'), async (req, res) => {
       body,
       message,
       email,
-      img: fileName,
+      logo: fileName,
     });
-    // отправляем пост
+    // отправляем спонсора
+
+    const event_id = req.body.eventId;
+    const sponsor_id = sponsor.id;
+
+    await EventsSponsors.create({
+      sponsor_id,
+      event_id,
+      sponsor_status: false, // поставить false пока манагер не одобрит
+    });
+
     res.json(sponsor);
   } catch (error) {
     console.log(error);

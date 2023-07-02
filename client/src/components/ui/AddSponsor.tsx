@@ -1,35 +1,55 @@
 import React, { useState } from 'react';
 import { Button } from '@mui/base';
-import { TextField } from '@mui/material';
 import { Box, Container } from '@mui/system';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import AdsClickIcon from '@mui/icons-material/AdsClick';
+import { Paper } from '@mui/material';
 import useSponsorHook from '../../hooks/useSponsorHook';
+import AddFormSponsor from './AddFormSponsor';
+import type { EventType } from '../../types';
 
-export default function AddSponsor(): JSX.Element {
-  const { addHandler } = useSponsorHook();
-  const [value, setValue] = useState('');
+const style = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 650,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+type AddSponsorProps = {
+  eventId: EventType['id'];
+};
+
+export default function AddSponsor({ eventId }: AddSponsorProps): JSX.Element {
+  const [open, setOpen] = useState(false);
+  const handleOpen = (): void => setOpen(true);
+  const handleClose = (): void => setOpen(false);
 
   return (
     <Container>
-      <Box
-        component="form"
-        onSubmit={addHandler}
-        sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch' },
-        }}
-        noValidate
-        autoComplete="off"
+      <Button onClick={handleOpen} variant="contained" endIcon={<AdsClickIcon />}>
+        Стать спонсором
+      </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        <TextField name="title" label="Title" placeholder="Title" required />
-        <TextField name="name" label="Name" placeholder="Name" required />
-        <TextField name="body" label="Body" placeholder="Body" required />
-        <TextField name="message" label="Message" type="message" required />
-        <TextField name="email" label="email" type="email" required />
-        <TextField name="file" type="file" required />
-
-        <Button type="submit" variant="contained">
-          Стать спонсором
-        </Button>
-      </Box>
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Стать спонсором
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <AddFormSponsor eventId={eventId} setOpen={setOpen} />
+          </Typography>
+        </Box>
+      </Modal>
     </Container>
   );
 }

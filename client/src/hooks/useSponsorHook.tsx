@@ -1,24 +1,26 @@
 import type React from 'react';
 import { useEffect } from 'react';
 import type { SponsorFormType, SponsorType } from '../types';
-import { useAppDispatch } from '../features/redux/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../features/redux/reduxHooks';
 import {
   addSponsorThunk,
   getSponsorsExistEventThunk,
 } from '../features/thunkActions/sponsorThunkActions';
 
 export type SponsorHandler = {
-  addHandler: (e: React.FormEvent<HTMLFormElement & SponsorFormType>) => void;
+  addHandler: (e: React.FormEvent<HTMLFormElement & SponsorFormType>, eventId: number) => void;
 };
 
-export default function useSponsorHook(id: string): SponsorHandler {
+export default function useSponsorHook(): SponsorHandler {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    void dispatch(getSponsorsExistEventThunk());
-  }, []);
+  const eventId = useAppSelector((state) => state.events.event.id);
+  console.log('-->eventId', eventId);
 
-  const addHandler = (e: React.FormEvent<HTMLFormElement & SponsorFormType>): void => {
+  const addHandler = (
+    e: React.FormEvent<HTMLFormElement & SponsorFormType>,
+    eventId: number,
+  ): void => {
     e.preventDefault();
     if (!e.currentTarget.title.value.trim() || !e.currentTarget.file.files?.length) return;
     const formData = new FormData();
@@ -28,6 +30,7 @@ export default function useSponsorHook(id: string): SponsorHandler {
     formData.append('name', e.currentTarget.name.value);
     formData.append('message', e.currentTarget.message.value);
     formData.append('email', e.currentTarget.email.value);
+    formData.append('eventId', eventId);
     void dispatch(addSponsorThunk(formData));
   };
 
