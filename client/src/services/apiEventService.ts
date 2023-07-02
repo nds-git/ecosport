@@ -36,3 +36,15 @@ export const updateEvent = ({ data, id }: { data: FormData; id: number }): Promi
     .patch<EventType>(`/api/events/${id}`, data)
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
+
+export const archiveEvent = (id: number): Promise<EventType['id']> =>
+  apiInstance
+    .patch(`/api/events/${id}/archive`)
+    .then(() => id)
+    .catch((error) => Promise.reject(error));
+
+export const getArchiveEvents = (): Promise<EventType[]> =>
+  apiInstance
+    .get<EventType[]>('/api/events/archive')
+    .then((response) => response.data)
+    .catch((error) => Promise.reject(error));

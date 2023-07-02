@@ -7,6 +7,8 @@ import {
   getOneEventThunk,
   updateEventThunk,
   getAllEventToMainPageThunk,
+  archiveEventThunk,
+  getAllArchiveEventThunk,
 } from '../../thunkActions/eventThunkActions';
 
 export type InitialState = {
@@ -40,8 +42,14 @@ const eventSlice = createSlice({
       state.data = state.data.map((el) => (el.id === action.payload.id ? action.payload : el));
     });
     builder.addCase(getOneEventThunk.fulfilled, (state, action) => {
-      state.event = action.payload
-    })
+      state.event = action.payload;
+    });
+    builder.addCase(archiveEventThunk.fulfilled, (state, action) => {
+      state.data = state.data.filter((el) => el.id !== action.payload);
+    });
+    builder.addCase(getAllArchiveEventThunk.fulfilled, (state, action) => {
+      state.data = action.payload;
+    });
   },
 });
 

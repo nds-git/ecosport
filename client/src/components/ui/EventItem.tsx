@@ -6,17 +6,17 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import type { EventType } from '../../types';
 import useEventHook from '../../hooks/useEventHook';
 import ModalEdit from './ModalEdit';
-import { Link } from 'react-router-dom';
 
 export type EventProps = {
   event: EventType;
 };
 
 export default function EventItem({ event }: EventProps): JSX.Element {
-  const { deleteHandler } = useEventHook();
+  const { archiveHandler } = useEventHook();
   return (
     <Card sx={{ maxWidth: 345 }}>
       <motion.div
@@ -47,25 +47,20 @@ export default function EventItem({ event }: EventProps): JSX.Element {
         </CardContent>
         <CardActions>
           <ModalEdit event={event} />
+          <Link to={`/events/${event.id}`}>
+            <Button size="small" variant="contained" color="secondary" sx={{ marginLeft: 1 }}>
+              More Info
+            </Button>
+          </Link>
           <Button
-            onClick={() => deleteHandler(event.id)}
+            onClick={() => archiveHandler(event.id)}
             size="small"
             variant="outlined"
-            color="error"
-            sx={{ marginLeft: 1 }}
-          >
-            Delete
-          </Button>
-          <Link to={`/events/${event.id}`}>
-          <Button
-            size="small"
-            variant="contained"
             color="secondary"
             sx={{ marginLeft: 1 }}
           >
-            More Info
+            Archive
           </Button>
-          </Link>
         </CardActions>
       </motion.div>
     </Card>

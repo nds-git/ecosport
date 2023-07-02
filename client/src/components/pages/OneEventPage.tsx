@@ -17,9 +17,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Container } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { Box } from '@mui/system';
 import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 import { getOneEventThunk } from '../../features/thunkActions/eventThunkActions';
 import useEventHook from '../../hooks/useEventHook';
+import AddSponsor from '../ui/AddSponsor';
+import { getSponsorsExistEventThunk } from '../../features/thunkActions';
 
 type ExpandMoreProps = {
   expand: boolean;
@@ -40,17 +43,22 @@ export default function OneEventPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   // useEventHook(id);
+  // const [sponsor, setSponsor] = useState();
 
   useEffect(() => {
     dispatch(getOneEventThunk(id));
   }, []);
 
   const event = useAppSelector((state) => state.events.event);
-
+  
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  useEffect(() => {
+    void dispatch(getSponsorsExistEventThunk(event.id));
+  }, []);
 
   return (
     <Container>
@@ -75,6 +83,9 @@ export default function OneEventPage(): JSX.Element {
           image={`http://localhost:3001/img/${event.img}`}
           alt="Paella dish"
         />
+        <Box sx={{ m: 1 }}>
+          <AddSponsor eventId={event.id} />
+        </Box>
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             {event.body}
@@ -94,7 +105,7 @@ export default function OneEventPage(): JSX.Element {
 
           <ExpandMore
             expand={expanded}
-            onClick={ handleExpandClick}
+            onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
           >

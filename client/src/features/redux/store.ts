@@ -3,6 +3,7 @@ import userSlice from './slices/userSlice';
 import postSlice from './slices/postSlice';
 import eventSlice from './slices/eventSlice';
 import eventCreateSlice from './slices/eventCreateSlice';
+import sponsorSlice from './slices/sponsorSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     posts: postSlice,
     events: eventSlice,
     eventCreate: eventCreateSlice,
+    sponsor: sponsorSlice,
   },
 });
 

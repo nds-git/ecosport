@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { Grid } from '@mui/material';
+import Box from '@mui/material/Box';
+import { Container } from '@mui/system';
 import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 
 import useEventHook from '../../hooks/useEventHook';
@@ -9,20 +11,32 @@ import { getAllEventToMainPageThunk } from '../../features/thunkActions/eventThu
 export default function AllEventList(): JSX.Element {
   // useEventHook();
   const dispatch = useAppDispatch();
-    useEffect(() => {
+  useEffect(() => {
     void dispatch(getAllEventToMainPageThunk());
-    
   }, []);
 
   const events = useAppSelector((state) => state.events);
 
   return (
-    <Grid container spacing={3}>
-      {events.data.map((event) => (
-        <Grid item key={event.id} xs={12} sm={6} md={4}>
-          <MainPageEventItem event={event} />
+    <Container>
+      <Box
+        component="div"
+        sx={{
+          width: '100%',
+          height: '100%',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <Grid container spacing={3}>
+          {events.data.map((event) => (
+            <Grid item key={event.id} xs={12} sm={6} md={4}>
+              <MainPageEventItem event={event} />
+            </Grid>
+          ))}
         </Grid>
-      ))}
-    </Grid>
+      </Box>
+    </Container>
   );
 }
