@@ -13,13 +13,12 @@ import ArchivePage from './components/pages/ArchivePage';
 import './style.css';
 import Footer from './components/ui/Footer';
 
-
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(userCheckThunk())
-  }, [])
+    dispatch(userCheckThunk());
+  }, []);
   return (
     <>
       <AppNavBar />
