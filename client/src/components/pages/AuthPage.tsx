@@ -10,9 +10,7 @@ import {
   FormControl,
   InputLabel,
   OutlinedInput,
-  Modal,
-  Tabs,
-  Tab,
+  Modal
 } from '@mui/material';
 import { Visibility, VisibilityOff, Google } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
@@ -25,8 +23,8 @@ import ColorTabs from '../ui/Auth/ColorTab';
 export default function AuthPage(): JSX.Element {
   const user = useAppSelector((state) => state.user);
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = (): void => setOpen(true);
+  const handleClose = (): void => setOpen(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const { type } = useParams();
   const dispatch = useAppDispatch();
@@ -72,9 +70,7 @@ export default function AuthPage(): JSX.Element {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        
         <Container maxWidth="sm">
-          
           <Box
             component="form"
             onSubmit={type === 'signup' ? signUpHandler : signInHandler}
