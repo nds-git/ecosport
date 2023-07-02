@@ -15,6 +15,14 @@ apiEventRouter.get('/', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+apiEventRouter.get('/garbageTotal', async (req, res) => {
+  try {
+    const result = await Event.sum('garbage');
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 // Роут на личный кабинет - события одного организатора
 apiEventRouter.get('/account', async (req, res) => {
@@ -29,13 +37,27 @@ apiEventRouter.get('/account', async (req, res) => {
   }
 });
 
+// Роут на получение архивных событий конкретного организатора
 apiEventRouter.get('/archive', async (req, res) => {
-  console.log('--->>>>');
   try {
     const events = await Event.findAll({
       where: { manager_id: req.session.user.id, event_archive: true },
     });
-    console.log(events);
+    res.json(events);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error archive' });
+  }
+});
+
+// Роут на получение всех архивных событий
+apiEventRouter.get('/archiveEvents', async (req, res) => {
+  try {
+    const events = await Event.findAll({
+      limit: 3,
+      where: { event_archive: true },
+      order: [['garbage', 'DESC']],
+    });
     res.json(events);
   } catch (error) {
     console.log(error);
@@ -48,7 +70,6 @@ apiEventRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const event = await Event.findOne({ where: { id } });
-    console.log(event);
     res.json(event);
   } catch (error) {
     console.log(error);
@@ -152,6 +173,7 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
 
 apiEventRouter.patch('/:id/archive', async (req, res) => {
   const { id } = req.params;
+  const { garbage } = req.body;
   if (!id || Number.isNaN(Number(id))) {
     res.status(400).json({ message: 'Bad request id' });
     return;
@@ -163,6 +185,7 @@ apiEventRouter.patch('/:id/archive', async (req, res) => {
       return;
     }
     event.event_archive = true;
+    event.garbage = garbage;
     await event.save();
     res.json({ message: 'event status archived' });
   } catch (error) {

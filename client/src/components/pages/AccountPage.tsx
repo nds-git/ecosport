@@ -6,8 +6,8 @@ import MenuManager from '../ui/MenuManager';
 export default function AccountPage(): JSX.Element {
   return (
     <>
-      <EventForm />
       <MenuManager />
+      <EventForm />
       <EventList />
     </>
   );
