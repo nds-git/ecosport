@@ -41,13 +41,14 @@ export default function AppNavBar(): JSX.Element {
                 SignIn
               </Button>
             </Box>
-
-              {user.status === 'success' &&
-              <Typography sx={{ color: 'yellow' }}>{user && `Hello, ${user.data.name}`}</Typography>
-              }
+            <Box>
+              {user.status === 'success' && (
+                <Typography sx={{ color: 'yellow' }}>
+                  {user && `Hello, ${user.data.name}`}
+                </Typography>
+              )}
               <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
                 Logout
-
               </Button>
             </Box>
             {user.status === 'success' && (
