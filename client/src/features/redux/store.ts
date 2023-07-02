@@ -11,7 +11,7 @@ const store = configureStore({
     posts: postSlice,
     events: eventSlice,
     eventCreate: eventCreateSlice,
-    sponsor: sponsorSlice,
+    sponsors: sponsorSlice,
   },
 });
 

@@ -9,7 +9,6 @@ import MainPageEventItem from './MainPageEventItem';
 import { getAllEventToMainPageThunk } from '../../features/thunkActions/eventThunkActions';
 
 export default function AllEventList(): JSX.Element {
-  // useEventHook();
   const dispatch = useAppDispatch();
   useEffect(() => {
     void dispatch(getAllEventToMainPageThunk());
