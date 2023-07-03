@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       manager_id: DataTypes.INTEGER,
       event_status: DataTypes.BOOLEAN,
       event_archive: DataTypes.BOOLEAN,
+      garbage: DataTypes.INTEGER,
     },
     {
       sequelize,

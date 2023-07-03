@@ -12,6 +12,7 @@ import MainPage from './components/pages/MainPage';
 import ArchivePage from './components/pages/ArchivePage';
 import './style.css';
 import Footer from './components/ui/Footer';
+import AuthModal from './components/ui/Auth/AuthModal';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -21,6 +22,7 @@ function App(): JSX.Element {
   }, []);
   return (
     <>
+    <AuthModal />
       <AppNavBar />
       <Routes>
         <Route element={<Layout />}>

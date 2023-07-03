@@ -13,9 +13,10 @@ export default function AllEventList(): JSX.Element {
   useEffect(() => {
     void dispatch(getAllEventToMainPageThunk());
   }, []);
-
+ 
   const events = useAppSelector((state) => state.events);
-  console.log('events-->', events);
+ 
+ 
   return (
     <Container>
       <Box
@@ -29,7 +30,7 @@ export default function AllEventList(): JSX.Element {
         }}
       >
         <Grid container spacing={3}>
-          {events.data.map((event) => (
+          {events.map((event) => (
             <Grid item key={event.id} xs={12} sm={6} md={4}>
               <MainPageEventItem event={event} />
             </Grid>
