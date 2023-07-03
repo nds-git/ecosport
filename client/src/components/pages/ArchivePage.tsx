@@ -12,6 +12,7 @@ import { getAllArchiveEventThunk } from '../../features/thunkActions/eventThunkA
 import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 import MenuManager from '../ui/MenuManager';
 import useEventHook from '../../hooks/useEventHook';
+import ModalCopy from '../ui/ModalCopy';
 
 export default function ArchivePage(): JSX.Element {
   const events = useAppSelector((state) => state.events);
@@ -35,6 +36,9 @@ export default function ArchivePage(): JSX.Element {
                     <DeleteForeverIcon />
                   </ListItemIcon>
                   <ListItemText primary={event.title} />
+                  <ListItemIcon>
+                    <ModalCopy event={event} />
+                  </ListItemIcon>
                 </ListItemButton>
               </ListItem>
             ))}

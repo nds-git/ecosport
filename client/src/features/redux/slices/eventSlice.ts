@@ -15,12 +15,14 @@ import {
 
 export type InitialState = {
   data: EventType[];
+  archiveData: EventType[];
   event: EventType;
   garbage: number;
 };
 
 const initialState: InitialState = {
   data: [],
+  archiveData: [],
   event: {} as EventType,
   garbage: 0,
 };
@@ -55,7 +57,7 @@ const eventSlice = createSlice({
       state.data = action.payload;
     });
     builder.addCase(getMainPageArchiveEventThunk.fulfilled, (state, action) => {
-      state.data = action.payload;
+      state.archiveData = action.payload;
     });
     builder.addCase(getTotalGarbageEventThunk.fulfilled, (state, action) => {
       state.garbage = action.payload;

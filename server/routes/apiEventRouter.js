@@ -3,21 +3,23 @@
 const apiEventRouter = require('express').Router();
 const fs = require('fs').promises;
 const sharp = require('sharp');
-const { Event } = require('../db/models');
+const { Event, Garbage } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
 // Роут на все события
 apiEventRouter.get('/', async (req, res) => {
   try {
-    const events = await Event.findAll();
+    const events = await Event.findAll({ where: { event_archive: false } });
     res.json(events);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+// Роут на количество мусора
 apiEventRouter.get('/garbageTotal', async (req, res) => {
   try {
-    const result = await Event.sum('garbage');
+    const result = await Garbage.sum('total');
     res.json(result);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
@@ -126,7 +128,7 @@ apiEventRouter.delete('/:id', async (req, res) => {
       res.status(400).json({ message: 'event not found' });
       return;
     }
-    // fs.unlink(`./public/img/${event.img}`).catch((error) => console.log(error));
+    fs.unlink(`./public/img/${event.img}`).catch((error) => console.log(error));
     await event.destroy();
     res.json({ message: 'Post deleted' });
   } catch (error) {
@@ -187,6 +189,8 @@ apiEventRouter.patch('/:id/archive', async (req, res) => {
     event.event_archive = true;
     event.garbage = garbage;
     await event.save();
+
+    await Garbage.create({ total: garbage });
     res.json({ message: 'event status archived' });
   } catch (error) {
     console.log(error);
