@@ -3,22 +3,24 @@ import { Box, Button, ButtonGroup, IconButton } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useAppDispatch, useAppSelector } from '../../../features/redux/reduxHooks';
 import { userLogoutThunk } from '../../../features/thunkActions';
+import { useNavigate } from 'react-router-dom';
 
 import { openModal } from '../../../features/redux/slices/modalSlice';
 
 export default function AuthButtons(): JSX.Element {
   const dispatch = useAppDispatch();
   const modalOpen = useAppSelector((state) => state.modal.isOpen);
-
   const user = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
+
 
   const LogoutHandler = (): void => {
     dispatch(userLogoutThunk());
-    window.location.href = '/';
+    navigate('/');
   };
 
   const handleAccountButtonClick = (): void => {
-    window.location.href = '/account';
+    navigate('/account')
   };
 
   return (
