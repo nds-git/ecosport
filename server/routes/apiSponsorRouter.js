@@ -8,16 +8,12 @@ const upload = require('../middlewares/multerMid');
 
 // Роут вытащить конкретных спонсоров для конкретного события
 apiSponsorRouter.get('/:id', async (req, res) => {
-  const { id } = req.params; // id конкретного события
+  const { id } = req.params; // id конкретного события+
 
   try {
     const sponsorsByEvent = await Sponsor.findAll({
-      include: {
-        model: Event,
-        through: { model: EventsSponsors, where: { event_id: id } },
-      },
+      include: { model: Event, where: { id } },
     });
-    console.log('sponsorsByEvent-->', sponsorsByEvent);
 
     res.json(sponsorsByEvent);
   } catch (error) {

@@ -55,7 +55,6 @@ export default function OneEventPage(): JSX.Element {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
- 
 
   return (
     <>
