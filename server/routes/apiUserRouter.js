@@ -30,6 +30,7 @@ apiAuthRouter.post('/signup', async (req, res) => {
 
 apiAuthRouter.post('/signin', async (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
   if (!email || !password) {
     res.status(400).json({ message: 'no user full data' });
     return;
@@ -41,6 +42,7 @@ apiAuthRouter.post('/signin', async (req, res) => {
     res.status(401).json({ message: 'email not exists' });
     return;
   }
+  console.log(currentUser);
   req.session.user = {
     id: currentUser.id,
     name: currentUser.name,
