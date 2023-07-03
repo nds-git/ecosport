@@ -13,9 +13,10 @@ export default function AllEventList(): JSX.Element {
   useEffect(() => {
     void dispatch(getAllEventToMainPageThunk());
   }, []);
-  const events = useAppSelector((state) => state.events.data);
-  console.log('AlleventsLIST', events);
-
+ 
+  const events = useAppSelector((state) => state.events);
+ 
+ 
   return (
     <Container>
       <Box

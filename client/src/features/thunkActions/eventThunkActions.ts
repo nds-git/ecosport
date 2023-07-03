@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { EventFormType, EventType } from '../../types';
+import type { EventFormType, EventType, PageType, RowsType } from '../../types';
 
 import {
   archiveEvent,
@@ -7,6 +7,7 @@ import {
   deleteEvent,
   getAllArchiveEvents,
   getAllEvents,
+  getAllEventsWithPaginate,
   getArchiveEvents,
   getEvent,
   getEvents,
@@ -18,6 +19,14 @@ export const getAllEventToMainPageThunk = createAsyncThunk<EventType[]>('/events
   getAllEvents()
     .then((response) => response)
     .catch((error) => Promise.reject(error)),
+);
+
+export const getAllEventWithPaginateThunk = createAsyncThunk<RowsType, PageType['page']>(
+  '/events/paginate',
+  async (page) =>
+    getAllEventsWithPaginate(page)
+      .then((response) => response)
+      .catch((error) => Promise.reject(error)),
 );
 
 export const getAllEventThunk = createAsyncThunk<EventType[]>('events/getAll', async () =>

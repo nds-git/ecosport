@@ -1,9 +1,15 @@
-import type { EventType } from '../types';
+import type { EventType, PageType, RowsType } from '../types';
 import apiInstance from './apiConfig';
 
 export const getAllEvents = (): Promise<EventType[]> =>
   apiInstance
     .get<EventType[]>('/api/events')
+    .then((response) => response.data)
+    .catch((error) => Promise.reject(error));
+
+export const getAllEventsWithPaginate = (page: number): Promise<RowsType> =>
+  apiInstance
+    .get<RowsType>(`/api/events/${page}`)
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 

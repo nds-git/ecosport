@@ -1,15 +1,16 @@
 import React from 'react';
-import AllEventList from '../ui/AllEventList';
 import MainPageBanner from '../ui/MainPageBanner';
+import PaginationToMainPage from '../ui/PaginationToMainPage';
 import ArchiveList from '../ui/MainArchive/ArchiveList';
 import AuthModal from '../ui/Auth/AuthModal';
+
 
 export default function MainPage(): JSX.Element {
   return (
     <>
       <AuthModal />
       <MainPageBanner />
-      <AllEventList />
+      <PaginationToMainPage />
       <hr />
       <ArchiveList />
     </>
