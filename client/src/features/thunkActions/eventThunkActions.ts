@@ -50,12 +50,12 @@ export const deleteEventThunk = createAsyncThunk<EventType['id'], EventType['id'
 );
 
 export const updateEventThunk = createAsyncThunk<
-EventType,
-{ data: FormData; id: EventType['id'] }
+  EventType,
+  { data: FormData; id: EventType['id'] }
 >('events/updateEvent', async ({ data, id }) =>
-updateEvent({ data, id })
-.then((response) => response)
-.catch((error) => Promise.reject(error)),
+  updateEvent({ data, id })
+    .then((response) => response)
+    .catch((error) => Promise.reject(error)),
 );
 
 export const archiveEventThunk = createAsyncThunk<EventType['id'], { data: FormData; id: EventType['id'] }>(
@@ -83,3 +83,4 @@ export const getTotalGarbageEventThunk = createAsyncThunk<number>('events/getTot
     .then((response) => response)
     .catch((error) => Promise.reject(error)),
 );
+

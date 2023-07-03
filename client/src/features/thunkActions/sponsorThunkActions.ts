@@ -10,7 +10,7 @@ export const addSponsorThunk = createAsyncThunk<SponsorType, FormData>(
       .catch((err) => Promise.reject(err)),
 );
 
-export const getSponsorsExistEventThunk = createAsyncThunk<SponsorType[], EventType['id']>(
+export const getSponsorsExistEventThunk = createAsyncThunk<SponsorType[], string>(
   'sponsor/getSponsorsExistEvent',
   async (data) =>
     getSponsorsExistEvent(data)

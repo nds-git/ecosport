@@ -1,66 +1,67 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
-import { TextField } from '@mui/material';
+import { Paper, TextField, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { Container } from '@mui/system';
-import { useAppDispatch } from '../../features/redux/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 import useSponsorHook from '../../hooks/useSponsorHook';
-import type { SponsorFormType } from '../../types';
+import type { EventType, SponsorFormType } from '../../types';
 
 type AddFormSponsorProps = {
-  setOpen: boolean;
-  eventId: number;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function AddFormSponsor({ setOpen, eventId }: AddFormSponsorProps): JSX.Element {
-  const dispatch = useAppDispatch();
-
+export default function AddFormSponsor({ setOpen }: AddFormSponsorProps): JSX.Element {
   const { addHandler } = useSponsorHook();
 
-  const [value, setValue] = useState('');
-
-  const handlerClose = (): void => {
-    setOpen(false);
-  };
+  const id = useAppSelector((state) => state.events.event.id);
 
   return (
-    <Box
-      component="form"
-      onSubmit={(e: React.FormEvent<HTMLFormElement & SponsorFormType>) => addHandler(e, eventId)}
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField
-        name="title"
-        label="Title"
-        placeholder="Title"
-        defaultValue="Abibas карабас"
-        required
-      />
-      <TextField name="name" label="Name" placeholder="Name" defaultValue="Abibas" required />
-      <TextField
-        name="body"
-        label="Body"
-        placeholder="Body"
-        defaultValue="никто кроме нас"
-        required
-      />
-      <TextField
-        name="message"
-        label="Message"
-        type="message"
-        defaultValue="хочется стать спонсором"
-        required
-      />
-      <TextField name="email" label="email" type="email" defaultValue="abibas@abibas.ru" required />
-      <TextField name="file" type="file" required />
+    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+      <Box
+        component="form"
+        onSubmit={(e: React.FormEvent<HTMLFormElement & SponsorFormType>) => addHandler(e, id)}
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          name="title"
+          label="Title"
+          placeholder="Title"
+          defaultValue="Abibas карабас"
+          required
+        />
+        <TextField name="name" label="Name" placeholder="Name" defaultValue="Abibas" required />
+        <TextField
+          name="body"
+          label="Body"
+          placeholder="Body"
+          defaultValue="никто кроме нас"
+          required
+        />
+        <TextField
+          name="message"
+          label="Message"
+          type="message"
+          defaultValue="хочется стать спонсором"
+          required
+        />
+        <TextField
+          name="email"
+          label="email"
+          type="email"
+          defaultValue="abibas@abibas.ru"
+          required
+        />
+        <TextField name="file" type="file" required />
 
-      <Button type="submit" variant="contained" onClick={handlerClose}>
-        Стать спонсором
-      </Button>
-    </Box>
+        <Button type="submit" variant="contained">
+          Стать спонсором
+        </Button>
+      </Box>
+    </Typography>
   );
 }

@@ -28,5 +28,11 @@ export default function useFormHook(): AuthHookReturnedType {
     void dispatch(userSignInThunk(formData));
   };
 
+  // const subscriberHandler = (e: React.FormEvent<HTMLFormElement>): void => {
+  //   e.preventDefault();
+  //   const formData = Object.fromEntries(new FormData(e.currentTarget)) as UserSingInType;
+  //   void dispatch(subscriberThunk(formData));
+  // };
+
   return { signUpHandler, signInHandler };
 }
