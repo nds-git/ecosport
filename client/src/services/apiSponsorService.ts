@@ -7,7 +7,7 @@ export const createSponsor = (data: FormData): Promise<SponsorType> =>
     .then((res) => res.data)
     .catch((err) => Promise.reject(err));
 
-export const getSponsorsExistEvent = (id: number): Promise<SponsorType[]> =>
+export const getSponsorsExistEvent = (id: string): Promise<SponsorType[]> =>
   apiInstance
     .get<SponsorType[]>(`/api/sponsor/${id}`)
     .then((response) => response.data)

@@ -3,21 +3,26 @@ import React, { useEffect, useState } from 'react';
 import { Container } from '@mui/system';
 import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
+import { useParams } from 'react-router';
 import type { SponsorType } from '../../types';
 import SponsorsOneByEvent from './SponsorsOneByEvent';
 import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 import { getSponsorsExistEventThunk } from '../../features/thunkActions';
+import { clearSponsorsState } from '../../features/redux/slices/sponsorSlice';
 
 export default function SponsorsListByEvent(): JSX.Element {
-  const event = useAppSelector((state) => state.events.event);
-  const sponsors = useAppSelector((state) => state.sponsors.data);
   const dispatch = useAppDispatch();
+  const sponsors = useAppSelector((state) => state.sponsors.data);
 
-  //   useEffect(() => {
-  //     void dispatch(getSponsorsExistEventThunk(event.id));
-  //   }, []);
+  const { id } = useParams();
+  console.log('event id-->', id);
 
-  //   console.log('sponsors-->', sponsors);
+  useEffect(() => {
+    void dispatch(getSponsorsExistEventThunk(id));
+    return () => dispatch(clearSponsorsState());
+  }, []);
+
+  console.log('sponsors-->', sponsors);
 
   return (
     <Container>

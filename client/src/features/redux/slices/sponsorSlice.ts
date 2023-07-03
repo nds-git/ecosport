@@ -13,7 +13,11 @@ const initialState: InitialState = {
 const sponsorSlice = createSlice({
   name: 'sponsor',
   initialState,
-  reducers: {},
+  reducers: {
+    clearSponsorsState(state) {
+      state.data = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(addSponsorThunk.fulfilled, (state, action) => {
       state.data.push(action.payload);
@@ -25,3 +29,4 @@ const sponsorSlice = createSlice({
 });
 
 export default sponsorSlice.reducer;
+export const { clearSponsorsState } = sponsorSlice.actions;
