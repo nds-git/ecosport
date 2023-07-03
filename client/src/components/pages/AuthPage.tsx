@@ -1,70 +1,81 @@
 import React from 'react';
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  TextField,
-  Container,
-  InputAdornment,
-  IconButton,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  Modal
-} from '@mui/material';
-import { Visibility, VisibilityOff, Google } from '@mui/icons-material';
-import { useParams } from 'react-router-dom';
-import useFormHook from '../../hooks/useFormHook';
-import '../css/auth.css';
-import { useAppSelector, useAppDispatch } from '../../features/redux/reduxHooks';
-import { userLogoutThunk } from '../../features/thunkActions';
-import ColorTabs from '../ui/Auth/ColorTab';
+// import {
+//   Box,
+//   Button,
+//   ButtonGroup,
+//   TextField,
+//   Container,
+//   InputAdornment,
+//   IconButton,
+//   FormControl,
+//   InputLabel,
+//   OutlinedInput,
+//   Modal,
+// } from '@mui/material';
+// import { Visibility, VisibilityOff, Google } from '@mui/icons-material';
+// import { useParams } from 'react-router-dom';
+// import useFormHook from '../../hooks/useFormHook';
+// import '../css/auth.css';
+// import { useAppSelector, useAppDispatch } from '../../features/redux/reduxHooks';
+// import { userLogoutThunk } from '../../features/thunkActions';
+// import ColorTabs from '../ui/Auth/ColorTab';
+import AuthModal from '../ui/Auth/AuthModal';
+import AuthButtons from '../ui/Auth/AuthButtons';
 
 export default function AuthPage(): JSX.Element {
-  const user = useAppSelector((state) => state.user);
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = (): void => setOpen(true);
-  const handleClose = (): void => setOpen(false);
-  const [showPassword, setShowPassword] = React.useState(false);
-  const { type } = useParams();
-  const dispatch = useAppDispatch();
+  // const user = useAppSelector((state) => state.user);
+  // const [open, setOpen] = React.useState(false);
+  // const handleOpen = (): void => setOpen(true);
+  // const handleClose = (): void => {
+  //   window.location.href = '/';
+  //   setOpen(false);
+  // };
+  // const [showPassword, setShowPassword] = React.useState(false);
+  // const { type } = useParams();
+  // const dispatch = useAppDispatch();
 
-  const style = {
-    position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
+  // const style = {
+  //   position: 'absolute' as const,
+  //   top: '50%',
+  //   left: '50%',
+  //   transform: 'translate(-50%, -50%)',
+  //   width: 400,
+  //   bgcolor: 'background.paper',
+  //   border: '2px solid #000',
+  //   boxShadow: 24,
+  //   p: 4,
+  // };
 
-  const handleClickShowPassword = (): void => setShowPassword((show) => !show);
+  // const handleClickShowPassword = (): void => setShowPassword((show) => !show);
 
-  const { signInHandler, signUpHandler } = useFormHook();
+  // const { signInHandler, signUpHandler } = useFormHook();
 
   return (
     <>
-      {user.status === 'success' ? (
-        <span className="nav-link">Привет, {user.data.name}</span>
-      ) : null}
-      <br />
-      <br />
-      <ButtonGroup className="button-group">
-        <Button variant="contained" onClick={handleOpen}>
-          Создать событие
-        </Button>
-        <Button variant="contained" onClick={handleOpen}>
-          Войти
-        </Button>
-        <Button variant="contained" onClick={() => dispatch(userLogoutThunk())}>
-          Выйти
-        </Button>
-      </ButtonGroup>
+    {/* <AuthButtons/> */}
+      {/* <Box sx={{ textAlign: 'right' }}>
+        <Box>
+          {user.status === 'success' ? (
+            <span className="nav-link">Привет, {user.data.name}</span>
+          ) : null}
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <ButtonGroup className="button-group">
+            <Button variant="contained" onClick={handleOpen}>
+              Создать событие
+            </Button>
+            <Button variant="contained" onClick={handleOpen}>
+              Войти
+            </Button>
+            <Button variant="contained" onClick={() => dispatch(userLogoutThunk())}>
+              Выйти
+            </Button>
+          </ButtonGroup>
+        </Box>
+      </Box> */}
       {/* <Button onClick={handleOpen}>Создать событие</Button> */}
-      <Modal
+      <AuthModal />
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -161,7 +172,7 @@ export default function AuthPage(): JSX.Element {
             </Button>
           </Box>
         </Container>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

@@ -4,6 +4,7 @@ import postSlice from './slices/postSlice';
 import eventSlice from './slices/eventSlice';
 import eventCreateSlice from './slices/eventCreateSlice';
 import sponsorSlice from './slices/sponsorSlice';
+import modalSlice from './slices/modalSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     events: eventSlice,
     eventCreate: eventCreateSlice,
     sponsor: sponsorSlice,
+    modal: modalSlice
   },
 });
 

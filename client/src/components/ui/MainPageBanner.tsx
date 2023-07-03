@@ -1,6 +1,9 @@
 import React from 'react';
-import Box from '@mui/material/Box';
+
 import { Container } from '@mui/system';
+
+import AuthButtons from './Auth/AuthButtons';
+import AuthModal from './Auth/AuthModal';
 
 export default function MainPageBanner(): JSX.Element {
   return (
