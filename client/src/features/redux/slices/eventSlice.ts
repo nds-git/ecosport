@@ -9,16 +9,22 @@ import {
   getAllEventToMainPageThunk,
   archiveEventThunk,
   getAllArchiveEventThunk,
+  getMainPageArchiveEventThunk,
+  getTotalGarbageEventThunk,
 } from '../../thunkActions/eventThunkActions';
 
 export type InitialState = {
   data: EventType[];
+  archiveData: EventType[];
   event: EventType;
+  garbage: number;
 };
 
 const initialState: InitialState = {
   data: [],
+  archiveData: [],
   event: {} as EventType,
+  garbage: 0,
 };
 
 const eventSlice = createSlice({
@@ -49,6 +55,12 @@ const eventSlice = createSlice({
     });
     builder.addCase(getAllArchiveEventThunk.fulfilled, (state, action) => {
       state.data = action.payload;
+    });
+    builder.addCase(getMainPageArchiveEventThunk.fulfilled, (state, action) => {
+      state.archiveData = action.payload;
+    });
+    builder.addCase(getTotalGarbageEventThunk.fulfilled, (state, action) => {
+      state.garbage = action.payload;
     });
   },
 });

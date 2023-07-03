@@ -46,6 +46,9 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
+      garbage: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

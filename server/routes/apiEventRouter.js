@@ -3,14 +3,24 @@
 const apiEventRouter = require('express').Router();
 const fs = require('fs').promises;
 const sharp = require('sharp');
-const { Event, Sponsor } = require('../db/models');
+const { Event, Garbage, Sponsor } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
 // Роут на все события
 apiEventRouter.get('/', async (req, res) => {
   try {
-    const events = await Event.findAll();
+    const events = await Event.findAll({ where: { event_archive: false } });
     res.json(events);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Роут на количество мусора
+apiEventRouter.get('/garbageTotal', async (req, res) => {
+  try {
+    const result = await Garbage.sum('total');
+    res.json(result);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
@@ -29,10 +39,26 @@ apiEventRouter.get('/account', async (req, res) => {
   }
 });
 
+// Роут на получение архивных событий конкретного организатора
 apiEventRouter.get('/archive', async (req, res) => {
   try {
     const events = await Event.findAll({
       where: { manager_id: req.session.user.id, event_archive: true },
+    });
+    res.json(events);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error archive' });
+  }
+});
+
+// Роут на получение всех архивных событий
+apiEventRouter.get('/archiveEvents', async (req, res) => {
+  try {
+    const events = await Event.findAll({
+      limit: 3,
+      where: { event_archive: true },
+      order: [['garbage', 'DESC']],
     });
     res.json(events);
   } catch (error) {
@@ -109,7 +135,7 @@ apiEventRouter.delete('/:id', async (req, res) => {
       res.status(400).json({ message: 'event not found' });
       return;
     }
-    // fs.unlink(`./public/img/${event.img}`).catch((error) => console.log(error));
+    fs.unlink(`./public/img/${event.img}`).catch((error) => console.log(error));
     await event.destroy();
     res.json({ message: 'Post deleted' });
   } catch (error) {
@@ -156,6 +182,7 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
 
 apiEventRouter.patch('/:id/archive', async (req, res) => {
   const { id } = req.params;
+  const { garbage } = req.body;
   if (!id || Number.isNaN(Number(id))) {
     res.status(400).json({ message: 'Bad request id' });
     return;
@@ -167,7 +194,10 @@ apiEventRouter.patch('/:id/archive', async (req, res) => {
       return;
     }
     event.event_archive = true;
+    event.garbage = garbage;
     await event.save();
+
+    await Garbage.create({ total: garbage });
     res.json({ message: 'event status archived' });
   } catch (error) {
     console.log(error);

@@ -10,13 +10,13 @@ import { Link } from 'react-router-dom';
 import type { EventType } from '../../types';
 import useEventHook from '../../hooks/useEventHook';
 import ModalEdit from './ModalEdit';
+import ModalGarbage from './ModalGarbage';
 
 export type EventProps = {
   event: EventType;
 };
 
 export default function EventItem({ event }: EventProps): JSX.Element {
-  const { archiveHandler } = useEventHook();
   return (
     <Card sx={{ maxWidth: 345 }}>
       <motion.div
@@ -52,15 +52,7 @@ export default function EventItem({ event }: EventProps): JSX.Element {
               More Info
             </Button>
           </Link>
-          <Button
-            onClick={() => archiveHandler(event.id)}
-            size="small"
-            variant="outlined"
-            color="secondary"
-            sx={{ marginLeft: 1 }}
-          >
-            Archive
-          </Button>
+          <ModalGarbage event={event}/>
         </CardActions>
       </motion.div>
     </Card>
