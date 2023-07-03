@@ -3,7 +3,7 @@
 const apiEventRouter = require('express').Router();
 const fs = require('fs').promises;
 const sharp = require('sharp');
-const { Event } = require('../db/models');
+const { Event, Sponsor } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
 // Роут на все события
@@ -30,12 +30,10 @@ apiEventRouter.get('/account', async (req, res) => {
 });
 
 apiEventRouter.get('/archive', async (req, res) => {
-  console.log('--->>>>');
   try {
     const events = await Event.findAll({
       where: { manager_id: req.session.user.id, event_archive: true },
     });
-    console.log(events);
     res.json(events);
   } catch (error) {
     console.log(error);
@@ -47,8 +45,14 @@ apiEventRouter.get('/archive', async (req, res) => {
 apiEventRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const event = await Event.findOne({ where: { id } });
-    console.log(event);
+    const event = await Event.findOne({
+      where: { id },
+      include: [
+        {
+          model: Sponsor,
+        },
+      ],
+    });
     res.json(event);
   } catch (error) {
     console.log(error);

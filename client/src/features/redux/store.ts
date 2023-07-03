@@ -13,7 +13,8 @@ const store = configureStore({
     events: eventSlice,
     eventCreate: eventCreateSlice,
     sponsor: sponsorSlice,
-    modal: modalSlice
+    modal: modalSlice,
+    sponsors: sponsorSlice,
   },
 });
 

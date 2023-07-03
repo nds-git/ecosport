@@ -4,7 +4,7 @@ import { Box, Container } from '@mui/system';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import AdsClickIcon from '@mui/icons-material/AdsClick';
-import { Paper } from '@mui/material';
+import { Backdrop, Fade, Paper } from '@mui/material';
 import useSponsorHook from '../../hooks/useSponsorHook';
 import AddFormSponsor from './AddFormSponsor';
 import type { EventType } from '../../types';
@@ -14,7 +14,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 650,
+  width: 400,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -26,30 +26,41 @@ type AddSponsorProps = {
 };
 
 export default function AddSponsor({ eventId }: AddSponsorProps): JSX.Element {
-  const [open, setOpen] = useState(false);
-  const handleOpen = (): void => setOpen(true);
-  const handleClose = (): void => setOpen(false);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
-    <Container>
-      <Button onClick={handleOpen} variant="contained" endIcon={<AdsClickIcon />}>
-        Стать спонсором
-      </Button>
+    <div>
+      <Button onClick={handleOpen}>Стать спонсором</Button>
       <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Стать спонсором
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <AddFormSponsor eventId={eventId} setOpen={setOpen} />
-          </Typography>
-        </Box>
+        <Fade in={open}>
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Стать спонсором
+            </Typography>
+
+              <AddFormSponsor setOpen={setOpen} />
+             
+          </Box>
+        </Fade>
       </Modal>
-    </Container>
+    </div>
   );
 }
