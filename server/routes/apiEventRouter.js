@@ -7,9 +7,30 @@ const { Event, Sponsor } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
 // Роут на все события
+
 apiEventRouter.get('/', async (req, res) => {
   try {
     const events = await Event.findAll();
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+apiEventRouter.get('/:page', async (req, res) => {
+  const { page } = req.params; // Номер текущей страницы
+
+  // Делаем для пагинации
+  const limit = 6; // Количество записей на странице
+  const offset = limit * (page - 1); // сколько записей нужно пропустить для текущей страницы.
+
+  try {
+    const events = await Event.findAndCountAll({
+      order: [['updatedAt', 'DESC']],
+      limit,
+      offset,
+    });
+    console.log('events-->', events);
     res.json(events);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });

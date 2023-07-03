@@ -112,7 +112,7 @@ export default function GetGeo({ setOpen }: GetGeoProps): JSX.Element {
       }
     } // fin func init
   }, []);
-  // const getGeoHandler = () => {};
+
   const getGeoHandler = (coordinate: number[], address: string | null) => {
     dispatch(setCoord({ geo: coordinate, address }));
     setOpen(false);
