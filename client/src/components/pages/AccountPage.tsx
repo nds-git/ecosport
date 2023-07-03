@@ -7,7 +7,6 @@ import AuthModal from '../ui/Auth/AuthModal';
 export default function AccountPage(): JSX.Element {
   return (
     <>
-      <AuthModal />
       <MenuManager />
       <EventForm />
       <EventList />

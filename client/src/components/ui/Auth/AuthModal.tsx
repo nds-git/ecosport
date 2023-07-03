@@ -20,30 +20,20 @@ import useFormHook from '../../../hooks/useFormHook';
 import { closeModal } from '../../../features/redux/slices/modalSlice';
 
 export default function AuthModal(): JSX.Element {
-  
   const dispatch = useAppDispatch();
   const modalOpen = useAppSelector((state) => state.modal.isOpen);
   const type = useAppSelector((state) => state.modal.modalType);
 
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm();
-
-
-
   const handleClose = (): void => {
-    window.location.href = '/';
     dispatch(closeModal());
   };
 
   const handleClickShowPassword = (): void => setShowPassword((show) => !show);
 
   const handleSubmitForm = async (data: any) => {
-    window.location.href = '/account';
+    type === 'signup' ? signUpHandler : signInHandler
   };
 
   const { signInHandler, signUpHandler } = useFormHook();
@@ -152,7 +142,7 @@ export default function AuthModal(): JSX.Element {
             }}
             variant="outlined"
             type="submit"
-            onClick={() => window.location.href = '/account'}
+            // onClick={}
           >
             Войти
           </Button>
