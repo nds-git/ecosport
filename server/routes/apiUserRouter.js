@@ -1,6 +1,6 @@
 const apiAuthRouter = require('express').Router();
 const bcrypt = require('bcrypt');
-const { Manager } = require('../db/models');
+const { Manager, User } = require('../db/models');
 
 apiAuthRouter.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
@@ -61,6 +61,26 @@ apiAuthRouter.delete('/logout', (req, res) => {
   req.session.destroy();
   res.clearCookie('sId');
   res.sendStatus(200);
+});
+
+apiAuthRouter.post('/subscribe', async (req, res) => {
+  const { name, email, phone } = req.body;
+  if (!name || !email || !phone) {
+    res.status(400).json({ message: 'Incomplete subscriber data' });
+    return;
+  }
+
+  const [subscriber, created] = await User.findOrCreate({
+    where: { email },
+    defaults: { name, phone },
+  });
+
+  if (!created) {
+    res.status(409).json({ message: 'Subscriber with this email already exists' });
+    return;
+  }
+
+  res.json({ message: 'Subscriber successfully added', subscriber });
 });
 
 module.exports = apiAuthRouter;
