@@ -11,7 +11,6 @@ import {
   getAllArchiveEventThunk,
   getAllEventWithPaginateThunk,
 } from '../../thunkActions/eventThunkActions';
-import { subscribe } from 'diagnostics_channel';
 
 export type InitialState = {
   data: EventType[];
@@ -32,11 +31,11 @@ const eventSlice = createSlice({
   name: 'event',
   initialState,
   reducers: {
-    subscriberCount: (state, action) => {
-      console.log(action);
+    // subscriberCount: (state, action) => {
+    //   console.log(action);
       
-      state.data = state.data.map((el) => ({...el, subscribe: el.id === action.payload.id ? el.subscribe + 1 : el.subscribe  }))
-    }
+    //   state.data = state.data.map((el) => ({...el, subscribe: el.id === action.payload.id ? el.subscribe + 1 : el.subscribe  }))
+    // }
   },
   extraReducers: (builder) => {
     builder.addCase(getAllEventToMainPageThunk.fulfilled, (state, action) => {

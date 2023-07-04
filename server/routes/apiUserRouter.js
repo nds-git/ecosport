@@ -92,7 +92,7 @@ apiAuthRouter.post('/subscribe', async (req, res) => {
       return res.status(409).json({ message: 'Event already exists' });
     }
     const subscriberCount = await EventsUsers.count({ where: { event_id } });
-    console.log(subscriberCount);
+    console.log('server count ======>',subscriberCount);
 
     await Event.update(
       {

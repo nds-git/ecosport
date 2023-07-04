@@ -28,22 +28,23 @@ function FormField({ name, label, type = 'text', placeholder }: FormFieldProps):
     />
   );
 }
+type UserAuthModalProps = {
+  eventId: number;
+};
 
-export default function UserAuthModal({ eventId }): JSX.Element {
-  const navigate = useNavigate();
-  
+export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Element {
   const eventData = useAppSelector((state) =>
-    state.events.data.find((event) => event.id === eventId),
+    state.events.rows?.rows?.find((event) => event.id === eventId),
   );
-  const count = useAppSelector((state) => {
-    const event = state.events.data.find((event) => event.id === eventId);
-    return event ? event.subscribe : 0;
-  });
+  console.log(eventData);
 
-  const userStatus = useAppSelector((state) => state.user.status);
+  const count = eventData ? eventData.subscribe : 0;
 
   const maxSubscribers = eventData ? eventData.count_user : 0;
+
   const remainingSubscribers = maxSubscribers - count;
+
+  const userStatus = useAppSelector((state) => state.user.status);
 
   const [open, setOpen] = useState(false);
 
@@ -54,9 +55,7 @@ export default function UserAuthModal({ eventId }): JSX.Element {
 
   const handleConfirm = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
-    // if (userStatus === 'success') {
-    //   navigate('/');
-    // }
+
     handleClose();
   };
 
@@ -79,7 +78,7 @@ export default function UserAuthModal({ eventId }): JSX.Element {
         sx={{ marginLeft: 1 }}
         size="small"
         onClick={handleOpen}
-        disabled={count >= maxSubscribers}
+        // disabled={count >= maxSubscribers}
       >
         Я пойду ({count} / {remainingSubscribers})
       </Button>
