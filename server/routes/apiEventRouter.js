@@ -201,14 +201,19 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
   }
 });
 
-apiEventRouter.patch('/:id/archive', async (req, res) => {
+apiEventRouter.patch('/:id/archive', upload.single('file'), async (req, res) => {
   const { id } = req.params;
   const { garbage } = req.body;
   if (!id || Number.isNaN(Number(id))) {
     res.status(400).json({ message: 'Bad request id' });
     return;
   }
+
   try {
+    const name = `${Date.now()}.webp`;
+    const outputBuffer = await sharp(req.file.buffer).webp().toBuffer();
+    await fs.writeFile(`./public/img/${name}`, outputBuffer);
+
     const event = await Event.findOne({ where: { id } });
     if (!event) {
       res.status(400).json({ message: 'event not found' });
@@ -216,6 +221,8 @@ apiEventRouter.patch('/:id/archive', async (req, res) => {
     }
     event.event_archive = true;
     event.garbage = garbage;
+    // img нужно сохранять в отдельную таблицу
+    event.img = name;
     await event.save();
 
     await Garbage.create({ total: garbage });
