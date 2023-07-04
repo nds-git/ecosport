@@ -45,7 +45,7 @@ export default function MainPageEventItem({ event }: EventProps): JSX.Element {
               Посмотреть
             </Button>
           </Link>
-          <UserAuthModal  />
+          <UserAuthModal  eventId={event.id}/>
         </CardActions>
       </Card>
     </Container>

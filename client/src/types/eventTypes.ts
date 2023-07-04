@@ -15,6 +15,8 @@ export type EventType = {
   event_status: boolean;
   event_archive: boolean;
   img: string;
+  subscribe: number;
+  address: string;
 };
 
 export type EventFormType = {
@@ -24,5 +26,8 @@ export type EventFormType = {
   time: HTMLInputElement;
   count_user: HTMLInputElement;
   geo: HTMLInputElement;
+  subscribe: HTMLInputElement;
+  address: HTMLInputElement;
   file: HTMLInputElement & { files: FileList };
+
 };

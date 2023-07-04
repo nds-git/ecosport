@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { UserSingInType, UserSingUpType, UserType } from '../../types';
-import { checkUser, logoutUser, signInUser, signUpUser } from '../../services';
+import { checkUser, logoutUser, signInSubscriber, signInUser, signUpUser } from '../../services';
 
 export const userCheckThunk = createAsyncThunk<UserType>('user/check', async () =>
   checkUser()
@@ -25,18 +25,16 @@ export const userSignInThunk = createAsyncThunk<UserType, UserSingInType>(
       .catch((err) => Promise.reject(err)),
 );
 
-export const userLogoutThunk = createAsyncThunk<UserType, UserSingInType>(
-  'user/logout',
-   () =>
-    logoutUser()
-      .then((res) => res)
-      .catch((err) => err),
+export const userLogoutThunk = createAsyncThunk<UserType, UserSingInType>('user/logout', () =>
+  logoutUser()
+    .then((res) => res)
+    .catch((err) => err),
 );
 
-// export const subscriberThunk = createAsyncThunk<UserType, UserSingInType>(
-//   'subscriber/signin',
-//   async (data) =>
-//     signInSubscriber(data)
-//       .then((res) => res)
-//       .catch((err) => Promise.reject(err)),
-// );
+export const subscriberThunk = createAsyncThunk<UserType, UserSingInType>(
+  'subscriber/signin',
+  async (data) =>
+    signInSubscriber(data)
+      .then((res) => res)
+      .catch((err) => Promise.reject(err)),
+);

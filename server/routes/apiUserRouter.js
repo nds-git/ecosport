@@ -1,6 +1,6 @@
 const apiAuthRouter = require('express').Router();
 const bcrypt = require('bcrypt');
-const { Manager, User } = require('../db/models');
+const { Manager, User, EventsUsers, Event } = require('../db/models');
 
 apiAuthRouter.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
@@ -30,7 +30,7 @@ apiAuthRouter.post('/signup', async (req, res) => {
 
 apiAuthRouter.post('/signin', async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
+
   if (!email || !password) {
     res.status(400).json({ message: 'no user full data' });
     return;
@@ -42,7 +42,7 @@ apiAuthRouter.post('/signin', async (req, res) => {
     res.status(401).json({ message: 'email not exists' });
     return;
   }
-  console.log(currentUser);
+
   req.session.user = {
     id: currentUser.id,
     name: currentUser.name,
@@ -66,23 +66,45 @@ apiAuthRouter.delete('/logout', (req, res) => {
 });
 
 apiAuthRouter.post('/subscribe', async (req, res) => {
-  const { name, email, phone } = req.body;
+  const { name, email, phone, event_id } = req.body;
+  console.log(req.body);
+
   if (!name || !email || !phone) {
-    res.status(400).json({ message: 'Incomplete subscriber data' });
-    return;
+    return res.status(400).json({ message: 'Incomplete subscriber data' });
   }
 
-  const [subscriber, created] = await User.findOrCreate({
-    where: { email },
-    defaults: { name, phone },
-  });
+  try {
+    const [subscriber, created] = await User.findOrCreate({
+      where: { email },
+      defaults: { name, phone },
+    });
 
-  if (!created) {
-    res.status(409).json({ message: 'Subscriber with this email already exists' });
-    return;
+    if (!created) {
+      return res.status(409).json({ message: 'Subscriber with this email already exists' });
+    }
+
+    const [event, eventCreated] = await EventsUsers.findOrCreate({
+      where: { event_id, user_id: subscriber.id },
+      defaults: { event_id, user_id: subscriber.id },
+    });
+
+    if (!eventCreated) {
+      return res.status(409).json({ message: 'Event already exists' });
+    }
+    const subscriberCount = await EventsUsers.count({ where: { event_id } });
+    console.log(subscriberCount);
+
+    await Event.update(
+      {
+        subscribe: subscriberCount,
+      },
+      { where: { id: event_id } },
+    );
+
+    return res.json({ message: 'Subscriber successfully added', subscriberCount });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
   }
-
-  res.json({ message: 'Subscriber successfully added', subscriber });
 });
 
 module.exports = apiAuthRouter;
