@@ -47,11 +47,15 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
+
       subscribe: {
         type: Sequelize.INTEGER,
       },
       address: {
         type: Sequelize.STRING,
+      },
+      garbage: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

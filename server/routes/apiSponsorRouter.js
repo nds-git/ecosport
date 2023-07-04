@@ -50,13 +50,13 @@ apiSponsorRouter.post('/new', upload.single('file'), async (req, res) => {
 
     const event_id = req.body.eventId;
     const sponsor_id = sponsor.id;
+    console.log('-->', sponsor_id, event_id);
 
     await EventsSponsors.create({
       sponsor_id,
       event_id,
       sponsor_status: false, // поставить false пока манагер не одобрит
     });
-
     res.json(sponsor);
   } catch (error) {
     console.log(error);

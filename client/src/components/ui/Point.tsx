@@ -25,7 +25,7 @@ export default function Point(): JSX.Element {
 
   return (
     <>
-      <Button onClick={handleOpen} variant="contained" endIcon={<AdsClickIcon />}>
+      <Button sx={{marginLeft: 8}} onClick={handleOpen} variant="contained" endIcon={<AdsClickIcon />}>
         Точка сбора
       </Button>
       <Modal

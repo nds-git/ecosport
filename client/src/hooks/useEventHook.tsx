@@ -16,7 +16,7 @@ export type EventHandler = {
   addHandler: (e: React.FormEvent<HTMLFormElement & EventFormType>) => void;
   deleteHandler: (id: EventType['id']) => void;
   updateHandler: (e: React.FormEvent<HTMLFormElement & EventFormType>, id: EventType['id']) => void;
-  archiveHandler: (id: EventType['id']) => void;
+  archiveHandler: (e: React.FormEvent<HTMLFormElement & EventFormType>, id: EventType['id']) => void;
 };
 
 export default function useEventHook(): EventHandler {
@@ -32,7 +32,6 @@ export default function useEventHook(): EventHandler {
     formData.append('time', e.currentTarget.time.value);
     formData.append('count_user', e.currentTarget.count_user.value);
     formData.append('geo', e.currentTarget.geo.value);
-    console.log(formData);
     void dispatch(addEventThunk(formData));
   };
 
@@ -40,8 +39,15 @@ export default function useEventHook(): EventHandler {
     void dispatch(deleteEventThunk(id));
   };
 
-  const archiveHandler = (id: EventType['id']): void => {
-    void dispatch(archiveEventThunk(id));
+  const archiveHandler = (e: React.FormEvent<HTMLFormElement & EventFormType>,
+    id: EventType['id']): void => {
+    e.preventDefault();
+    if (!e.currentTarget.title.value.trim()) return;
+    const formData = new FormData();
+    formData.append('file', e.currentTarget.file.files[0]);
+    formData.append('garbage', e.currentTarget.garbage.value);
+    console.log(formData);
+    void dispatch(archiveEventThunk({data: formData, id}));
   };
 
   const updateHandler = (
