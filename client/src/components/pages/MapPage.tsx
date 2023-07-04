@@ -45,14 +45,7 @@ export default function MapPage({ geo }: MapPageProps): JSX.Element {
 
   return (
     <div className="map-page">
-      <Box
-        m={8}
-        id="boxMap"
-        sx={{
-          width: 800,
-          height: 450,
-        }}
-      />
+      <Box m={8} id="boxMap" sx={{ marginY: 3, marginX: 'auto', width: 800, height: 450 }} />
     </div>
   );
 }
