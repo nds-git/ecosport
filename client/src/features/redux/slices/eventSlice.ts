@@ -10,6 +10,7 @@ import {
   archiveEventThunk,
   getAllArchiveEventThunk,
 } from '../../thunkActions/eventThunkActions';
+import { subscribe } from 'diagnostics_channel';
 
 export type InitialState = {
   data: EventType[];
@@ -24,7 +25,13 @@ const initialState: InitialState = {
 const eventSlice = createSlice({
   name: 'event',
   initialState,
-  reducers: {},
+  reducers: {
+    subscriberCount: (state, action) => {
+      console.log(action);
+      
+      state.data = state.data.map((el) => ({...el, subscribe: el.id === action.payload.id ? el.subscribe + 1 : el.subscribe  }))
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllEventToMainPageThunk.fulfilled, (state, action) => {
       state.data = action.payload;
@@ -54,3 +61,4 @@ const eventSlice = createSlice({
 });
 
 export default eventSlice.reducer;
+// export const {subscriberCount } = eventSlice.actions
