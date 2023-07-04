@@ -16,6 +16,32 @@ apiEventRouter.get('/', async (req, res) => {
   }
 });
 
+// Роут для пагинации
+apiEventRouter.get('/:page', async (req, res) => {
+  const { page } = req.params; // Номер текущей страницы
+
+  // Делаем для пагинации
+  const limit = 6; // Количество записей на странице
+  const offset = limit * (page - 1); // сколько записей нужно пропустить для текущей страницы.
+
+  try {
+    const events = await Event.findAndCountAll({
+      order: [['updatedAt', 'DESC']],
+      limit,
+      offset,
+    });
+    console.log('events-->', events);
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+export const getAllEventsWithPaginate = (page: number): Promise<RowsType> =>
+  apiInstance.get <
+  RowsType >
+  `/api/events/${page}`.then((response) => response.data).catch((error) => Promise.reject(error));
+
 // Роут на количество мусора
 apiEventRouter.get('/garbageTotal', async (req, res) => {
   try {

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { EventType } from '../../../types';
+import type { EventType, RowsType } from '../../../types';
 import {
   addEventThunk,
   deleteEventThunk,
@@ -9,22 +9,22 @@ import {
   getAllEventToMainPageThunk,
   archiveEventThunk,
   getAllArchiveEventThunk,
-  getMainPageArchiveEventThunk,
-  getTotalGarbageEventThunk,
+  getAllEventWithPaginateThunk,
 } from '../../thunkActions/eventThunkActions';
 
 export type InitialState = {
   data: EventType[];
-  archiveData: EventType[];
   event: EventType;
-  garbage: number;
+  rows: RowsType;
 };
 
 const initialState: InitialState = {
   data: [],
-  archiveData: [],
   event: {} as EventType,
-  garbage: 0,
+  rows: {
+    count: 0,
+    rows: [],
+  } as RowsType,
 };
 
 const eventSlice = createSlice({
@@ -37,6 +37,9 @@ const eventSlice = createSlice({
     });
     builder.addCase(getAllEventThunk.fulfilled, (state, action) => {
       state.data = action.payload;
+    });
+    builder.addCase(getAllEventWithPaginateThunk.fulfilled, (state, action) => {
+      state.rows = action.payload;
     });
     builder.addCase(addEventThunk.fulfilled, (state, action) => {
       state.data.push(action.payload);
@@ -55,12 +58,6 @@ const eventSlice = createSlice({
     });
     builder.addCase(getAllArchiveEventThunk.fulfilled, (state, action) => {
       state.data = action.payload;
-    });
-    builder.addCase(getMainPageArchiveEventThunk.fulfilled, (state, action) => {
-      state.archiveData = action.payload;
-    });
-    builder.addCase(getTotalGarbageEventThunk.fulfilled, (state, action) => {
-      state.garbage = action.payload;
     });
   },
 });
