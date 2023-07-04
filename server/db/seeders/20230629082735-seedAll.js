@@ -54,6 +54,8 @@ module.exports = {
           manager_id: 1,
           event_status: true,
           event_archive: false,
+          subscribe: 10,
+          address: 'Moscow',
         },
         {
           title: 'Бег в Одинцово',
@@ -66,6 +68,8 @@ module.exports = {
           manager_id: 1,
           event_status: true,
           event_archive: false,
+          subscribe: 0,
+          address: '',
         },
         {
           title: 'Бег в коломенском',
@@ -78,6 +82,8 @@ module.exports = {
           manager_id: 1,
           event_status: true,
           event_archive: false,
+          subscribe: 5,
+          address: 'Одинцово',
         },
       ],
       {},

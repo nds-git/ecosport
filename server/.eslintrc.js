@@ -12,5 +12,6 @@ module.exports = {
   },
   rules: {
     'react/function-component-definition': ['error', { namedComponents: 'function-expression' }],
+    'camelcase': 0;
   },
 };

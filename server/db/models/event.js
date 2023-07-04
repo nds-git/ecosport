@@ -25,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       manager_id: DataTypes.INTEGER,
       event_status: DataTypes.BOOLEAN,
       event_archive: DataTypes.BOOLEAN,
+      subscribe: DataTypes.INTEGER,
+      address: DataTypes.STRING,
     },
     {
       sequelize,

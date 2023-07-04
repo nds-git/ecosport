@@ -1,6 +1,6 @@
 const apiAuthRouter = require('express').Router();
 const bcrypt = require('bcrypt');
-const { Manager, User, EventsUsers } = require('../db/models');
+const { Manager, User, EventsUsers, Event } = require('../db/models');
 
 apiAuthRouter.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
@@ -91,10 +91,18 @@ apiAuthRouter.post('/subscribe', async (req, res) => {
     if (!eventCreated) {
       return res.status(409).json({ message: 'Event already exists' });
     }
+    const subscriberCount = await EventsUsers.count({ where: { event_id } });
+    console.log(subscriberCount);
 
-    return res.json({ message: 'Subscriber successfully added', subscriber });
+    await Event.update(
+      {
+        subscribe: subscriberCount,
+      },
+      { where: { id: event_id } },
+    );
+
+    return res.json({ message: 'Subscriber successfully added', subscriberCount });
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 });

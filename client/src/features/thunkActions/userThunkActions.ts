@@ -25,12 +25,10 @@ export const userSignInThunk = createAsyncThunk<UserType, UserSingInType>(
       .catch((err) => Promise.reject(err)),
 );
 
-export const userLogoutThunk = createAsyncThunk<UserType, UserSingInType>(
-  'user/logout',
-   () =>
-    logoutUser()
-      .then((res) => res)
-      .catch((err) => err),
+export const userLogoutThunk = createAsyncThunk<UserType, UserSingInType>('user/logout', () =>
+  logoutUser()
+    .then((res) => res)
+    .catch((err) => err),
 );
 
 export const subscriberThunk = createAsyncThunk<UserType, UserSingInType>(

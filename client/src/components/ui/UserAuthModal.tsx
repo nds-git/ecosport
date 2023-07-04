@@ -4,6 +4,7 @@ import { Box, Button, TextField, Container, Modal } from '@mui/material';
 
 import '../css/auth.css';
 import useFormHook from '../../hooks/useFormHook';
+import { useAppSelector } from '../../features/redux/reduxHooks';
 
 type FormFieldProps = {
   name: string;
@@ -28,11 +29,18 @@ function FormField({ name, label, type = 'text', placeholder }: FormFieldProps):
 }
 
 export default function UserAuthModal({ eventId }): JSX.Element {
-  console.log(eventId);
+  // const count = useAppSelector((state) => state.events.data[0].subscribe)
+  const count = useAppSelector((state) => {
+    const eventData = state.events.data.find((event) => event.id === eventId);
+    return eventData ? eventData.subscribe : 0;
+  });
+  
+  console.log(count);
+
   
   const [open, setOpen] = useState(false);
   const [subscribers, setSubscribers] = useState(0);
-  const maxSubscribers = 5;
+  
 
   const handleOpen = (): void => setOpen(true);
   const handleClose = (): void => setOpen(false);
@@ -42,7 +50,7 @@ export default function UserAuthModal({ eventId }): JSX.Element {
   const handleConfirm = (e: FormEvent): void => {
     e.preventDefault();
 
-    setSubscribers(subscribers + 1);
+    
     handleClose();
   };
 
@@ -61,14 +69,13 @@ export default function UserAuthModal({ eventId }): JSX.Element {
   return (
     <>
       <Button
-        color={subscribers >= maxSubscribers ? 'error' : 'success'}
         variant="contained"
         sx={{ marginLeft: 1 }}
         size="small"
         onClick={handleOpen}
-        disabled={subscribers >= maxSubscribers}
+        // disabled={subscribers >= maxSubscribers}
       >
-        Я пойду ({subscribers})
+        Я пойду ({count})
       </Button>
 
       <Modal
@@ -91,7 +98,7 @@ export default function UserAuthModal({ eventId }): JSX.Element {
             onSubmit={subscriberHandler}
           >
             <h2>Регистрация на событие</h2>
-            <input name="event_id" label="eventId" value={eventId} sx={{'display' : 'hidden'}} />
+            <input name="event_id" label="eventId" value={eventId} style={{display : 'none'}} />
             <FormField name="name" label="Name" placeholder="Enter your name" />
             <FormField
               name="email"

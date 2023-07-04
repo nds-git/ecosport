@@ -29,6 +29,7 @@ module.exports = {
       count_user: {
         type: Sequelize.INTEGER,
       },
+
       geo: {
         type: Sequelize.STRING,
       },
@@ -45,6 +46,12 @@ module.exports = {
       event_archive: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
+      },
+      subscribe: {
+        type: Sequelize.INTEGER,
+      },
+      address: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

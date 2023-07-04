@@ -46,5 +46,5 @@ export const archiveEvent = (id: number): Promise<EventType['id']> =>
 export const getArchiveEvents = (): Promise<EventType[]> =>
   apiInstance
     .get<EventType[]>('/api/events/archive')
-    .then((response) => response.data)
+    .then((response) => (response.data))
     .catch((error) => Promise.reject(error));
