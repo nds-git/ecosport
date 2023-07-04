@@ -52,6 +52,7 @@ apiEventRouter.get('/garbageTotal', async (req, res) => {
 apiEventRouter.get('/account', async (req, res) => {
   try {
     const events = await Event.findAll({
+      order: [['createdAt', 'DESC']],
       where: { manager_id: req.session.user.id, event_archive: false },
     });
     res.json(events);
