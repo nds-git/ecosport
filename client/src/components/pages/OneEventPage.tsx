@@ -87,23 +87,27 @@ export default function OneEventPage(): JSX.Element {
           <CardContent>
             <IconButton aria-label="share">
               {/* <ShareIcon /> */}
-              <Typography paragraph> Полный адрес: {event.address}</Typography>
+              <Typography paragraph>
+                <b>Полный адрес:</b> {event.address}
+              </Typography>
             </IconButton>
           </CardContent>
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
-              <Typography paragraph>Дата: {event.date}</Typography>
+              <Typography paragraph>
+                <b>Дата:</b> {event.date}
+              </Typography>
             </IconButton>
             <IconButton aria-label="add to favorites">
-              <Typography paragraph>Количество участников: {event.count_user}</Typography>
+              <Typography paragraph>
+                <b>Количество участников:</b> {event.count_user}
+              </Typography>
             </IconButton>
             <IconButton aria-label="share">
               {/* <ShareIcon /> */}
-              <Typography paragraph> Время: {event.time}</Typography>
-            </IconButton>
-            <IconButton aria-label="share">
-              {/* <ShareIcon /> */}
-              <Typography paragraph> Полный адрес: {event.address}</Typography>
+              <Typography paragraph>
+                <b>Время:</b> {event.time}
+              </Typography>
             </IconButton>
 
             <ExpandMore
