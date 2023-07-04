@@ -1,8 +1,9 @@
 import React from 'react';
 import AllEventList from '../ui/AllEventList';
 import MainPageBanner from '../ui/MainPageBanner';
-import ArchiveList from '../ui/MainArchive/ArchiveList';
 import AuthModal from '../ui/Auth/AuthModal';
+import ArchiveTopList from '../ui/MainArchive/ArchiveTopList';
+import MainArchiveList from '../ui/MainArchive/MainArchiveList';
 
 export default function MainPage(): JSX.Element {
   return (
@@ -11,7 +12,9 @@ export default function MainPage(): JSX.Element {
       <MainPageBanner />
       <AllEventList />
       <hr />
-      <ArchiveList />
+      <ArchiveTopList />
+      <hr />
+      <MainArchiveList />
     </>
   );
 }

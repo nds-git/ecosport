@@ -3,7 +3,7 @@
 const apiEventRouter = require('express').Router();
 const fs = require('fs').promises;
 const sharp = require('sharp');
-const { Event, Garbage, Sponsor } = require('../db/models');
+const { Event, Garbage, Sponsor, FotoEvents } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
 // Роут на все события
@@ -52,13 +52,27 @@ apiEventRouter.get('/archive', async (req, res) => {
   }
 });
 
-// Роут на получение всех архивных событий
-apiEventRouter.get('/archiveEvents', async (req, res) => {
+// Роут на получение топ-3 архивных событий
+apiEventRouter.get('/archive/top', async (req, res) => {
   try {
     const events = await Event.findAll({
       limit: 3,
       where: { event_archive: true },
       order: [['garbage', 'DESC']],
+    });
+    res.json(events);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error archive' });
+  }
+});
+
+// Роут на получение всех архивных событий
+apiEventRouter.get('/archive/all', async (req, res) => {
+  try {
+    const events = await Event.findAll({
+      where: { event_archive: true },
+      order: [['date', 'DESC']],
     });
     res.json(events);
   } catch (error) {
@@ -76,6 +90,25 @@ apiEventRouter.get('/:id', async (req, res) => {
       include: [
         {
           model: Sponsor,
+        },
+      ],
+    });
+    res.json(event);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Роут на получение одного архивного события ---> OneArchEventPage
+apiEventRouter.get('/archive/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const event = await Event.findOne({
+      where: { id },
+      include: [
+        {
+          model: FotoEvents,
         },
       ],
     });
@@ -131,6 +164,10 @@ apiEventRouter.delete('/:id', async (req, res) => {
   }
   try {
     const event = await Event.findOne({ where: { id } });
+    const eventPhotos = await FotoEvents.findAll({ where: { event_id: id } });
+    eventPhotos.forEach((el) => {
+      fs.unlink(`./public/img/${el.img}`).catch((error) => console.log(error));
+    });
     if (!event) {
       res.status(400).json({ message: 'event not found' });
       return;
@@ -180,18 +217,29 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
   }
 });
 
-apiEventRouter.patch('/:id/archive', upload.single('file'), async (req, res) => {
+apiEventRouter.patch('/:id/archive', upload.array('file'), async (req, res) => {
   const { id } = req.params;
   const { garbage } = req.body;
-  if (!id || Number.isNaN(Number(id))) {
-    res.status(400).json({ message: 'Bad request id' });
-    return;
-  }
+  console.log('===>>>', req.files);
+
+  // if (!id || Number.isNaN(Number(id))) {
+  //   res.status(400).json({ message: 'Bad request id' });
+  //   return;
+  // }
 
   try {
-    const name = `${Date.now()}.webp`;
-    const outputBuffer = await sharp(req.file.buffer).webp().toBuffer();
-    await fs.writeFile(`./public/img/${name}`, outputBuffer);
+    await Promise.all(
+      req.files.map(async (file) => {
+        const name = `${Date.now()}+${Math.round(Math.random() * 1e9)}.webp`;
+        const outputBuffer = await sharp(file.buffer).webp().toBuffer();
+        await fs.writeFile(`./public/img/${name}`, outputBuffer);
+        const eventPhoto = await FotoEvents.create({
+          img: name,
+          event_id: id,
+        });
+        console.log(eventPhoto);
+      }),
+    );
 
     const event = await Event.findOne({ where: { id } });
     if (!event) {
@@ -200,8 +248,6 @@ apiEventRouter.patch('/:id/archive', upload.single('file'), async (req, res) => 
     }
     event.event_archive = true;
     event.garbage = garbage;
-    // img нужно сохранять в отдельную таблицу
-    event.img = name;
     await event.save();
 
     await Garbage.create({ total: garbage });

@@ -42,11 +42,15 @@ export default function useEventHook(): EventHandler {
   const archiveHandler = (e: React.FormEvent<HTMLFormElement & EventFormType>,
     id: EventType['id']): void => {
     e.preventDefault();
-    if (!e.currentTarget.title.value.trim()) return;
     const formData = new FormData();
-    formData.append('file', e.currentTarget.file.files[0]);
+    const imgArray = [...e.currentTarget.file.files];
+    imgArray.forEach((file) => {
+      formData.append('file', file)
+    })
+    // if (!e.currentTarget.title.value.trim() || !e.currentTarget.file.files?.length) return;
+    // formData.append('file', e.currentTarget.file.files[0]);
+    // formData.append('file', e.currentTarget.file.files[1]);
     formData.append('garbage', e.currentTarget.garbage.value);
-    console.log(formData);
     void dispatch(archiveEventThunk({data: formData, id}));
   };
 

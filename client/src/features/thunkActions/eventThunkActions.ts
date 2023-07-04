@@ -5,11 +5,13 @@ import {
   archiveEvent,
   createEvent,
   deleteEvent,
-  getAllArchiveEvents,
   getAllEvents,
+  getAllMainArchiveEvents,
   getArchiveEvents,
   getEvent,
   getEvents,
+  getOneArchEvent,
+  getTopThreeArchiveEvents,
   getTotalGarbage,
   updateEvent,
 } from '../../services';
@@ -72,10 +74,23 @@ export const getAllArchiveEventThunk = createAsyncThunk<EventType[]>('events/get
     .catch((error) => Promise.reject(error)),
 );
 
-export const getMainPageArchiveEventThunk = createAsyncThunk<EventType[]>('events/getMainPageArchive', async () =>
-  getAllArchiveEvents()
+export const getTopThreeArchiveEventThunk = createAsyncThunk<EventType[]>('events/getTopArchive', async () =>
+  getTopThreeArchiveEvents()
     .then((response) => response)
     .catch((error) => Promise.reject(error)),
+);
+export const getMainPageArchiveEventThunk = createAsyncThunk<EventType[]>('events/getMainArchive', async () =>
+  getAllMainArchiveEvents()
+    .then((response) => response)
+    .catch((error) => Promise.reject(error)),
+);
+
+export const getOneArchEventThunk = createAsyncThunk<EventType, EventType['id']>(
+  'events/getOneArchEvent',
+  async (data) =>
+    getOneArchEvent(data)
+      .then((response) => response)
+      .catch((error) => Promise.reject(error)),
 );
 
 export const getTotalGarbageEventThunk = createAsyncThunk<number>('events/getTotalGarbage', async () =>

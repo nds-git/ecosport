@@ -13,6 +13,7 @@ import ArchivePage from './components/pages/ArchivePage';
 import './style.css';
 import Footer from './components/ui/Footer';
 import AuthModal from './components/ui/Auth/AuthModal';
+import OneArchEventPage from './components/pages/OneArchEventPage';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -31,6 +32,7 @@ function App(): JSX.Element {
           <Route path="/account" element={<AccountPage />} />
           <Route path="/archive" element={<ArchivePage />} />
           <Route path='/events/:id' element={<OneEventPage />} />
+          <Route path='/events/archive/:id' element={<OneArchEventPage />} />
         </Route>
       </Routes>
       <Footer />

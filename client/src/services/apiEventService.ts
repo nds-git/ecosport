@@ -37,7 +37,13 @@ export const updateEvent = ({ data, id }: { data: FormData; id: number }): Promi
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 
-export const archiveEvent = ({ data, id }: { data: FormData; id: number }): Promise<EventType['id']> =>
+export const archiveEvent = ({
+  data,
+  id,
+}: {
+  data: FormData;
+  id: number;
+}): Promise<EventType['id']> =>
   apiInstance
     .patch(`/api/events/${id}/archive`, data)
     .then(() => id)
@@ -49,9 +55,21 @@ export const getArchiveEvents = (): Promise<EventType[]> =>
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 
-export const getAllArchiveEvents = (): Promise<EventType[]> =>
+export const getTopThreeArchiveEvents = (): Promise<EventType[]> =>
   apiInstance
-    .get<EventType[]>('/api/events/archiveEvents')
+    .get<EventType[]>('/api/events/archive/top')
+    .then((response) => response.data)
+    .catch((error) => Promise.reject(error));
+
+export const getAllMainArchiveEvents = (): Promise<EventType[]> =>
+  apiInstance
+    .get<EventType[]>('/api/events/archive/all')
+    .then((response) => response.data)
+    .catch((error) => Promise.reject(error));
+
+export const getOneArchEvent = (id: number): Promise<EventType> =>
+  apiInstance
+    .get<EventType>(`/api/events/archive/${id}`)
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 

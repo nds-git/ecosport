@@ -1,7 +1,9 @@
+import type { FotoEventType } from './fotoEventType';
 import type { SponsorType } from './sponsorType';
 
 export type EventType = {
   Sponsors: SponsorType[];
+  FotoEvents?: FotoEventType[];
   id: number;
   title: string;
   body: string;
