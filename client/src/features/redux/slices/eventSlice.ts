@@ -15,7 +15,7 @@ import {
 export type InitialState = {
   data: EventType[];
   event: EventType;
-  rows: RowsType;
+  rows: RowsType | null;
 };
 
 const initialState: InitialState = {
@@ -24,7 +24,7 @@ const initialState: InitialState = {
   rows: {
     count: 0,
     rows: [],
-  } as RowsType,
+  },
 };
 
 const eventSlice = createSlice({

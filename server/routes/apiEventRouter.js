@@ -21,7 +21,8 @@ apiEventRouter.get('/page/:page', async (req, res) => {
   const { page } = req.params; // Номер текущей страницы
 
   // Делаем для пагинации
-  const limit = 6; // Количество записей на странице
+  // const limit = 6; // Количество записей на странице
+  const limit = 3; // Количество записей на странице
   const offset = limit * (page - 1); // сколько записей нужно пропустить для текущей страницы.
 
   try {
