@@ -61,9 +61,21 @@ export const getArchiveEvents = (): Promise<EventType[]> =>
     .then((response) => (response.data))
     .catch((error) => Promise.reject(error));
 
-export const getAllArchiveEvents = (): Promise<EventType[]> =>
+export const getTopThreeArchiveEvents = (): Promise<EventType[]> =>
   apiInstance
-    .get<EventType[]>('/api/events/archiveEvents')
+    .get<EventType[]>('/api/events/archive/top')
+    .then((response) => response.data)
+    .catch((error) => Promise.reject(error));
+
+export const getAllMainArchiveEvents = (): Promise<EventType[]> =>
+  apiInstance
+    .get<EventType[]>('/api/events/archive/all')
+    .then((response) => response.data)
+    .catch((error) => Promise.reject(error));
+
+export const getOneArchEvent = (id: number): Promise<EventType> =>
+  apiInstance
+    .get<EventType>(`/api/events/archive/${id}`)
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 

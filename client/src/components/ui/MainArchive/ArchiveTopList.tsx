@@ -2,23 +2,22 @@ import React, { useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { Container } from '@mui/system';
 import { useAppDispatch, useAppSelector } from '../../../features/redux/reduxHooks';
-import { getMainPageArchiveEventThunk } from '../../../features/thunkActions/eventThunkActions';
-import ArchiveItem from './ArchiveItem';
+import { getTopThreeArchiveEventThunk } from '../../../features/thunkActions/eventThunkActions';
+import ArchiveTopItem from './ArchiveTopItem';
 
-export default function ArchiveList(): JSX.Element {
-  const events = useAppSelector((state) => state.events.archiveData);
+export default function ArchiveTopList(): JSX.Element {
+  const events = useAppSelector((state) => state.events.topArchiveData);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    void dispatch(getMainPageArchiveEventThunk());
+    void dispatch(getTopThreeArchiveEventThunk());
   }, []);
-  console.log('ARCHIVE LIST', events);
   return (
     <Container>
-      <h2>Тройка архивных событий</h2>
+      <h2>Топ-3 архивных событий по сбору мусора</h2>
       <Grid container spacing={3}>
         {events.map((event) => (
           <Grid item key={event.id} xs={12} sm={6} md={4}>
-            <ArchiveItem event={event} />
+            <ArchiveTopItem event={event} />
           </Grid>
         ))}
       </Grid>
