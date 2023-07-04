@@ -4,7 +4,7 @@ import type { EventCoordType } from '../../../types';
 
 const initialState: EventCoordType = {
   geo: [],
-  address: null,
+  address: '',
 };
 
 const eventCreateSlice = createSlice({
