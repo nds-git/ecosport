@@ -10,19 +10,21 @@ export default function PaginationToMainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const rows = useAppSelector((state) => state.events.rows);
+  const count = useAppSelector((state) => state.events.rows?.count);
 
   const [allEvents, setAllEvents] = useState(); // наши события
-  const [query, setQuery] = useState(''); // наш запрос
+
   const [currentPage, setCurrentPage] = useState(1); // текущая страница
-  const [countPage, setCountPage] = useState(rows.count); // сколько вообще у нас страниц
+  const [countPage, setCountPage] = useState(1); // сколько вообще у нас страниц
+
+  console.log('-countPage->', countPage);
 
   useEffect(() => {
-    setCountPage(rows.count);
+    setCountPage(count);
     void dispatch(getAllEventWithPaginateThunk(currentPage));
   }, [currentPage]);
 
   // запрос отправляется каждый раз когда изменяется страница
-
 
   return (
     <>
@@ -49,9 +51,9 @@ export default function PaginationToMainPage(): JSX.Element {
         </Stack>
       </Container>
       <Container>
-        {!!countPage && (
+        {currentPage && (
           <Pagination
-            count={Math.floor(countPage / 5) + 1}
+            count={Math.ceil(count / 3)}
             page={currentPage}
             onChange={(_, num) => setCurrentPage(num)}
             showFirstButton
