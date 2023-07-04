@@ -17,6 +17,7 @@ apiEventRouter.get('/', async (req, res) => {
   }
 });
 
+ 
 apiEventRouter.get('/:page', async (req, res) => {
   const { page } = req.params; // Номер текущей страницы
 
@@ -32,16 +33,13 @@ apiEventRouter.get('/:page', async (req, res) => {
     });
     console.log('events-->', events);
     res.json(events);
-  } catch (error) {
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-
+ 
 // Роут на количество мусора
 apiEventRouter.get('/garbageTotal', async (req, res) => {
   try {
     const result = await Garbage.sum('total');
     res.json(result);
+ 
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
