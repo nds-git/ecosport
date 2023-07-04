@@ -5,10 +5,10 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
 import { Link } from 'react-router-dom';
 import { Container } from '@mui/system';
 import type { EventType } from '../../types';
+import UserAuthModal from './UserAuthModal';
 
 export type EventProps = {
   event: EventType;
@@ -45,6 +45,7 @@ export default function MainPageEventItem({ event }: EventProps): JSX.Element {
               Посмотреть
             </Button>
           </Link>
+          <UserAuthModal  />
         </CardActions>
       </Card>
     </Container>

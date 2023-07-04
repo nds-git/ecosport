@@ -1,4 +1,9 @@
+import type { RowsType } from './rowsType';
+import type { SponsorType } from './sponsorType';
+
 export type EventType = {
+  Sponsors: SponsorType[];
+  rows: RowsType[];
   id: number;
   title: string;
   body: string;
@@ -10,6 +15,7 @@ export type EventType = {
   event_status: boolean;
   event_archive: boolean;
   img: string;
+  garbage: number;
 };
 
 export type EventFormType = {
@@ -19,5 +25,6 @@ export type EventFormType = {
   time: HTMLInputElement;
   count_user: HTMLInputElement;
   geo: HTMLInputElement;
-  file: HTMLInputElement & {files: FileList};
+  garbage: HTMLInputElement;
+  file: HTMLInputElement & { files: FileList };
 };

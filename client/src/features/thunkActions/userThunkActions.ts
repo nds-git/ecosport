@@ -33,3 +33,10 @@ export const userLogoutThunk = createAsyncThunk<UserType, UserSingInType>(
       .catch((err) => err),
 );
 
+// export const subscriberThunk = createAsyncThunk<UserType, UserSingInType>(
+//   'subscriber/signin',
+//   async (data) =>
+//     signInSubscriber(data)
+//       .then((res) => res)
+//       .catch((err) => Promise.reject(err)),
+// );

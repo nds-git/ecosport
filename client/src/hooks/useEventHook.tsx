@@ -9,21 +9,18 @@ import {
   updateEventThunk,
   getAllEventToMainPageThunk,
   getOneEventThunk,
+  archiveEventThunk,
 } from '../features/thunkActions/eventThunkActions';
 
 export type EventHandler = {
   addHandler: (e: React.FormEvent<HTMLFormElement & EventFormType>) => void;
   deleteHandler: (id: EventType['id']) => void;
   updateHandler: (e: React.FormEvent<HTMLFormElement & EventFormType>, id: EventType['id']) => void;
+  archiveHandler: (e: React.FormEvent<HTMLFormElement & EventFormType>, id: EventType['id']) => void;
 };
 
-export default function useEventHook(id: string): EventHandler {
+export default function useEventHook(): EventHandler {
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    void dispatch(getAllEventThunk());
-  }, []);
-
   const addHandler = (e: React.FormEvent<HTMLFormElement & EventFormType>): void => {
     e.preventDefault();
     if (!e.currentTarget.title.value.trim() || !e.currentTarget.file.files?.length) return;
@@ -40,6 +37,14 @@ export default function useEventHook(id: string): EventHandler {
 
   const deleteHandler = (id: EventType['id']): void => {
     void dispatch(deleteEventThunk(id));
+  };
+
+  const archiveHandler = (e: React.FormEvent<HTMLFormElement & EventFormType>,
+    id: EventType['id']): void => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.currentTarget));
+    console.log(formData);
+    void dispatch(archiveEventThunk({data: formData, id}));
   };
 
   const updateHandler = (
@@ -59,5 +64,5 @@ export default function useEventHook(id: string): EventHandler {
     void dispatch(updateEventThunk({ data: formData, id }));
   };
 
-  return { addHandler, deleteHandler, updateHandler };
+  return { addHandler, deleteHandler, updateHandler, archiveHandler };
 }

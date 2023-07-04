@@ -4,12 +4,11 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import { Container } from '@mui/system';
 import { useAppSelector } from '../../features/redux/reduxHooks';
 import '../../style.css';
+
+import AuthButtons from './Auth/AuthButtons';
 
 export default function AppNavBar(): JSX.Element {
   const user = useAppSelector((state) => state.user);
@@ -17,7 +16,7 @@ export default function AppNavBar(): JSX.Element {
     <Container>
       <Box sx={{ flexGrow: 1, marginBottom: '2rem' }}>
         <AppBar position="static">
-          <Toolbar>
+          <Toolbar sx={{ justifyContent: 'space-between' }}>
             <Typography
               color="inherit"
               variant="h6"
@@ -31,28 +30,15 @@ export default function AppNavBar(): JSX.Element {
                 </a>
               </p>
             </Typography>
-            <Box color="inherit" component={NavLink} to="/auth/signup">
-              <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
-                SignUp
-              </Button>
-            </Box>
-            <Box color="inherit" component={NavLink} to="/auth/signin">
-              <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
-                SignIn
-              </Button>
-            </Box>
-
-            <Box color="inherit" component={NavLink} to="/account">
-              <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
-                Account
-              </Button>
-            </Box>
+            <div sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center'}}>
+              <h2>Мы собрали: 7000 кг мусора</h2>
+            </div>
             {user.status === 'success' && (
-              <Typography sx={{ color: 'yellow' }}>{user && `Hello, ${user.data.name}`}</Typography>
+              <Typography sx={{ color: 'yellow', mr: '45px' }}>
+                {user && `Hello, ${user.data.name}`}
+              </Typography>
             )}
-            <Button sx={{ fontFamily: 'FuturaBookC' }} color="inherit">
-              Logout
-            </Button>
+            <AuthButtons />
           </Toolbar>
         </AppBar>
       </Box>
