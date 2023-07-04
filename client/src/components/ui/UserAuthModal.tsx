@@ -1,10 +1,11 @@
 import type { FormEvent } from 'react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, TextField, Container, Modal } from '@mui/material';
 
 import '../css/auth.css';
 import useFormHook from '../../hooks/useFormHook';
 import { useAppSelector } from '../../features/redux/reduxHooks';
+import { useNavigate } from 'react-router-dom';
 
 type FormFieldProps = {
   name: string;
@@ -29,28 +30,33 @@ function FormField({ name, label, type = 'text', placeholder }: FormFieldProps):
 }
 
 export default function UserAuthModal({ eventId }): JSX.Element {
-  // const count = useAppSelector((state) => state.events.data[0].subscribe)
+  const navigate = useNavigate();
+  
+  const eventData = useAppSelector((state) =>
+    state.events.data.find((event) => event.id === eventId),
+  );
   const count = useAppSelector((state) => {
-    const eventData = state.events.data.find((event) => event.id === eventId);
-    return eventData ? eventData.subscribe : 0;
+    const event = state.events.data.find((event) => event.id === eventId);
+    return event ? event.subscribe : 0;
   });
-  
-  console.log(count);
 
-  
+  const userStatus = useAppSelector((state) => state.user.status);
+
+  const maxSubscribers = eventData ? eventData.count_user : 0;
+  const remainingSubscribers = maxSubscribers - count;
+
   const [open, setOpen] = useState(false);
-  const [subscribers, setSubscribers] = useState(0);
-  
 
   const handleOpen = (): void => setOpen(true);
   const handleClose = (): void => setOpen(false);
 
   const { subscriberHandler } = useFormHook();
 
-  const handleConfirm = (e: FormEvent): void => {
+  const handleConfirm = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
-
-    
+    // if (userStatus === 'success') {
+    //   navigate('/');
+    // }
     handleClose();
   };
 
@@ -73,9 +79,9 @@ export default function UserAuthModal({ eventId }): JSX.Element {
         sx={{ marginLeft: 1 }}
         size="small"
         onClick={handleOpen}
-        // disabled={subscribers >= maxSubscribers}
+        disabled={count >= maxSubscribers}
       >
-        Я пойду ({count})
+        Я пойду ({count} / {remainingSubscribers})
       </Button>
 
       <Modal
@@ -98,7 +104,7 @@ export default function UserAuthModal({ eventId }): JSX.Element {
             onSubmit={subscriberHandler}
           >
             <h2>Регистрация на событие</h2>
-            <input name="event_id" label="eventId" value={eventId} style={{display : 'none'}} />
+            <input name="event_id" label="eventId" value={eventId} style={{ display: 'none' }} />
             <FormField name="name" label="Name" placeholder="Enter your name" />
             <FormField
               name="email"
@@ -106,16 +112,13 @@ export default function UserAuthModal({ eventId }): JSX.Element {
               type="email"
               placeholder="name@example.com"
             />
-            <FormField
-              name="phone"
-              label="phone number"
-              placeholder="Enter your phone number"
-            />
+            <FormField name="phone" label="phone number" placeholder="Enter your phone number" />
 
             <Button
               sx={{ m: 1, width: '30ch', borderRadius: '20px' }}
               variant="outlined"
               type="submit"
+              // onClick={handleConfirm}
             >
               Подтвердить
             </Button>
