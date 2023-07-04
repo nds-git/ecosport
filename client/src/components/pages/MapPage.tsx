@@ -1,46 +1,43 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
-import { useAppDispatch } from '../../features/redux/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 
 import Point from '../ui/Point';
 
-type MapPageProps = {
-  geo: string;
-};
+export default function MapPage(): JSX.Element {
+  //  event.geo   55.947769715515335 37.56467117382813
 
-export default function MapPage({ geo }: MapPageProps): JSX.Element {
+  const event = useAppSelector((state) => state.events.event);
+
+  const geo = event.geo.split(' ').map((el) => Number(el));
+
   useEffect(() => {
     ymaps.ready(init);
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     function init() {
-      let myPlacemark;
       const myMap = new ymaps.Map(
         'boxMap',
         {
-          center: [55.800643, 37.667668],
-          zoom: 12,
+          center: geo,
+          zoom: 10,
         },
         {
           searchControlProvider: 'yandex#search',
         },
       );
+      const myPlacemark = new ymaps.Placemark(geo, {
+        // Чтобы балун и хинт открывались на метке, необходимо задать ей определенные свойства.
+        balloonContentHeader: event.title,
+        balloonContentBody: event.address,
+        balloonContentFooter: event.geo,
+        hintContent: 'Спасем плангету вместе',
+      });
 
-      // Создание метки.
-      function createPlacemark(coords) {
-        return new ymaps.Placemark(
-          coords,
-          {
-            iconCaption: 'поиск...',
-            coordinates: [55.690928, 37.249125],
-          },
-          {
-            preset: 'islands#violetDotIconWithCaption',
-            draggable: true,
-          },
-        );
-      }
-    } // fin func init
+      myMap.geoObjects.add(myPlacemark);
+    }
   }, []);
 
   return (
