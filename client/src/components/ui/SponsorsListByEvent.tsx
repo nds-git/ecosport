@@ -15,14 +15,11 @@ export default function SponsorsListByEvent(): JSX.Element {
   const sponsors = useAppSelector((state) => state.sponsors.data);
 
   const { id } = useParams();
-  console.log('event id-->', id);
 
   useEffect(() => {
     void dispatch(getSponsorsExistEventThunk(id));
     return () => dispatch(clearSponsorsState());
   }, []);
-
-  console.log('sponsors-->', sponsors);
 
   return (
     <Container>

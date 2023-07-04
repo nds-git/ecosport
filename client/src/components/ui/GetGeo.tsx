@@ -87,9 +87,10 @@ export default function GetGeo({ setOpen }: GetGeoProps): JSX.Element {
         myPlacemark.properties.set('iconCaption', 'поиск...');
         ymaps.geocode(coords).then((res) => {
           const firstGeoObject = res.geoObjects.get(0);
-          console.log('-myPlacemark->', myPlacemark);
+          // console.log('-myPlacemark->', myPlacemark);
 
           setCoordToView(myPlacemark.geometry._coordinates);
+
           setAdressToView(myPlacemark.properties._data.balloonContent);
 
           myPlacemark.properties.set({
@@ -112,7 +113,6 @@ export default function GetGeo({ setOpen }: GetGeoProps): JSX.Element {
       }
     } // fin func init
   }, []);
-  // const getGeoHandler = () => {};
   const getGeoHandler = (coordinate: number[], address: string | null) => {
     dispatch(setCoord({ geo: coordinate, address }));
     setOpen(false);

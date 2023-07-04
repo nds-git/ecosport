@@ -1,9 +1,15 @@
-import type { EventType } from '../types';
+import type { EventType, RowsType } from '../types';
 import apiInstance from './apiConfig';
 
 export const getAllEvents = (): Promise<EventType[]> =>
   apiInstance
     .get<EventType[]>('/api/events')
+    .then((response) => response.data)
+    .catch((error) => Promise.reject(error));
+
+export const getAllEventsWithPaginate = (page: number): Promise<RowsType> =>
+  apiInstance
+    .get<RowsType>(`/api/events/page/${page}`)
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 
@@ -52,7 +58,7 @@ export const archiveEvent = ({
 export const getArchiveEvents = (): Promise<EventType[]> =>
   apiInstance
     .get<EventType[]>('/api/events/archive')
-    .then((response) => response.data)
+    .then((response) => (response.data))
     .catch((error) => Promise.reject(error));
 
 export const getTopThreeArchiveEvents = (): Promise<EventType[]> =>

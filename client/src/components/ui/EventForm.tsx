@@ -13,15 +13,23 @@ import type { EventCoordType } from '../../types';
 export default function EventForm(): JSX.Element {
   const { addHandler } = useEventHook();
 
-  const [value, setValue] = useState('');
+  const [geo, setGeo] = useState('');
+  const [address, setAddress] = useState('');
 
   const coordinate = useAppSelector((state) => state.eventCreate);
 
+  // console.log('-coordinate->', coordinate.address);
+
   const changeGeo = (): void => {
-    setValue(coordinate.geo.join(' '));
+    setGeo(coordinate.geo.join(' '));
+  };
+
+  const changeAddress = (): void => {
+    setAddress(coordinate.address || '');
   };
 
   useEffect(() => changeGeo(), [coordinate]);
+  useEffect(() => changeAddress(), [coordinate]);
 
   return (
     <Container>
@@ -46,7 +54,15 @@ export default function EventForm(): JSX.Element {
           onChange={() => changeGeo}
           type="text"
           required
-          value={value}
+          value={geo}
+        />
+        <TextField
+          name="address"
+          label="address"
+          onChange={() => changeAddress}
+          type="text"
+          required
+          value={address}
         />
 
         <TextField name="count_user" label="CountUser" type="number" required />

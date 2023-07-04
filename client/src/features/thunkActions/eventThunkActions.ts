@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { EventFormType, EventType } from '../../types';
+import type { EventFormType, EventType, PageType, RowsType } from '../../types';
 
 import {
   archiveEvent,
@@ -7,6 +7,7 @@ import {
   deleteEvent,
   getAllEvents,
   getAllMainArchiveEvents,
+  getAllEventsWithPaginate,
   getArchiveEvents,
   getEvent,
   getEvents,
@@ -27,6 +28,15 @@ export const getAllEventThunk = createAsyncThunk<EventType[]>('events/getAll', a
     .then((response) => response)
     .catch((error) => Promise.reject(error)),
 );
+
+export const getAllEventWithPaginateThunk = createAsyncThunk<RowsType, PageType['page']>(
+  '/events/paginate',
+  async (page) =>
+    getAllEventsWithPaginate(page)
+      .then((response) => response)
+      .catch((error) => Promise.reject(error)),
+);
+
 export const getOneEventThunk = createAsyncThunk<EventType, EventType['id']>(
   'events/getOne',
   async (data) =>
@@ -60,16 +70,11 @@ export const updateEventThunk = createAsyncThunk<
     .catch((error) => Promise.reject(error)),
 );
 
-export const archiveEventThunk = createAsyncThunk<EventType['id'], { data: FormData; id: EventType['id'] }>(
-  'events/Archive',
-  async ({data, id}) =>
-    archiveEvent({ data, id })
-      .then((response) => response)
-      .catch((error) => Promise.reject(error)),
-);
-
-export const getAllArchiveEventThunk = createAsyncThunk<EventType[]>('events/getAllArchive', async () =>
-  getArchiveEvents()
+export const archiveEventThunk = createAsyncThunk<
+  EventType['id'],
+  { data: FormData; id: EventType['id'] }
+>('events/Archive', async ({ data, id }) =>
+  archiveEvent({ data, id })
     .then((response) => response)
     .catch((error) => Promise.reject(error)),
 );
@@ -78,6 +83,14 @@ export const getTopThreeArchiveEventThunk = createAsyncThunk<EventType[]>('event
   getTopThreeArchiveEvents()
     .then((response) => response)
     .catch((error) => Promise.reject(error)),
+
+export const getAllArchiveEventThunk = createAsyncThunk<EventType[]>(
+  'events/getAllArchive',
+  async () =>
+    getArchiveEvents()
+      .then((response) => response)
+      .catch((error) => Promise.reject(error)),
+
 );
 export const getMainPageArchiveEventThunk = createAsyncThunk<EventType[]>('events/getMainArchive', async () =>
   getAllMainArchiveEvents()
@@ -93,9 +106,18 @@ export const getOneArchEventThunk = createAsyncThunk<EventType, EventType['id']>
       .catch((error) => Promise.reject(error)),
 );
 
-export const getTotalGarbageEventThunk = createAsyncThunk<number>('events/getTotalGarbage', async () =>
-  getTotalGarbage()
-    .then((response) => response)
-    .catch((error) => Promise.reject(error)),
+export const getMainPageArchiveEventThunk = createAsyncThunk<EventType[]>(
+  'events/getMainPageArchive',
+  async () =>
+    getAllArchiveEvents()
+      .then((response) => response)
+      .catch((error) => Promise.reject(error)),
 );
 
+export const getTotalGarbageEventThunk = createAsyncThunk<number>(
+  'events/getTotalGarbage',
+  async () =>
+    getTotalGarbage()
+      .then((response) => response)
+      .catch((error) => Promise.reject(error)),
+);

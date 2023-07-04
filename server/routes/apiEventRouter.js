@@ -16,6 +16,28 @@ apiEventRouter.get('/', async (req, res) => {
   }
 });
 
+// Роут для пагинации
+apiEventRouter.get('/page/:page', async (req, res) => {
+  const { page } = req.params; // Номер текущей страницы
+
+  // Делаем для пагинации
+  // const limit = 6; // Количество записей на странице
+  const limit = 3; // Количество записей на странице
+  const offset = limit * (page - 1); // сколько записей нужно пропустить для текущей страницы.
+
+  try {
+    const events = await Event.findAndCountAll({
+      order: [['updatedAt', 'DESC']],
+      limit,
+      offset,
+    });
+    console.log('events-->', events);
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Роут на количество мусора
 apiEventRouter.get('/garbageTotal', async (req, res) => {
   try {
@@ -134,7 +156,7 @@ apiEventRouter.post('/new', upload.single('file'), async (req, res) => {
     await fs.writeFile(`./public/img/${name}`, outputBuffer);
     // создаем пост в бд
 
-    const { title, body, date, time, geo, count_user } = req.body;
+    const { title, body, date, time, geo, count_user, address } = req.body;
 
     const event = await Event.create({
       title,
@@ -142,6 +164,7 @@ apiEventRouter.post('/new', upload.single('file'), async (req, res) => {
       date,
       time,
       geo,
+      address,
       img: name,
       count_user,
       manager_id: req.session.user.id,
@@ -196,7 +219,7 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
     // const name = `${Date.now()}.webp`;
     // const outputBuffer = await sharp(req.file.buffer).webp().toBuffer();
     // await fs.writeFile(`./public/img/${name}`, outputBuffer);
-    const { title, body, date, time, geo, count_user } = req.body;
+    const { title, body, date, time, geo, count_user, address } = req.body;
     await Event.update(
       {
         title,
@@ -205,6 +228,7 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
         time,
         geo,
         count_user,
+        address,
       },
       { where: { id } },
       // { where: { id, userId: req.session.user.id } },
