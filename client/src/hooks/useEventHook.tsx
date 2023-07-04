@@ -42,7 +42,10 @@ export default function useEventHook(): EventHandler {
   const archiveHandler = (e: React.FormEvent<HTMLFormElement & EventFormType>,
     id: EventType['id']): void => {
     e.preventDefault();
-    const formData = Object.fromEntries(new FormData(e.currentTarget));
+    if (!e.currentTarget.title.value.trim()) return;
+    const formData = new FormData();
+    formData.append('file', e.currentTarget.file.files[0]);
+    formData.append('garbage', e.currentTarget.garbage.value);
     console.log(formData);
     void dispatch(archiveEventThunk({data: formData, id}));
   };

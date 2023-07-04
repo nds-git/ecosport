@@ -32,13 +32,13 @@ export default function ModalGarbage({event}: ModalEventProps): JSX.Element {
       <DialogTitle>Количество мусора</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Перед тем как отправить событие в архив, укажите, пожалуйста, сколько килограмм мусора вам удалось собрать 
+          Перед тем как отправить событие в архив, укажите, пожалуйста, сколько килограмм мусора вам удалось собрать и фото с мероприятия
         </DialogContentText>
         <Box
           component="form"
           onSubmit={(e: React.FormEvent<HTMLFormElement & EventFormType>) => archiveHandler(e, event.id)}
           sx={{
-            '& .MuiTextField-root': { m: 1, width: '8rem', marginLeft: 8 },
+            '& .MuiTextField-root': { m: 1, width: '15rem', marginLeft: 8 },
           }}
           noValidate
           autoComplete="off"
@@ -51,6 +51,13 @@ export default function ModalGarbage({event}: ModalEventProps): JSX.Element {
               type="number"
             />
           </div>
+          <div>
+              <TextField
+                id="outlined-textarea"
+                name="file"
+                type="file"
+              />
+            </div>
           <DialogActions>
             <Button onClick={handleClose}>Отмена</Button>
             <Button type="submit">Сохранить</Button>
