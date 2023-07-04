@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { EventType } from '../../../types';
+import type { EventType, RowsType } from '../../../types';
 import {
   addEventThunk,
   deleteEventThunk,
@@ -9,17 +9,23 @@ import {
   getAllEventToMainPageThunk,
   archiveEventThunk,
   getAllArchiveEventThunk,
+  getAllEventWithPaginateThunk,
 } from '../../thunkActions/eventThunkActions';
 import { subscribe } from 'diagnostics_channel';
 
 export type InitialState = {
   data: EventType[];
   event: EventType;
+  rows: RowsType | null;
 };
 
 const initialState: InitialState = {
   data: [],
   event: {} as EventType,
+  rows: {
+    count: 0,
+    rows: [],
+  },
 };
 
 const eventSlice = createSlice({
@@ -38,6 +44,9 @@ const eventSlice = createSlice({
     });
     builder.addCase(getAllEventThunk.fulfilled, (state, action) => {
       state.data = action.payload;
+    });
+    builder.addCase(getAllEventWithPaginateThunk.fulfilled, (state, action) => {
+      state.rows = action.payload;
     });
     builder.addCase(addEventThunk.fulfilled, (state, action) => {
       state.data.push(action.payload);
