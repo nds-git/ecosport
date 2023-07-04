@@ -122,7 +122,7 @@ apiEventRouter.post('/new', upload.single('file'), async (req, res) => {
     await fs.writeFile(`./public/img/${name}`, outputBuffer);
     // создаем пост в бд
 
-    const { title, body, date, time, geo, count_user } = req.body;
+    const { title, body, date, time, geo, count_user, address } = req.body;
 
     const event = await Event.create({
       title,
@@ -130,6 +130,7 @@ apiEventRouter.post('/new', upload.single('file'), async (req, res) => {
       date,
       time,
       geo,
+      address,
       img: name,
       count_user,
       manager_id: req.session.user.id,
@@ -180,7 +181,7 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
     // const name = `${Date.now()}.webp`;
     // const outputBuffer = await sharp(req.file.buffer).webp().toBuffer();
     // await fs.writeFile(`./public/img/${name}`, outputBuffer);
-    const { title, body, date, time, geo, count_user } = req.body;
+    const { title, body, date, time, geo, count_user, address } = req.body;
     await Event.update(
       {
         title,
@@ -189,6 +190,7 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
         time,
         geo,
         count_user,
+        address,
       },
       { where: { id } },
       // { where: { id, userId: req.session.user.id } },
