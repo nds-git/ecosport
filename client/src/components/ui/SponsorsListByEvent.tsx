@@ -22,6 +22,8 @@ export default function SponsorsListByEvent(): JSX.Element {
     return () => dispatch(clearSponsorsState());
   }, []);
 
+  console.log('sponsors-->', sponsors);
+
   return (
     <Container>
       <Container>
