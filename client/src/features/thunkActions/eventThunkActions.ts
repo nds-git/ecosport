@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { EventFormType, EventType, RowsType } from '../../types';
+import type { EventFormType, EventType, PageType, RowsType } from '../../types';
 
 import {
   archiveEvent,
@@ -7,6 +7,7 @@ import {
   deleteEvent,
   getAllArchiveEvents,
   getAllEvents,
+  getAllEventsWithPaginate,
   getArchiveEvents,
   getEvent,
   getEvents,

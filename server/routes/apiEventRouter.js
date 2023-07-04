@@ -37,11 +37,6 @@ apiEventRouter.get('/:page', async (req, res) => {
   }
 });
 
-export const getAllEventsWithPaginate = (page: number): Promise<RowsType> =>
-  apiInstance.get <
-  RowsType >
-  `/api/events/${page}`.then((response) => response.data).catch((error) => Promise.reject(error));
-
 // Роут на количество мусора
 apiEventRouter.get('/garbageTotal', async (req, res) => {
   try {
