@@ -15,7 +15,7 @@ export type EventType = {
   event_status: boolean;
   event_archive: boolean;
   img: string;
-  subscribe: number;
+  subscribe?: number;
   address: string;
 };
 
