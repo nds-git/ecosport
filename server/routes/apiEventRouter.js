@@ -7,7 +7,6 @@ const { Event, Garbage, Sponsor } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
 // Роут на все события
-
 apiEventRouter.get('/', async (req, res) => {
   try {
     const events = await Event.findAll({ where: { event_archive: false } });
@@ -17,12 +16,13 @@ apiEventRouter.get('/', async (req, res) => {
   }
 });
 
- 
-apiEventRouter.get('/:page', async (req, res) => {
+// Роут для пагинации
+apiEventRouter.get('/page/:page', async (req, res) => {
   const { page } = req.params; // Номер текущей страницы
 
   // Делаем для пагинации
-  const limit = 6; // Количество записей на странице
+  // const limit = 6; // Количество записей на странице
+  const limit = 3; // Количество записей на странице
   const offset = limit * (page - 1); // сколько записей нужно пропустить для текущей страницы.
 
   try {
@@ -33,13 +33,16 @@ apiEventRouter.get('/:page', async (req, res) => {
     });
     console.log('events-->', events);
     res.json(events);
- 
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Роут на количество мусора
 apiEventRouter.get('/garbageTotal', async (req, res) => {
   try {
     const result = await Garbage.sum('total');
     res.json(result);
- 
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
@@ -120,7 +123,7 @@ apiEventRouter.post('/new', upload.single('file'), async (req, res) => {
     await fs.writeFile(`./public/img/${name}`, outputBuffer);
     // создаем пост в бд
 
-    const { title, body, date, time, geo, count_user } = req.body;
+    const { title, body, date, time, geo, count_user, address } = req.body;
 
     const event = await Event.create({
       title,
@@ -128,6 +131,7 @@ apiEventRouter.post('/new', upload.single('file'), async (req, res) => {
       date,
       time,
       geo,
+      address,
       img: name,
       count_user,
       manager_id: req.session.user.id,
@@ -178,7 +182,7 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
     // const name = `${Date.now()}.webp`;
     // const outputBuffer = await sharp(req.file.buffer).webp().toBuffer();
     // await fs.writeFile(`./public/img/${name}`, outputBuffer);
-    const { title, body, date, time, geo, count_user } = req.body;
+    const { title, body, date, time, geo, count_user, address } = req.body;
     await Event.update(
       {
         title,
@@ -187,6 +191,7 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
         time,
         geo,
         count_user,
+        address,
       },
       { where: { id } },
       // { where: { id, userId: req.session.user.id } },
@@ -199,14 +204,19 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
   }
 });
 
-apiEventRouter.patch('/:id/archive', async (req, res) => {
+apiEventRouter.patch('/:id/archive', upload.single('file'), async (req, res) => {
   const { id } = req.params;
   const { garbage } = req.body;
   if (!id || Number.isNaN(Number(id))) {
     res.status(400).json({ message: 'Bad request id' });
     return;
   }
+
   try {
+    const name = `${Date.now()}.webp`;
+    const outputBuffer = await sharp(req.file.buffer).webp().toBuffer();
+    await fs.writeFile(`./public/img/${name}`, outputBuffer);
+
     const event = await Event.findOne({ where: { id } });
     if (!event) {
       res.status(400).json({ message: 'event not found' });
@@ -214,6 +224,8 @@ apiEventRouter.patch('/:id/archive', async (req, res) => {
     }
     event.event_archive = true;
     event.garbage = garbage;
+    // img нужно сохранять в отдельную таблицу
+    event.img = name;
     await event.save();
 
     await Garbage.create({ total: garbage });

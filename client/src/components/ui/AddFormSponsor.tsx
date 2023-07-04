@@ -16,6 +16,10 @@ export default function AddFormSponsor({ setOpen }: AddFormSponsorProps): JSX.El
 
   const id = useAppSelector((state) => state.events.event.id);
 
+  const handlerClose = (): void => {
+    setOpen(false);
+  };
+
   return (
     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
       <Box
@@ -58,7 +62,7 @@ export default function AddFormSponsor({ setOpen }: AddFormSponsorProps): JSX.El
         />
         <TextField name="file" type="file" required />
 
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" onClick={handlerClose}>
           Стать спонсором
         </Button>
       </Box>

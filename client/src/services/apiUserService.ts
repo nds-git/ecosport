@@ -25,8 +25,8 @@ export const signInUser = (data: UserSingInType): Promise<UserType> =>
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 
-  //   export const signInSubscriber = (data: UserSingInType): Promise<UserType> =>
-  // apiInstanse
-  //   .post<UserType>('/api/auth/subscribe', data)
-  //   .then((response) => response.data)
-  //   .catch((error) => Promise.reject(error));
+    export const signInSubscriber = (data: UserSingInType): Promise<UserType> =>
+  apiInstanse
+    .post<UserType>('/api/auth/subscribe', data)
+    .then((response) => response.data)
+    .catch((error) => Promise.reject(error));

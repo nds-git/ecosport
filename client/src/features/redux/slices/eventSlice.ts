@@ -9,43 +9,34 @@ import {
   getAllEventToMainPageThunk,
   archiveEventThunk,
   getAllArchiveEventThunk,
- 
   getAllEventWithPaginateThunk,
- 
-  getMainPageArchiveEventThunk,
-  getTotalGarbageEventThunk,
- 
 } from '../../thunkActions/eventThunkActions';
 
 export type InitialState = {
   data: EventType[];
-  archiveData: EventType[];
   event: EventType;
- 
-  rows: RowsType;
- 
-  garbage: number;
- 
+  rows: RowsType | null;
 };
 
 const initialState: InitialState = {
   data: [],
-  archiveData: [],
   event: {} as EventType,
- 
   rows: {
     count: 0,
     rows: [],
-  } as RowsType,
- 
-  garbage: 0,
- 
+  },
 };
 
 const eventSlice = createSlice({
   name: 'event',
   initialState,
-  reducers: {},
+  reducers: {
+    // subscriberCount: (state, action) => {
+    //   console.log(action);
+      
+    //   state.data = state.data.map((el) => ({...el, subscribe: el.id === action.payload.id ? el.subscribe + 1 : el.subscribe  }))
+    // }
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllEventToMainPageThunk.fulfilled, (state, action) => {
       state.data = action.payload;
@@ -74,13 +65,8 @@ const eventSlice = createSlice({
     builder.addCase(getAllArchiveEventThunk.fulfilled, (state, action) => {
       state.data = action.payload;
     });
-    builder.addCase(getMainPageArchiveEventThunk.fulfilled, (state, action) => {
-      state.archiveData = action.payload;
-    });
-    builder.addCase(getTotalGarbageEventThunk.fulfilled, (state, action) => {
-      state.garbage = action.payload;
-    });
   },
 });
 
 export default eventSlice.reducer;
+// export const {subscriberCount } = eventSlice.actions

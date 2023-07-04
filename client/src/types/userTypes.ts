@@ -2,6 +2,7 @@ export type UserType = {
   id: number;
   name: string;
   email: string;
+  count: number;
 };
 
 export type FetchingUserType = {
