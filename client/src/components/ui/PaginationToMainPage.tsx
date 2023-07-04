@@ -10,7 +10,6 @@ export default function PaginationToMainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const rows = useAppSelector((state) => state.events.rows);
-  console.log('rows-->', rows);
 
   const [allEvents, setAllEvents] = useState(); // наши события
   const [query, setQuery] = useState(''); // наш запрос
@@ -24,7 +23,6 @@ export default function PaginationToMainPage(): JSX.Element {
 
   // запрос отправляется каждый раз когда изменяется страница
 
-  console.log('rows.count--> ', rows.count);
 
   return (
     <>

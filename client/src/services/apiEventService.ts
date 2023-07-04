@@ -9,7 +9,7 @@ export const getAllEvents = (): Promise<EventType[]> =>
 
 export const getAllEventsWithPaginate = (page: number): Promise<RowsType> =>
   apiInstance
-    .get<RowsType>(`/api/events/${page}`)
+    .get<RowsType>(`/api/events/page/${page}`)
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 

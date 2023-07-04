@@ -17,7 +17,7 @@ apiEventRouter.get('/', async (req, res) => {
 });
 
 // Роут для пагинации
-apiEventRouter.get('/:page', async (req, res) => {
+apiEventRouter.get('/page/:page', async (req, res) => {
   const { page } = req.params; // Номер текущей страницы
 
   // Делаем для пагинации

@@ -15,14 +15,6 @@ export type SponsorHandler = {
 export default function useSponsorHook(): SponsorHandler {
   const dispatch = useAppDispatch();
 
-  // const eventId = useAppSelector((state) => state.events.event.id);
-
-  // useEffect(() => {
-  //   void dispatch(getSponsorsExistEventThunk(eventId));
-  // }, []);
-
-  // console.log('sponsors-->', sponsors);
-
   const addHandler = (e: React.FormEvent<HTMLFormElement & SponsorFormType>, id: number): void => {
     e.preventDefault();
     if (!e.currentTarget.title.value.trim() || !e.currentTarget.file.files?.length) return;
