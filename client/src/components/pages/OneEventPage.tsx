@@ -29,6 +29,7 @@ import { getSponsorsExistEventThunk } from '../../features/thunkActions';
 import type { SponsorType } from '../../types';
 import SponsorsListByEvent from '../ui/SponsorsListByEvent';
 import MapPage from './MapPage';
+import { getEventDate } from '../functions';
 
 type ExpandMoreProps = {
   expand: boolean;
@@ -59,7 +60,7 @@ export default function OneEventPage(): JSX.Element {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  const eventDate = getEventDate(event.date);
   return (
     <>
       <Container sx={{mb: '4rem'}}>
@@ -110,7 +111,7 @@ export default function OneEventPage(): JSX.Element {
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
               <Typography paragraph>
-                <b>Дата:</b> {event.date}
+                <b>Дата:</b> {eventDate}
               </Typography>
             </IconButton>
             <IconButton aria-label="add to favorites">

@@ -11,7 +11,7 @@ export default function LayoutSpinner(): JSX.Element {
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined;
     if (progress < 100) {
-      timeout = setTimeout(() => setProgress(progress + 20), 200);
+      timeout = setTimeout(() => setProgress(progress + 20), 500);
     }
     return () => clearTimeout(timeout);
   }, [progress]);

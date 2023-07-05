@@ -10,12 +10,14 @@ import { Link } from 'react-router-dom';
 import type { EventType } from '../../types';
 import ModalEdit from './ModalEdit';
 import ModalGarbage from './ModalGarbage';
+import { getEventDate } from '../functions';
 
 export type EventProps = {
   event: EventType;
 };
 
 export default function EventItem({ event }: EventProps): JSX.Element {
+  const eventDate = getEventDate(event.date);
   return (
     <Card sx={{ maxWidth: 345, height: '100%' }}>
       <motion.div
@@ -32,7 +34,7 @@ export default function EventItem({ event }: EventProps): JSX.Element {
             {event.body}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {event.date}
+            {eventDate}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {event.time}
