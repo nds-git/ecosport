@@ -37,9 +37,6 @@ export default function AuthButtons(): JSX.Element {
       )}
       {user.status === 'success' && (
         <Box>
-          <Button variant="contained" onClick={LogoutHandler}>
-            Выйти
-          </Button>
           <IconButton
             color="inherit"
             size="small"
@@ -48,6 +45,9 @@ export default function AuthButtons(): JSX.Element {
           >
             <AccountCircleIcon />
           </IconButton>
+          <Button variant="contained" onClick={LogoutHandler}>
+            Выйти
+          </Button>
         </Box>
       )}
     </ButtonGroup>

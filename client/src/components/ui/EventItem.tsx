@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import type { EventType } from '../../types';
-import useEventHook from '../../hooks/useEventHook';
 import ModalEdit from './ModalEdit';
 import ModalGarbage from './ModalGarbage';
 
@@ -18,7 +17,7 @@ export type EventProps = {
 
 export default function EventItem({ event }: EventProps): JSX.Element {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, height: '100%' }}>
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -47,12 +46,12 @@ export default function EventItem({ event }: EventProps): JSX.Element {
         </CardContent>
         <CardActions>
           <ModalEdit event={event} />
+          <ModalGarbage event={event}/>
           <Link to={`/events/${event.id}`}>
-            <Button size="small" variant="contained" color="secondary" sx={{ marginLeft: 1 }}>
-              More Info
+            <Button size="small" variant="text" color="primary" sx={{ marginLeft: 1 }}>
+              Подробнее
             </Button>
           </Link>
-          <ModalGarbage event={event}/>
         </CardActions>
       </motion.div>
     </Card>

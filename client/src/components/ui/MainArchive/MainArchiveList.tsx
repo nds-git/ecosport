@@ -12,7 +12,7 @@ export default function MainArchiveList(): JSX.Element {
     void dispatch(getMainPageArchiveEventThunk());
   }, []);
   return (
-    <Container>
+    <Container sx={{mb: '2rem'}}>
     <h2>Все архивные события</h2>
     <Grid container spacing={3}>
       {events.map((event) => (

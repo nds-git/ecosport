@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -6,16 +6,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Box } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import { Box, Container, Typography } from '@mui/material';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import useEventHook from '../../hooks/useEventHook';
-import type { EventFormType, EventType } from '../../types';
+import type { EventFormType } from '../../types';
+import { useAppSelector } from '../../features/redux/reduxHooks';
+import Point from './Point';
 
-type ModalEventProps = {
-  event: EventType;
-};
-
-export default function ModalEdit({ event }: ModalEventProps): JSX.Element {
+export default function ModalEventCreate(): JSX.Element {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -24,20 +22,38 @@ export default function ModalEdit({ event }: ModalEventProps): JSX.Element {
     setOpen(false);
   };
 
-  const { updateHandler } = useEventHook();
+  const { addHandler } = useEventHook();
+
+  const [geo, setGeo] = useState('');
+  const [address, setAddress] = useState('');
+  const coordinate = useAppSelector((state) => state.eventCreate);
+  const changeGeo = (): void => {
+    setGeo(coordinate.geo.join(' '));
+  };
+  const changeAddress = (): void => {
+    setAddress(coordinate.address || '');
+  };
+
+  useEffect(() => changeGeo(), [coordinate]);
+  useEffect(() => changeAddress(), [coordinate]);
   return (
-    <div>
-      <Button variant="contained" color="success" onClick={handleClickOpen}>
-        <EditIcon />
+    <Container sx={{ mb: '2rem' }}>
+      <Button
+        sx={{ padding: 2 }}
+        variant="contained"
+        onClick={handleClickOpen}
+        endIcon={<AddBoxIcon />}
+      >
+        Создать событие
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Изменение события</DialogTitle>
+        <DialogTitle>Создай свое событие</DialogTitle>
         <DialogContent>
           <DialogContentText>Заполните, пожалуйста, все поля</DialogContentText>
           <Box
             component="form"
             onSubmit={(e: React.FormEvent<HTMLFormElement & EventFormType>) => {
-              updateHandler(e, event.id);
+              addHandler(e);
               setOpen(false);
             }}
             sx={{
@@ -47,13 +63,7 @@ export default function ModalEdit({ event }: ModalEventProps): JSX.Element {
             autoComplete="off"
           >
             <div>
-              <TextField
-                name="title"
-                label="Название события"
-                type="text"
-                required
-                defaultValue={event.title}
-              />
+              <TextField name="title" label="Название события" type="text" required />
             </div>
             <div>
               <TextField
@@ -62,30 +72,32 @@ export default function ModalEdit({ event }: ModalEventProps): JSX.Element {
                 multiline
                 rows={4}
                 required
-                defaultValue={event.body}
               />
             </div>
             <div>
-              <TextField name="date" type="date" required defaultValue={event.date} />
+              <TextField name="date" type="date" required />
             </div>
             <div>
-              <TextField name="time" type="time" required defaultValue={event.time} />
+              <TextField name="time" type="time" required />
             </div>
             <div>
+              <Point />
               <TextField
                 name="geo"
                 label="Координаты"
                 type="text"
+                onChange={() => changeGeo}
+                value={geo}
                 required
-                defaultValue={event.geo}
               />
             </div>
             <TextField
               name="address"
               label="Адрес"
+              onChange={() => changeAddress}
               type="text"
               required
-              defaultValue={event.address}
+              value={address}
             />
             <div>
               <TextField
@@ -93,7 +105,25 @@ export default function ModalEdit({ event }: ModalEventProps): JSX.Element {
                 label="Максимальное количество участников"
                 type="number"
                 required
-                defaultValue={event.count_user}
+              />
+            </div>
+            <div>
+              <Button variant="contained" sx={{ marginLeft: 8 }}>
+                <Typography component="label" htmlFor="filePicker">
+                  Изображение
+                </Typography>
+              </Button>
+              <TextField
+                id="filePicker"
+                sx={{ visibility: 'hidden' }}
+                name="file"
+                type="file"
+                InputProps={{
+                  inputProps: {
+                    multiple: true,
+                    accept: '.jpg,.jpeg,.png',
+                  },
+                }}
               />
             </div>
             <DialogActions>
@@ -103,6 +133,6 @@ export default function ModalEdit({ event }: ModalEventProps): JSX.Element {
           </Box>
         </DialogContent>
       </Dialog>
-    </div>
+    </Container>
   );
 }

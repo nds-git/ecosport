@@ -20,6 +20,7 @@ import { useParams } from 'react-router-dom';
 import { Box } from '@mui/system';
 import AirlineStopsIcon from '@mui/icons-material/AirlineStops';
 import { AlarmOn, PinDrop } from '@mui/icons-material';
+import { motion } from 'framer-motion';
 import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 import { getOneEventThunk } from '../../features/thunkActions/eventThunkActions';
 import useEventHook from '../../hooks/useEventHook';
@@ -61,7 +62,7 @@ export default function OneEventPage(): JSX.Element {
 
   return (
     <>
-      <Container>
+      <Container sx={{mb: '4rem'}}>
         <Card sx={{ maxWidth: 1000 }}>
           <CardHeader
             avatar={
@@ -77,12 +78,18 @@ export default function OneEventPage(): JSX.Element {
             title={event.title}
             subheader={`Место: ${event.geo}`}
           />
-          <CardMedia
-            component="img"
-            height="480"
-            image={`http://localhost:3001/img/${event.img}`}
-            alt="Paella dish"
-          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <CardMedia
+              component="img"
+              height="480"
+              image={`http://localhost:3001/img/${event.img}`}
+              alt="Paella dish"
+            />
+          </motion.div>
           <Box sx={{ m: 1 }}>
             <AddSponsor eventId={event.id} />
           </Box>

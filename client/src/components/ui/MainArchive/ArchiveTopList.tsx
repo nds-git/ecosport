@@ -12,7 +12,7 @@ export default function ArchiveTopList(): JSX.Element {
     void dispatch(getTopThreeArchiveEventThunk());
   }, []);
   return (
-    <Container>
+    <Container sx={{mb: '2rem'}}>
       <h2>Топ-3 архивных событий по сбору мусора</h2>
       <Grid container spacing={3}>
         {events.map((event) => (
