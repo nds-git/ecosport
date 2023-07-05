@@ -46,6 +46,10 @@
   font-family: 'FuturaBookC';
   src: url(fonts/LUI33EU5.ttf), url(fonts/futurabookc.otf);
 }
+.box-top-navi {
+  font-family: 'FuturaBookC';
+  background-image: linear-gradient(to top, #4481eb 0%, #04befe 100%);
+}
 .logo {
   height: 55px;
   font-size: 32px;
@@ -54,12 +58,16 @@
   height: 55px;
 }
 .logo a {
-  color: aliceblue !important;
+  color: #f3f3f3 !important;
   text-decoration: none !important;
 }
 .logo a:hover {
-  color: aliceblue;
+  color: #f8f8f8;
   text-decoration: none !important;
+}
+
+.stackWithoutBg {
+  border: 1px solid red;
 }
 
 .no_href a {

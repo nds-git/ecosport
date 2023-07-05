@@ -1,5 +1,5 @@
-import { Container } from '@mui/system';
 import React from 'react';
+import { Container } from '@mui/system';
 
 export default function Footer(): JSX.Element {
   return (
