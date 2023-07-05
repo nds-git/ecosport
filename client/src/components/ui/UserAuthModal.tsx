@@ -6,6 +6,18 @@ import '../css/auth.css';
 import useFormHook from '../../hooks/useFormHook';
 import { useAppSelector } from '../../features/redux/reduxHooks';
 import { useNavigate } from 'react-router-dom';
+import { css, keyframes } from '@emotion/react';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
 
 type FormFieldProps = {
   name: string;
@@ -59,18 +71,6 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
     handleClose();
   };
 
-  const style = {
-    position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-
   return (
     <>
       <Button
@@ -89,16 +89,24 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         closeAfterTransition
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       >
-        <Container maxWidth="sm">
+        <Container maxWidth="xs">
           <Box
             component="form"
             sx={{
-              ...style,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
+              backgroundColor: '#fff',
+              padding: '2rem',
+              animation: `${fadeIn} 0.4s forwards`,
+              borderRadius: '8px',
             }}
             onSubmit={subscriberHandler}
           >
