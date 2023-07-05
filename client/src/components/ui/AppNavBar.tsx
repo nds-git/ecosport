@@ -37,9 +37,9 @@ export default function AppNavBar(): JSX.Element {
   return (
     <Box className="box-top-navi" sx={{ flexGrow: 1, fontFamily: 'FuturaBookC' }}>
       <Container>
-        <Box sx={{ backgroundColor: 'transparent', flexGrow: 1, marginBottom: '2rem' }}>
-          <AppBar position="static">
-            <Toolbar sx={{ justifyContent: 'space-between' }}>
+        {/* <Box sx={{ backgroundColor: 'transparent', flexGrow: 1, marginBottom: '2rem' }}> */}
+          <AppBar position="static" sx={{ backgroundColor: 'transparent' }} elevation={0}>
+            <Toolbar sx={{ justifyContent: 'space-between', backgroundColor: 'transparent' }}>
               <Typography
                 color="inherit"
                 variant="h6"
@@ -83,8 +83,11 @@ export default function AppNavBar(): JSX.Element {
               <AuthButtons />
             </Toolbar>
           </AppBar>
-        </Box>
+        {/* </Box> */}
       </Container>
     </Box>
   );
 }
+
+
+
