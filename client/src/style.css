@@ -71,9 +71,12 @@
 }
 
 .bg-main-p {
-  font-size: 22px;
+  font-family: 'Myriad Pro Regular';
+  font-size: 15px;
+  font-weight: 400;
   color: #777272;
-  line-height: 22px;
+  line-height: 19px;
+  font-style: italic;
 }
 
 .no_href a {
@@ -91,6 +94,12 @@
   /* border: 2px solid green; */
   display: flex;
   justify-content: center;
+}
+
+.box-top-footer {
+  height: 200px;
+  font-family: 'FuturaBookC';
+  background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
 }
 
 .bg-footer {

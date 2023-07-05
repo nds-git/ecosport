@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import { Container } from '@mui/system';
-import { Typography } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
-import { getTotalGarbageEventThunk } from '../../features/thunkActions/eventThunkActions';
-import AuthButtons from './Auth/AuthButtons';
+import { Grid, Paper, Typography } from '@mui/material';
+
 import AuthModal from './Auth/AuthModal';
+import AuthButtons from './Auth/AuthButtons';
+import { getTotalGarbageEventThunk } from '../../features/thunkActions/eventThunkActions';
+import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 
 export default function MainPageBanner(): JSX.Element {
   return (
     <Container>
-      <div className="bg-main ">
-        <Typography
+      <div className="bg-main  ">
+        <Typography ml={5}
           sx={{
             fontFamily: 'FuturaFuturisC',
             flexGrow: 1,
             textDecoration: 0,
-            fontSize: '62px',
+            fontSize: '72px',
             padding: '25px 0 0 0',
             color: 'green',
           }}
@@ -27,34 +28,18 @@ export default function MainPageBanner(): JSX.Element {
             <br />
             спортивные мероприятия с пользой
             <br />
-            для себя, общества и<br />
-            всей Планеты.
+            для себя, общества и всей
+            <br />
+            Планеты
           </p>
           <p className="bg-main-p">
-            или стань участником
+            ...или стань участником экологического
             <br />
-            спортивно-экологического
-            <br />
-            движения вместе с организаторами
+            события своего города вместе с <br />
+            организаторами
             <br />
           </p>
         </Typography>
-
-        {/* <Box>
-          <Typography
-            className="bg-main-h"
-            sx={{
-              fontFamily: 'FuturaFuturisC',
-              flexGrow: 1,
-              textDecoration: 0,
-              fontSize: '22px',
-              padding: '25px 0 0 0',
-              color: 'green',
-            }}
-          >
-            Тут подзаголовки
-          </Typography>
-        </Box> */}
       </div>
     </Container>
   );
