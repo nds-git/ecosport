@@ -27,7 +27,7 @@ export default function ModalEdit({ event }: ModalEventProps): JSX.Element {
   const { updateHandler } = useEventHook();
   return (
     <div>
-      <Button variant="contained" color="success" onClick={handleClickOpen}>
+      <Button variant="text" color="success" onClick={handleClickOpen}>
         <EditIcon />
       </Button>
       <Dialog open={open} onClose={handleClose}>

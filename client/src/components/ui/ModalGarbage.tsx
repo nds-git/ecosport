@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Box, Typography } from '@mui/material';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import type { EventFormType, EventType } from '../../types';
 import useEventHook from '../../hooks/useEventHook';
 
@@ -26,8 +27,8 @@ export default function ModalGarbage({ event }: ModalEventProps): JSX.Element {
 
   return (
     <div>
-      <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
-        Архив
+      <Button variant="text" color="secondary" onClick={handleClickOpen}>
+        В архив
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Количество мусора</DialogTitle>
@@ -51,7 +52,7 @@ export default function ModalGarbage({ event }: ModalEventProps): JSX.Element {
               <TextField id="outlined-multiline-flexible" name="garbage" label="kg" type="number" />
             </div>
             <div>
-              <Button variant="contained" sx={{ marginLeft: 8 }}>
+              <Button endIcon={<AddAPhotoIcon />}  variant="outlined" sx={{ marginLeft: 8 }}>
                 <Typography component="label" htmlFor="filePicker">
                   Добавить фотографии
                 </Typography>
@@ -70,8 +71,8 @@ export default function ModalGarbage({ event }: ModalEventProps): JSX.Element {
               />
             </div>
             <DialogActions>
-              <Button onClick={handleClose}>Отмена</Button>
-              <Button type="submit">Сохранить</Button>
+              <Button  onClick={handleClose}>Отмена</Button>
+              <Button variant='contained' type="submit">Сохранить</Button>
             </DialogActions>
           </Box>
         </DialogContent>

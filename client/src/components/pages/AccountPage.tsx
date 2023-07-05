@@ -8,8 +8,6 @@ export default function AccountPage(): JSX.Element {
   return (
     <>
       <MenuManager />
-      <ModalEventCreate />
-      {/* <EventForm /> */}
       <EventList />
     </>
   );

@@ -7,7 +7,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Box, Container, Typography } from '@mui/material';
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import useEventHook from '../../hooks/useEventHook';
 import type { EventFormType } from '../../types';
 import { useAppSelector } from '../../features/redux/reduxHooks';
@@ -42,7 +43,7 @@ export default function ModalEventCreate(): JSX.Element {
         sx={{ padding: 2 }}
         variant="contained"
         onClick={handleClickOpen}
-        endIcon={<AddBoxIcon />}
+        endIcon={<AddCircleOutlineIcon />}
       >
         Создать событие
       </Button>
@@ -108,7 +109,7 @@ export default function ModalEventCreate(): JSX.Element {
               />
             </div>
             <div>
-              <Button variant="contained" sx={{ marginLeft: 8 }}>
+              <Button endIcon={<AddAPhotoIcon />} variant="outlined" sx={{ marginLeft: 8 }}>
                 <Typography component="label" htmlFor="filePicker">
                   Изображение
                 </Typography>
@@ -128,7 +129,7 @@ export default function ModalEventCreate(): JSX.Element {
             </div>
             <DialogActions>
               <Button onClick={handleClose}>Отменить</Button>
-              <Button type="submit">Сохранить</Button>
+              <Button variant='contained' type="submit">Сохранить</Button>
             </DialogActions>
           </Box>
         </DialogContent>
