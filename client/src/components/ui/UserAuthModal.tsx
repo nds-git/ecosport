@@ -65,7 +65,7 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
 
   const { subscriberHandler } = useFormHook();
 
-  const handleConfirm = async (e: FormEvent): Promise<void> => {
+  const handleConfirm = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     handleClose();
@@ -125,8 +125,8 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
               sx={{ m: 1, width: '30ch', borderRadius: '20px' }}
               variant="outlined"
               type="submit"
-              // onClick={handleConfirm}
-o            >
+              onClick={handleConfirm}
+            >
               Подтвердить
             </Button>
           </Box>
