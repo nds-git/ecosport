@@ -70,6 +70,12 @@
   border: 1px solid red;
 }
 
+.bg-main-p {
+  font-size: 22px;
+  color: #777272;
+  line-height: 22px;
+}
+
 .no_href a {
   text-decoration: none;
 }
@@ -82,7 +88,7 @@
   margin: 0 auto;
   height: 500px;
   width: 100%;
-  border: 2px solid green;
+  /* border: 2px solid green; */
   display: flex;
   justify-content: center;
 }

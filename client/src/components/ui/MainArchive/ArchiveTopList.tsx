@@ -12,8 +12,8 @@ export default function ArchiveTopList(): JSX.Element {
     void dispatch(getTopThreeArchiveEventThunk());
   }, []);
   return (
-    <Container sx={{mb: '2rem'}}>
-      <h2>Топ-3 архивных событий по сбору мусора</h2>
+    <Container sx={{ mb: '2rem', mt: '5rem', fontFamily: 'FuturaFuturisC' }}>
+      <h2>ТОП-3 лучших событий</h2>
       <Grid container spacing={3}>
         {events.map((event) => (
           <Grid item key={event.id} xs={12} sm={6} md={4}>
