@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@mui/base';
+import Button from '@mui/material/Button';
 import { Box, Container } from '@mui/system';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -8,18 +8,18 @@ import { Backdrop, Fade, Paper } from '@mui/material';
 import useSponsorHook from '../../hooks/useSponsorHook';
 import AddFormSponsor from './AddFormSponsor';
 import type { EventType } from '../../types';
+import { css, keyframes } from '@emotion/react';
 
-const style = {
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
 
 type AddSponsorProps = {
   eventId: EventType['id'];
@@ -27,40 +27,55 @@ type AddSponsorProps = {
 
 export default function AddSponsor({ eventId }: AddSponsorProps): JSX.Element {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
+  const handleOpen = (): void => setOpen(true);
+  const handleClose = (): void => setOpen(false);
+
+  const handleBackdropClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (event.target === event.currentTarget) {
+      handleClose();
+    }
   };
 
   return (
-    <div>
-      <Button onClick={handleOpen}>Стать спонсором</Button>
+    <Box>
+      <Button type="submit" variant="contained" onClick={handleOpen}>
+        Стать спонсором
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
         onClose={handleClose}
         closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <Fade in={open}>
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Стать спонсором
-            </Typography>
-
+          <Container maxWidth="xs">
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#fff',
+                padding: '2rem',
+                animation: `${fadeIn} 0.4s forwards`,
+                borderRadius: '8px',
+              }}
+              onClick={handleBackdropClick}
+            >
+              <Typography id="modal-modal-title" variant="h6" component="h2" textAlign="center">
+                Стать спонсором
+              </Typography>
               <AddFormSponsor setOpen={setOpen} />
-             
-          </Box>
+            </Box>
+          </Container>
         </Fade>
       </Modal>
-    </div>
+    </Box>
   );
 }

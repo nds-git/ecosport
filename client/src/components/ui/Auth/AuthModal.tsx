@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Button,
@@ -12,15 +12,29 @@ import {
   TextField,
 } from '@mui/material';
 import { Google, Visibility, VisibilityOff } from '@mui/icons-material';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import ColorTabs from './ColorTab';
 import { useAppDispatch, useAppSelector } from '../../../features/redux/reduxHooks';
 import useFormHook from '../../../hooks/useFormHook';
 import { closeModal } from '../../../features/redux/slices/modalSlice';
+import { css, keyframes } from '@emotion/react';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
 
 export default function AuthModal(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const user = useAppSelector((state) => state.user);
   const modalOpen = useAppSelector((state) => state.modal.isOpen);
   const type = useAppSelector((state) => state.modal.modalType);
 
@@ -32,22 +46,15 @@ export default function AuthModal(): JSX.Element {
 
   const handleClickShowPassword = (): void => setShowPassword((show) => !show);
 
-  const handleSubmitForm = async (data: any) => {
-    type === 'signup' ? signUpHandler : signInHandler
-  };
-
   const { signInHandler, signUpHandler } = useFormHook();
 
-  const style = {
-    position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
+  const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    type === 'signup' ? signUpHandler(e) : signInHandler(e);
+
+    dispatch(closeModal());
+
+    navigate('/account');
   };
 
   return (
@@ -56,17 +63,25 @@ export default function AuthModal(): JSX.Element {
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
     >
-      <Container maxWidth="sm">
+      <Container maxWidth="xs">
         <Box
           component="form"
-          onSubmit={type === 'signup' ? signUpHandler : signInHandler}
+          onSubmit={handleSubmitForm}
           sx={{
-            ...style,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
+            backgroundColor: '#fff',
+            padding: '2rem',
+            animation: `${fadeIn} 0.1s forwards`,
+            borderRadius: '8px',
           }}
         >
           {/* <ColorTabs /> */}
