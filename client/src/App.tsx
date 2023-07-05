@@ -14,9 +14,9 @@ import './style.css';
 import Footer from './components/ui/Footer';
 import AuthModal from './components/ui/Auth/AuthModal';
 import OneArchEventPage from './components/pages/OneArchEventPage';
+ 
 import LayoutSpinner from './components/pages/LayoutSpinner';
 import PrivateRoute from './components/Hoks/PrivateRoute';
-
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -42,6 +42,7 @@ function App(): JSX.Element {
               </PrivateRoute>
             }
           />
+ 
 
           <Route element={<PrivateRoute isAllowed={!(user && user.status)} redirectTo="/" />}>
             <Route path="/auth/:type" element={<AuthPage />} />
