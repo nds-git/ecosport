@@ -48,7 +48,6 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
   const eventData = useAppSelector((state) =>
     state.events.rows?.rows?.find((event) => event.id === eventId),
   );
-  console.log(eventData);
 
   const count = eventData ? eventData.subscribe : 0;
 

@@ -17,8 +17,6 @@ export default function PaginationToMainPage(): JSX.Element {
   const [currentPage, setCurrentPage] = useState(1); // текущая страница
   const [countPage, setCountPage] = useState(1); // сколько вообще у нас страниц
 
-  console.log('-countPage->', countPage);
-
   useEffect(() => {
     setCountPage(count);
     void dispatch(getAllEventWithPaginateThunk(currentPage));

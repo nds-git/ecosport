@@ -24,6 +24,7 @@ export type InitialState = {
   oneArchiveData: EventType | null
   event: EventType;
   rows: RowsType | null;
+  garbage: number;
 };
 
 const initialState: InitialState = {
@@ -36,6 +37,7 @@ const initialState: InitialState = {
     count: 0,
     rows: [],
   },
+  garbage: 0,
 };
 
 const eventSlice = createSlice({

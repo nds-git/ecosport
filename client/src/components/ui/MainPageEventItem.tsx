@@ -10,12 +10,14 @@ import { Container } from '@mui/system';
 import { motion } from 'framer-motion';
 import type { EventType } from '../../types';
 import UserAuthModal from './UserAuthModal';
+import { getEventDate } from '../functions';
 
 export type EventProps = {
   event: EventType;
 };
 
 export default function MainPageEventItem({ event }: EventProps): JSX.Element {
+  const eventDate = getEventDate(event.date);
   return (
     <Container>
       <Card sx={{ maxWidth: 345, height: '100%' }}>
@@ -33,7 +35,7 @@ export default function MainPageEventItem({ event }: EventProps): JSX.Element {
               {event.body}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {event.date}
+              {eventDate}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {event.time}

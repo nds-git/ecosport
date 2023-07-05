@@ -14,6 +14,7 @@ import './style.css';
 import Footer from './components/ui/Footer';
 import AuthModal from './components/ui/Auth/AuthModal';
 import OneArchEventPage from './components/pages/OneArchEventPage';
+import LayoutSpinner from './components/pages/LayoutSpinner';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -26,7 +27,8 @@ function App(): JSX.Element {
     <AuthModal />
       <AppNavBar />
       <Routes>
-        <Route element={<Layout />}>
+        <Route element={<LayoutSpinner />}>
+        {/* <Route element={<Layout />}> */}
           <Route path="/" element={<MainPage />} />
           <Route path="/auth/:type" element={<AuthPage />} />
           <Route path="/account" element={<AccountPage />} />
