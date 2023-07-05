@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
 import { Stack } from '@mui/material';
+import { motion } from 'framer-motion';
 import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 
 import AuthButtons from './Auth/AuthButtons';
@@ -34,60 +35,75 @@ export default function AppNavBar(): JSX.Element {
   useEffect(() => {
     void dispatch(getTotalGarbageEventThunk());
   }, [events]);
+
   return (
     <Box className="box-top-navi" sx={{ flexGrow: 1, fontFamily: 'FuturaBookC' }}>
       <Container>
         {/* <Box sx={{ backgroundColor: 'transparent', flexGrow: 1, marginBottom: '2rem' }}> */}
-          <AppBar position="static" sx={{ backgroundColor: 'transparent' }} elevation={0}>
-            <Toolbar sx={{ justifyContent: 'space-between', backgroundColor: 'transparent' }}>
-              <Typography
-                color="inherit"
-                variant="h6"
-                component={NavLink}
-                to="/"
-                sx={{ fontFamily: 'FuturaBookC', flexGrow: 1, textDecoration: 0 }}
-              >
-                <p className="logo">
-                  <a href="/" title="эко спорт" className="no_href">
-                    <img src="../logo.png" alt="logo" /> ЭКО | Спорт{' '}
-                  </a>
-                </p>
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: 'FuturaBookC',
-                  // border: '1px solid yellow',
-                  borderRadius: '10px',
-                  padding: '0 60px 0 10px',
-                }}
-              >
-                {garbage && (
-                  <div
-                    style={{ flexGrow: 1, display: 'flex', justifyContent: 'left', height: '40px' }}
-                  >
-                    <h2>
-                      Уже спасли планету от{' '}
-                      <span style={{ color: 'yellow', borderBottom: '1px solid yellow' }}>
-                        {garbage}
-                      </span>{' '}
-                      кг мусора
-                    </h2>
-                  </div>
-                )}
-              </Typography>
-              {user.status === 'success' && (
-                <Typography sx={{ color: 'yellow', mr: '45px' }}>
-                  {user && `Hello, ${user.data.name}`}
-                </Typography>
+        <AppBar position="static" sx={{ backgroundColor: 'transparent' }} elevation={0}>
+          <Toolbar sx={{ justifyContent: 'space-between', backgroundColor: 'transparent' }}>
+            <Typography
+              color="inherit"
+              variant="h6"
+              component={NavLink}
+              to="/"
+              sx={{ fontFamily: 'FuturaBookC', flexGrow: 1, textDecoration: 0 }}
+            >
+              <p className="logo">
+                <a href="/" title="эко спорт" className="no_href">
+                  <img src="../logo.png" alt="logo" /> ЭКО | Спорт{' '}
+                </a>
+              </p>
+            </Typography>
+            <Typography
+              sx={{
+                fontFamily: 'FuturaBookC',
+                // border: '1px solid yellow',
+                borderRadius: '10px',
+                padding: '0 60px 0 10px',
+              }}
+            >
+              {garbage && (
+                <div
+                  style={{ flexGrow: 1, display: 'flex', justifyContent: 'left', height: '40px' }}
+                >
+                  <h2>
+                    Уже спасли планету от{' '}
+                    <span style={{ color: 'yellow', borderBottom: '1px solid yellow' }}>
+                      {garbage}
+                    </span>{' '}
+                    кг мусора
+                  </h2>
+                </div>
               )}
-              <AuthButtons />
-            </Toolbar>
-          </AppBar>
+              
+            </Typography>
+            <Typography variant="h4" sx={{ fontFamily: 'FuturaBookC', color: '#fff',  }}>
+      {user.status === 'success' && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          sx={{
+            backgroundImage: 'linear-gradient(45deg, #4ecdc4, #0099ff)',
+            backgroundSize: '200% 200%',
+            animation: 'gradientAnimation 10s ease infinite',
+          }}
+        >
+          {user && `Добро пожаловать, ${user.data.name}!`}
+        </motion.div>
+      )}
+    </Typography>
+            {/* {user.status === 'success' && (
+              <Typography variant="h4" sx={{ fontFamily: 'Montserrat', color: '#fff' }}>
+                {user && `Добро пожаловать, ${user.data.name}!`}
+              </Typography>
+            )} */}
+            <AuthButtons />
+          </Toolbar>
+        </AppBar>
         {/* </Box> */}
       </Container>
     </Box>
   );
 }
-
-
-

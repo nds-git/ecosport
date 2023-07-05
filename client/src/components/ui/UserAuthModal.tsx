@@ -49,13 +49,27 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
     state.events.rows?.rows?.find((event) => event.id === eventId),
   );
 
-  const count = eventData ? eventData.subscribe : 0;
+const [change, setChange] = useState(false)
+
+  
+const [ count, setCount] = useState(eventData ? eventData.subscribe : 0)
+
+  // const count = eventData ? eventData.subscribe : 0;
 
   const maxSubscribers = eventData ? eventData.count_user : 0;
 
   const remainingSubscribers = maxSubscribers - count;
 
   const userStatus = useAppSelector((state) => state.user.status);
+
+  useEffect(()=>{
+    if(change) {
+     
+      
+    setCount((prev) => prev + 1)
+      setChange(false)
+    }
+  },[change])
 
   const [open, setOpen] = useState(false);
 
@@ -64,11 +78,14 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
 
   const { subscriberHandler } = useFormHook();
 
-  const handleConfirm = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
 
-    handleClose();
-  };
+  const subscribeHook = (e) => {
+    subscriberHandler(e)
+     handleClose();
+     return setChange(true)
+     
+  }
+
 
   return (
     <>
@@ -107,7 +124,7 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
               animation: `${fadeIn} 0.4s forwards`,
               borderRadius: '8px',
             }}
-            onSubmit={subscriberHandler}
+            onSubmit={subscribeHook}
           >
             <h2>Регистрация на событие</h2>
             <input name="event_id" label="eventId" value={eventId} style={{ display: 'none' }} />
@@ -124,7 +141,6 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
               sx={{ m: 1, width: '30ch', borderRadius: '20px' }}
               variant="outlined"
               type="submit"
-              onClick={handleConfirm}
             >
               Подтвердить
             </Button>
