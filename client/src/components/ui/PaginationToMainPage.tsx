@@ -28,7 +28,15 @@ export default function PaginationToMainPage(): JSX.Element {
 
   return (
     <>
-      <Container sx={{ padding: '30px', bgcolor: 'background.paper' }}>
+      <Container
+        sx={{
+          padding: '30px',
+          bgcolor: 'background.paper',
+          mb: '2rem',
+          mt: '3rem',
+          fontFamily: 'FuturaBookC',
+        }}
+      >
         <Stack spacing={2}>
           <Box
             component="div"
@@ -40,6 +48,8 @@ export default function PaginationToMainPage(): JSX.Element {
               backgroundRepeat: 'no-repeat',
             }}
           >
+            {' '}
+            <h2>Ближайшие мероприятия: </h2>
             <Grid container spacing={3}>
               {rows.rows.map((event) => (
                 <Grid item key={event.id} xs={12} sm={6} md={4}>
