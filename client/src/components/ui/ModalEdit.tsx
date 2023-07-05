@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Box } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 import useEventHook from '../../hooks/useEventHook';
 import type { EventFormType, EventType } from '../../types';
 
@@ -26,22 +27,19 @@ export default function ModalEdit({ event }: ModalEventProps): JSX.Element {
   const { updateHandler } = useEventHook();
   return (
     <div>
-      <Button variant="contained" color="success" onClick={handleClickOpen}>
-        Edit
+      <Button variant="text" color="success" onClick={handleClickOpen}>
+        <EditIcon />
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Update your post</DialogTitle>
+        <DialogTitle>Изменение события</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We will send updates
-            occasionally.
-          </DialogContentText>
+          <DialogContentText>Заполните, пожалуйста, все поля</DialogContentText>
           <Box
             component="form"
             onSubmit={(e: React.FormEvent<HTMLFormElement & EventFormType>) => {
-              updateHandler(e, event.id)
-              setOpen(false)}
-            }
+              updateHandler(e, event.id);
+              setOpen(false);
+            }}
             sx={{
               '& .MuiTextField-root': { m: 1, width: '27rem', marginLeft: 8 },
             }}
@@ -50,69 +48,57 @@ export default function ModalEdit({ event }: ModalEventProps): JSX.Element {
           >
             <div>
               <TextField
-                id="outlined-multiline-flexible"
                 name="title"
-                label="Title"
+                label="Название события"
                 type="text"
-                multiline
-                maxRows={4}
+                required
                 defaultValue={event.title}
               />
             </div>
             <div>
-            <TextField
-              id="outlined-textarea"
-              name="geo"
-              label="geo"
-              type="text"
-              multiline
-              defaultValue={event.geo}
-            />
-            </div>
-            <div>
-            <TextField
-              id="outlined-textarea"
-              name="date"
-              label="date"
-              type="date"
-              multiline
-              defaultValue={event.date}
-            />
-            </div>
-            <div>
-            <TextField
-              id="outlined-textarea"
-              name="time"
-              label="time"
-              type="time"
-              multiline
-              defaultValue={event.time}
-            />
-            </div>
-            <div>
-            <TextField
-              id="outlined-textarea"
-              name="count_user"
-              label="count_user"
-              type="number"
-              multiline
-              defaultValue={event.count_user}
-            />
-            </div>
- 
-            <div>
               <TextField
-                id="outlined-multiline-static"
                 name="body"
-                label="Body"
+                label="Введите подробное описание"
                 multiline
                 rows={4}
+                required
                 defaultValue={event.body}
               />
             </div>
+            <div>
+              <TextField name="date" type="date" required defaultValue={event.date} />
+            </div>
+            <div>
+              <TextField name="time" type="time" required defaultValue={event.time} />
+            </div>
+            <div>
+              <TextField
+                name="geo"
+                label="Координаты"
+                type="text"
+                required
+                defaultValue={event.geo}
+              />
+            </div>
+            <TextField
+              name="address"
+              label="Адрес"
+              type="text"
+              required
+              defaultValue={event.address}
+            />
+            <div>
+              <TextField
+                name="count_user"
+                label="Максимальное количество участников"
+                type="number"
+                required
+                defaultValue={event.count_user}
+              />
+            </div>
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button type="submit">Save</Button>
+              <Button onClick={handleClose}>Отменить</Button>
+              <Button type="submit">Сохранить</Button>
             </DialogActions>
           </Box>
         </DialogContent>

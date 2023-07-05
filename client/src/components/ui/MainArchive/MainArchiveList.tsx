@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { Container } from '@mui/system';
-import { useAppDispatch, useAppSelector } from '../../../features/redux/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../features/redux/reduxHooks';
 import { getMainPageArchiveEventThunk } from '../../../features/thunkActions/eventThunkActions';
 import MainArchiveItem from './MainArchiveItem';
 
@@ -12,15 +12,15 @@ export default function MainArchiveList(): JSX.Element {
     void dispatch(getMainPageArchiveEventThunk());
   }, []);
   return (
-    <Container>
-    <h2>Все архивные события</h2>
-    <Grid container spacing={3}>
-      {events.map((event) => (
-        <Grid item key={event.id} xs={12} sm={6} md={4}>
-          <MainArchiveItem event={event} />
-        </Grid>
-      ))}
-    </Grid>
-  </Container>
-  )
+    <Container sx={{ mb: '2rem', mt: '5rem', fontFamily: 'FuturaBookC' }}>
+      <h2>Архив мероприятий</h2>
+      <Grid container spacing={3}>
+        {events.map((event) => (
+          <Grid item key={event.id} xs={12} sm={6} md={4}>
+            <MainArchiveItem event={event} />
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
+  );
 }

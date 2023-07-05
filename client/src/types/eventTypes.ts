@@ -19,6 +19,7 @@ export type EventType = {
   img: string;
   subscribe?: number;
   address: string;
+  garbage: number;
 };
 
 export type EventFormType = {

@@ -20,6 +20,7 @@ import { useParams } from 'react-router-dom';
 import { Box } from '@mui/system';
 import AirlineStopsIcon from '@mui/icons-material/AirlineStops';
 import { AlarmOn, PinDrop } from '@mui/icons-material';
+import { motion } from 'framer-motion';
 import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 import { getOneEventThunk } from '../../features/thunkActions/eventThunkActions';
 import useEventHook from '../../hooks/useEventHook';
@@ -28,6 +29,7 @@ import { getSponsorsExistEventThunk } from '../../features/thunkActions';
 import type { SponsorType } from '../../types';
 import SponsorsListByEvent from '../ui/SponsorsListByEvent';
 import MapPage from './MapPage';
+import { getEventDate } from '../functions';
 
 type ExpandMoreProps = {
   expand: boolean;
@@ -58,10 +60,10 @@ export default function OneEventPage(): JSX.Element {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  const eventDate = getEventDate(event.date);
   return (
     <>
-      <Container>
+      <Container sx={{mb: '4rem'}}>
         <Card sx={{ maxWidth: 1000 }}>
           <CardHeader
             avatar={
@@ -77,12 +79,18 @@ export default function OneEventPage(): JSX.Element {
             title={event.title}
             subheader={`Место: ${event.geo}`}
           />
-          <CardMedia
-            component="img"
-            height="480"
-            image={`http://localhost:3001/img/${event.img}`}
-            alt="Paella dish"
-          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <CardMedia
+              component="img"
+              height="480"
+              image={`http://localhost:3001/img/${event.img}`}
+              alt="Paella dish"
+            />
+          </motion.div>
           <Box sx={{ m: 1 }}>
             <AddSponsor eventId={event.id} />
           </Box>
@@ -103,7 +111,7 @@ export default function OneEventPage(): JSX.Element {
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
               <Typography paragraph>
-                <b>Дата:</b> {event.date}
+                <b>Дата:</b> {eventDate}
               </Typography>
             </IconButton>
             <IconButton aria-label="add to favorites">

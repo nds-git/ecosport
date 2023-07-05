@@ -3,7 +3,6 @@ import { Grid } from '@mui/material';
 import { Container } from '@mui/system';
 import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 import EventItem from './EventItem';
-import useEventHook from '../../hooks/useEventHook';
 import { getAllEventThunk } from '../../features/thunkActions/eventThunkActions';
 
 export default function EventList(): JSX.Element {
@@ -14,7 +13,7 @@ export default function EventList(): JSX.Element {
   }, []);
 
   return (
-    <Container>
+    <Container sx={{ mb: '2rem' }}>
       <Grid container spacing={3}>
         {events.data.map((event) => (
           <Grid item key={event.id} xs={12} sm={6} md={4}>

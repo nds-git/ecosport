@@ -5,11 +5,27 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Container } from '@mui/system';
-import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
+import { Padding } from '@mui/icons-material';
 import '../../style.css';
+
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+
+import { Stack } from '@mui/material';
+import { motion } from 'framer-motion';
+import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 
 import AuthButtons from './Auth/AuthButtons';
 import { getTotalGarbageEventThunk } from '../../features/thunkActions/eventThunkActions';
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 export default function AppNavBar(): JSX.Element {
   const user = useAppSelector((state) => state.user);
@@ -19,11 +35,13 @@ export default function AppNavBar(): JSX.Element {
   useEffect(() => {
     void dispatch(getTotalGarbageEventThunk());
   }, [events]);
+
   return (
-    <Container>
-      <Box sx={{ flexGrow: 1, marginBottom: '2rem' }}>
-        <AppBar position="static">
-          <Toolbar sx={{ justifyContent: 'space-between' }}>
+    <Box className="box-top-navi" sx={{ flexGrow: 1, fontFamily: 'FuturaBookC' }}>
+      <Container>
+        {/* <Box sx={{ backgroundColor: 'transparent', flexGrow: 1, marginBottom: '2rem' }}> */}
+        <AppBar position="static" sx={{ backgroundColor: 'transparent' }} elevation={0}>
+          <Toolbar sx={{ justifyContent: 'space-between', backgroundColor: 'transparent' }}>
             <Typography
               color="inherit"
               variant="h6"
@@ -37,20 +55,55 @@ export default function AppNavBar(): JSX.Element {
                 </a>
               </p>
             </Typography>
-            {garbage && (<div style={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-              <h2>
-                Вы спасли планету от <span style={{ color: 'yellow' }}>{garbage}</span> кг мусора
-              </h2>
-            </div>)}
-            {user.status === 'success' && (
-              <Typography sx={{ color: 'yellow', mr: '45px' }}>
-                {user && `Hello, ${user.data.name}`}
+            <Typography
+              sx={{
+                fontFamily: 'FuturaBookC',
+                // border: '1px solid yellow',
+                borderRadius: '10px',
+                padding: '0 60px 0 10px',
+              }}
+            >
+              {garbage && (
+                <div
+                  style={{ flexGrow: 1, display: 'flex', justifyContent: 'left', height: '40px' }}
+                >
+                  <h2>
+                    Уже спасли планету от{' '}
+                    <span style={{ color: 'yellow', borderBottom: '1px solid yellow' }}>
+                      {garbage}
+                    </span>{' '}
+                    кг мусора
+                  </h2>
+                </div>
+              )}
+              
+            </Typography>
+            <Typography variant="h4" sx={{ fontFamily: 'FuturaBookC', color: '#fff',  }}>
+      {user.status === 'success' && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          sx={{
+            backgroundImage: 'linear-gradient(45deg, #4ecdc4, #0099ff)',
+            backgroundSize: '200% 200%',
+            animation: 'gradientAnimation 10s ease infinite',
+          }}
+        >
+          {user && `Добро пожаловать, ${user.data.name}!`}
+        </motion.div>
+      )}
+    </Typography>
+            {/* {user.status === 'success' && (
+              <Typography variant="h4" sx={{ fontFamily: 'Montserrat', color: '#fff' }}>
+                {user && `Добро пожаловать, ${user.data.name}!`}
               </Typography>
-            )}
+            )} */}
             <AuthButtons />
           </Toolbar>
         </AppBar>
-      </Box>
-    </Container>
+        {/* </Box> */}
+      </Container>
+    </Box>
   );
 }

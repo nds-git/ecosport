@@ -21,8 +21,8 @@ apiEventRouter.get('/page/:page', async (req, res) => {
   const { page } = req.params; // Номер текущей страницы
 
   // Делаем для пагинации
-  // const limit = 6; // Количество записей на странице
-  const limit = 3; // Количество записей на странице
+  const limit = 6; // Количество записей на странице
+  // const limit = 3; // Количество записей на странице
   const offset = limit * (page - 1); // сколько записей нужно пропустить для текущей страницы.
 
   try {
@@ -217,6 +217,7 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
   //   return;
   // }
   try {
+    console.log(req.body);
     // const name = `${Date.now()}.webp`;
     // const outputBuffer = await sharp(req.file.buffer).webp().toBuffer();
     // await fs.writeFile(`./public/img/${name}`, outputBuffer);
@@ -232,7 +233,6 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
         address,
       },
       { where: { id } },
-      // { where: { id, userId: req.session.user.id } },
     );
     const event = await Event.findOne({ where: { id } });
     res.json(event);

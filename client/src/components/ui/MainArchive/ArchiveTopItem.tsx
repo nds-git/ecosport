@@ -23,6 +23,13 @@ export default function ArchiveTopItem({ event }: EventProps): JSX.Element {
           Количество собранного мусора: {event.garbage} кг
         </Typography>
       </CardContent>
+      <CardActions>
+        <Link to={`./events/archive/${event.id}`}>
+          <Button color="primary" variant="contained" sx={{ marginLeft: 1 }} size="small">
+            Подробнее
+          </Button>
+        </Link>
+      </CardActions>
     </Card>
   );
 }

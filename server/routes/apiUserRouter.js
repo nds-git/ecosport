@@ -67,7 +67,7 @@ apiAuthRouter.delete('/logout', (req, res) => {
 
 apiAuthRouter.post('/subscribe', async (req, res) => {
   const { name, email, phone, event_id } = req.body;
-  console.log(req.body);
+  console.log('SUBSC ====>', req.body);
 
   if (!name || !email || !phone) {
     return res.status(400).json({ message: 'Incomplete subscriber data' });
