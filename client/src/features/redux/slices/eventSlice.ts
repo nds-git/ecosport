@@ -9,17 +9,28 @@ import {
   getAllEventToMainPageThunk,
   archiveEventThunk,
   getAllArchiveEventThunk,
+  getTotalGarbageEventThunk,
+  getTopThreeArchiveEventThunk,
+  getMainPageArchiveEventThunk,
+  getOneArchEventThunk,
   getAllEventWithPaginateThunk,
 } from '../../thunkActions/eventThunkActions';
+import { FotoEventType } from '../../../types/fotoEventType';
 
 export type InitialState = {
   data: EventType[];
+  topArchiveData: EventType[];
+  mainArchiveData: EventType[];
+  oneArchiveData: EventType | null
   event: EventType;
   rows: RowsType | null;
 };
 
 const initialState: InitialState = {
   data: [],
+  topArchiveData: [],
+  mainArchiveData: [],
+  oneArchiveData: null,
   event: {} as EventType,
   rows: {
     count: 0,
@@ -65,6 +76,20 @@ const eventSlice = createSlice({
     builder.addCase(getAllArchiveEventThunk.fulfilled, (state, action) => {
       state.data = action.payload;
     });
+
+    builder.addCase(getTopThreeArchiveEventThunk.fulfilled, (state, action) => {
+      state.topArchiveData = action.payload;
+    });
+    builder.addCase(getMainPageArchiveEventThunk.fulfilled, (state, action) => {
+      state.mainArchiveData = action.payload;
+    });
+    builder.addCase(getTotalGarbageEventThunk.fulfilled, (state, action) => {
+      state.garbage = action.payload;
+    });
+    builder.addCase(getOneArchEventThunk.fulfilled, (state, action) => {
+      state.oneArchiveData = action.payload;
+    });
+
   },
 });
 

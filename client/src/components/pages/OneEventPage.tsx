@@ -18,6 +18,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Container } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { Box } from '@mui/system';
+import AirlineStopsIcon from '@mui/icons-material/AirlineStops';
+import { AlarmOn, PinDrop } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../../features/redux/reduxHooks';
 import { getOneEventThunk } from '../../features/thunkActions/eventThunkActions';
 import useEventHook from '../../hooks/useEventHook';
@@ -85,12 +87,18 @@ export default function OneEventPage(): JSX.Element {
             <AddSponsor eventId={event.id} />
           </Box>
           <CardContent>
-            <IconButton aria-label="share">
-              {/* <ShareIcon /> */}
-              <Typography paragraph>
-                <b>Полный адрес:</b> {event.address}
-              </Typography>
-            </IconButton>
+            <Typography variant="h4" component="h4">
+              {event.title}
+            </Typography>
+
+            <Typography paragraph>
+              <AirlineStopsIcon color="success" />
+              <b>Полный адрес:</b> {event.address}
+            </Typography>
+            <Typography paragraph>
+              <PinDrop color="success" />
+              <b>Координаты:</b> {event.geo}
+            </Typography>
           </CardContent>
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
@@ -106,6 +114,7 @@ export default function OneEventPage(): JSX.Element {
             <IconButton aria-label="share">
               {/* <ShareIcon /> */}
               <Typography paragraph>
+                <AlarmOn color="success" />
                 <b>Время:</b> {event.time}
               </Typography>
             </IconButton>
@@ -122,7 +131,7 @@ export default function OneEventPage(): JSX.Element {
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
               <Typography paragraph>Описание:</Typography>
-              <Typography paragraph>{event.title}</Typography>
+
               <Typography paragraph>{event.body}</Typography>
               {/* <Typography paragraph>
                 Add rice and stir very gently to distribute. Top with artichokes and peppers, and
@@ -132,7 +141,7 @@ export default function OneEventPage(): JSX.Element {
                 just tender, 5 to 7 minutes more. (Discard any mussels that don&apos;t open.)
               </Typography> */}
               <Typography>
-                <MapPage geo={event.geo} />
+                <MapPage />
               </Typography>
             </CardContent>
           </Collapse>
