@@ -14,7 +14,9 @@ import './style.css';
 import Footer from './components/ui/Footer';
 import AuthModal from './components/ui/Auth/AuthModal';
 import OneArchEventPage from './components/pages/OneArchEventPage';
+import LayoutSpinner from './components/pages/LayoutSpinner';
 import PrivateRoute from './components/Hoks/PrivateRoute';
+
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -28,7 +30,8 @@ function App(): JSX.Element {
       <AuthModal />
       <AppNavBar />
       <Routes>
-        <Route element={<Layout />}>
+        <Route element={<LayoutSpinner />}>
+        {/* <Route element={<Layout />}> */}
           <Route path="/" element={<MainPage />} />
 
           <Route
@@ -43,7 +46,6 @@ function App(): JSX.Element {
           <Route element={<PrivateRoute isAllowed={!(user && user.status)} redirectTo="/" />}>
             <Route path="/auth/:type" element={<AuthPage />} />
           </Route>
-
           <Route path="/archive" element={<ArchivePage />} />
           <Route path="/events/:id" element={<OneEventPage />} />
           <Route path="/events/archive/:id" element={<OneArchEventPage />} />

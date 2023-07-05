@@ -7,8 +7,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import type { EventProps } from '../EventItem';
+import { getEventDate } from '../../functions';
 
 export default function MainArchiveItem({ event }: EventProps): JSX.Element {
+  const eventDate = getEventDate(event.date);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia sx={{ height: 140 }} image={`http://localhost:3001/img/${event.img}`} />
@@ -17,7 +19,7 @@ export default function MainArchiveItem({ event }: EventProps): JSX.Element {
           {event.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {event.date}
+          {eventDate}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Количество собранного мусора: {event.garbage} кг

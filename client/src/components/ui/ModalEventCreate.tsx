@@ -13,6 +13,7 @@ import useEventHook from '../../hooks/useEventHook';
 import type { EventFormType } from '../../types';
 import { useAppSelector } from '../../features/redux/reduxHooks';
 import Point from './Point';
+import { motion } from 'framer-motion';
 
 export default function ModalEventCreate(): JSX.Element {
   const [open, setOpen] = React.useState(false);
@@ -39,6 +40,12 @@ export default function ModalEventCreate(): JSX.Element {
   useEffect(() => changeAddress(), [coordinate]);
   return (
     <Container sx={{ mb: '2rem' }}>
+      <motion.div
+        initial={{y: -300}}
+        animate={{y: 0}}
+        transition={{duration: 1}}
+        whileHover={{scale: 1.1}}
+      >
       <Button
         sx={{ padding: 2 }}
         variant="contained"
@@ -47,6 +54,7 @@ export default function ModalEventCreate(): JSX.Element {
       >
         Создать событие
       </Button>
+      </motion.div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Создай свое событие</DialogTitle>
         <DialogContent>
