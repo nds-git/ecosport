@@ -10,9 +10,7 @@ export default function MainPage(): JSX.Element {
     <>
       <MainPageBanner />
       <PaginationToMainPage />
-      <hr />
       <ArchiveTopList />
-      <hr />
       <MainArchiveList />
     </>
   );

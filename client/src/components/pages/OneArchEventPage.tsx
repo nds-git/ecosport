@@ -13,10 +13,10 @@ export default function OneArchEventPage(): JSX.Element {
     void dispatch(getOneArchEventThunk(Number(id)));
   }, []);
   return (
-    <Container>
+    <Container sx={{mb: '2rem'}}>
       <Carousel>
         {event?.FotoEvents?.map((el) => (
-          <img height={300} key={el.id} src={`http://localhost:3001/img/${el.img}`} alt="text" />
+          <img height={500} key={el.id} src={`http://localhost:3001/img/${el.img}`} alt="text" />
         ))}
       </Carousel>
     </Container>

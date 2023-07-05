@@ -217,6 +217,7 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
   //   return;
   // }
   try {
+    console.log(req.body);
     // const name = `${Date.now()}.webp`;
     // const outputBuffer = await sharp(req.file.buffer).webp().toBuffer();
     // await fs.writeFile(`./public/img/${name}`, outputBuffer);
@@ -232,7 +233,6 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
         address,
       },
       { where: { id } },
-      // { where: { id, userId: req.session.user.id } },
     );
     const event = await Event.findOne({ where: { id } });
     res.json(event);

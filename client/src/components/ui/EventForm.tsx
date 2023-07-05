@@ -32,7 +32,7 @@ export default function EventForm(): JSX.Element {
   useEffect(() => changeAddress(), [coordinate]);
 
   return (
-    <Container>
+    <Container sx={{ mb: '2rem' }}>
       <Box
         component="form"
         onSubmit={addHandler}
@@ -44,8 +44,8 @@ export default function EventForm(): JSX.Element {
       >
         <TextField name="title" label="Title" placeholder="Title" required />
         <TextField name="body" label="Body" placeholder="Body" required />
-        <TextField name="date" label="Date" type="date" required />
-        <TextField name="time" label="Time" type="time" required />
+        <TextField name="date" type="date" required />
+        <TextField name="time" type="time" required />
         <Point />
 
         <TextField

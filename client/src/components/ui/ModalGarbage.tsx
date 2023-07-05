@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import type { EventFormType, EventType } from '../../types';
 import useEventHook from '../../hooks/useEventHook';
 
@@ -51,15 +51,21 @@ export default function ModalGarbage({ event }: ModalEventProps): JSX.Element {
               <TextField id="outlined-multiline-flexible" name="garbage" label="kg" type="number" />
             </div>
             <div>
+              <Button variant="contained" sx={{ marginLeft: 8 }}>
+                <Typography component="label" htmlFor="filePicker">
+                  Добавить фотографии
+                </Typography>
+              </Button>
               <TextField
-                id="outlined-textarea"
+                id="filePicker"
+                sx={{ visibility: 'hidden' }}
                 name="file"
                 type="file"
                 InputProps={{
                   inputProps: {
                     multiple: true,
-                    accept: '.jpg,.jpeg,.png'
-                  }
+                    accept: '.jpg,.jpeg,.png',
+                  },
                 }}
               />
             </div>

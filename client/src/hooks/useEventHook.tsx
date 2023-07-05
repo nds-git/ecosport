@@ -24,6 +24,7 @@ export type EventHandler = {
 
 export default function useEventHook(): EventHandler {
   const dispatch = useAppDispatch();
+
   const addHandler = (e: React.FormEvent<HTMLFormElement & EventFormType>): void => {
     e.preventDefault();
     if (!e.currentTarget.title.value.trim() || !e.currentTarget.file.files?.length) return;
@@ -51,13 +52,10 @@ export default function useEventHook(): EventHandler {
     const formData = new FormData();
     const imgArray = [...e.currentTarget.file.files];
     imgArray.forEach((file) => {
-      formData.append('file', file)
-    })
-    // if (!e.currentTarget.title.value.trim() || !e.currentTarget.file.files?.length) return;
-    // formData.append('file', e.currentTarget.file.files[0]);
-    // formData.append('file', e.currentTarget.file.files[1]);
+      formData.append('file', file);
+    });
     formData.append('garbage', e.currentTarget.garbage.value);
-    void dispatch(archiveEventThunk({data: formData, id}));
+    void dispatch(archiveEventThunk({ data: formData, id }));
   };
 
   const updateHandler = (
