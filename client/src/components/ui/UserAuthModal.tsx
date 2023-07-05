@@ -126,7 +126,7 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
               variant="outlined"
               type="submit"
               // onClick={handleConfirm}
-            >
+o            >
               Подтвердить
             </Button>
           </Box>
