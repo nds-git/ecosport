@@ -32,7 +32,7 @@ export default function Footer(): JSX.Element {
             sx={{ color: '#7f7f7f ', fontFamily: 'FuturaBookC', flexGrow: 1, textDecoration: 0 }}
           >
             &#169; Сайт создан в учебных и ознакомительных целях. Создатели и модераторы сайта не
-            несут ответственности <br />
+            несут ответственность <br />
             за размещенные мероприятия и регистрацию на события третьими лицами.
           </Typography>
         </Box>
