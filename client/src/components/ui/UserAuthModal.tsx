@@ -94,9 +94,9 @@ const [ count, setCount] = useState(eventData ? eventData.subscribe : 0)
         sx={{ marginLeft: 1 }}
         size="small"
         onClick={handleOpen}
-        // disabled={count >= maxSubscribers}
+        disabled={count >= maxSubscribers}
       >
-        Я пойду ({count} / {remainingSubscribers})
+        Я пойду ({count || 0} / {maxSubscribers})
       </Button>
 
       <Modal

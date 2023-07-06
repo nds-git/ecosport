@@ -28,6 +28,7 @@ apiEventRouter.get('/page/:page', async (req, res) => {
   try {
     const events = await Event.findAndCountAll({
       order: [['updatedAt', 'DESC']],
+      where: { event_archive: false },
       limit,
       offset,
     });
