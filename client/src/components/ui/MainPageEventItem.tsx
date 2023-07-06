@@ -31,17 +31,17 @@ export default function MainPageEventItem({ event }: EventProps): JSX.Element {
             <Typography gutterBottom variant="h5" component="div">
               {event.title}
             </Typography>
+
             <Typography variant="body2" color="text.secondary">
-              {event.body}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {eventDate}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
+              <b>Дата </b>
+              {eventDate} &nbsp;
+              <b>Время: </b>
               {event.time}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {event.geo}
+            <Typography mt={1} variant="body2" color="text.secondary">
+              <b>Адрес:</b>
+
+              {event.address}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {event.count_user}

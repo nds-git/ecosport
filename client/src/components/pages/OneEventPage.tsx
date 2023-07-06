@@ -10,9 +10,9 @@ import Avatar from '@mui/material/Avatar';
 import type { IconButtonProps } from '@mui/material/IconButton';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
+import { lime } from '@mui/material/colors';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import PersonIcon from '@mui/icons-material/Person';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Container } from '@mui/material';
@@ -63,12 +63,12 @@ export default function OneEventPage(): JSX.Element {
   const eventDate = getEventDate(event.date);
   return (
     <>
-      <Container sx={{mb: '4rem'}}>
+      <Container sx={{ mb: '4rem' }}>
         <Card sx={{ maxWidth: 1000 }}>
           <CardHeader
             avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                R
+              <Avatar sx={{ bgcolor: lime[500] }} aria-label="recipe">
+                S
               </Avatar>
             }
             action={
@@ -111,11 +111,13 @@ export default function OneEventPage(): JSX.Element {
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
               <Typography paragraph>
+                <EventAvailableIcon color="success" />
                 <b>Дата:</b> {eventDate}
               </Typography>
             </IconButton>
             <IconButton aria-label="add to favorites">
               <Typography paragraph>
+                <PersonIcon color="success" />
                 <b>Количество участников:</b> {event.count_user}
               </Typography>
             </IconButton>
@@ -138,18 +140,14 @@ export default function OneEventPage(): JSX.Element {
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              <Typography paragraph>Описание:</Typography>
+              <Typography paragraph>Описание: {event.body}</Typography>
 
-              <Typography paragraph>{event.body}</Typography>
-              {/* <Typography paragraph>
-                Add rice and stir very gently to distribute. Top with artichokes and peppers, and
-                cook without stirring, until most of the liquid is absorbed, 15 to 18 minutes.
-                Reduce heat to medium-low, add reserved shrimp and mussels, tucking them down into
-                the rice, and cook again without stirring, until mussels have opened and rice is
-                just tender, 5 to 7 minutes more. (Discard any mussels that don&apos;t open.)
-              </Typography> */}
               <Typography>
                 <MapPage />
+              </Typography>
+              <Typography paragraph sx={{ mt: 2, fontSize: '0.8rem' }}>
+                *Создатели данного сайта не несут ответственность за фото,видео и информацию о
+                мероприятии размешенную третьими лицами посредством формы добавления нового события.
               </Typography>
             </CardContent>
           </Collapse>

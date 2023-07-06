@@ -48,7 +48,7 @@ export default function EventItem({ event }: EventProps): JSX.Element {
         </CardContent>
         <CardActions>
           <ModalEdit event={event} />
-          <ModalGarbage event={event}/>
+          <ModalGarbage event={event} />
           <Link to={`/events/${event.id}`}>
             <Button size="small" variant="text" color="primary" sx={{ marginLeft: 1 }}>
               Подробнее
