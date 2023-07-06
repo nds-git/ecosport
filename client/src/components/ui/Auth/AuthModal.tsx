@@ -50,7 +50,12 @@ export default function AuthModal(): JSX.Element {
 
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    type === 'signup' ? signUpHandler(e) : signInHandler(e);
+    // type === 'signup' ? signUpHandler(e) : signInHandler(e);
+    if (type === 'signup') {
+      signUpHandler(e);
+    } else {
+      signInHandler(e);
+    }
 
     dispatch(closeModal());
 
