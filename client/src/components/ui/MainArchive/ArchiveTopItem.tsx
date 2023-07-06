@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { Container } from '@mui/system';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import { amber } from '@mui/material/colors';
 import type { EventProps } from '../EventItem';
 
 export default function ArchiveTopItem({ event }: EventProps): JSX.Element {
@@ -15,10 +16,11 @@ export default function ArchiveTopItem({ event }: EventProps): JSX.Element {
     <Card sx={{ maxWidth: 345, height: '100%' }}>
       <CardMedia sx={{ height: 140 }} image={`http://localhost:3001/img/${event.img}`} />
       <CardContent>
+        <EmojiEventsIcon sx={{ color: amber[500], marginY: 0.2, marginX: 14 }} />
         <Typography gutterBottom variant="h5" component="div">
           {event.title}
         </Typography>
-        <EmojiEventsIcon />
+
         <Typography variant="body2" color="text.secondary">
           Количество собранного мусора: {event.garbage} кг
         </Typography>
