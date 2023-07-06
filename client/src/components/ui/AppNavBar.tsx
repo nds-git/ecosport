@@ -83,11 +83,11 @@ export default function AppNavBar(): JSX.Element {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1 }}
-                  sx={{
-                    backgroundImage: 'linear-gradient(45deg, #4ecdc4, #0099ff)',
-                    backgroundSize: '200% 200%',
-                    animation: 'gradientAnimation 10s ease infinite',
-                  }}
+                  // sx={{
+                  //   backgroundImage: 'linear-gradient(45deg, #4ecdc4, #0099ff)',
+                  //   backgroundSize: '200% 200%',
+                  //   animation: 'gradientAnimation 10s ease infinite',
+                  // }}
                 >
                   {user && `Добро пожаловать!`}
                 </motion.div>

@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, TextField, Container, Modal } from '@mui/material';
 
 import '../css/auth.css';
-import useFormHook from '../../hooks/useFormHook';
-import { useAppSelector } from '../../features/redux/reduxHooks';
 import { useNavigate } from 'react-router-dom';
 import { css, keyframes } from '@emotion/react';
+import useFormHook from '../../hooks/useFormHook';
+import { useAppSelector } from '../../features/redux/reduxHooks';
 
 const fadeIn = keyframes`
   from {
@@ -49,10 +49,9 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
     state.events.rows?.rows?.find((event) => event.id === eventId),
   );
 
-const [change, setChange] = useState(false)
+  const [change, setChange] = useState(false);
 
-  
-const [ count, setCount] = useState(eventData ? eventData.subscribe : 0)
+  const [count, setCount] = useState(eventData ? eventData.subscribe : 0);
 
   // const count = eventData ? eventData.subscribe : 0;
 
@@ -62,14 +61,12 @@ const [ count, setCount] = useState(eventData ? eventData.subscribe : 0)
 
   const userStatus = useAppSelector((state) => state.user.status);
 
-  useEffect(()=>{
-    if(change) {
-     
-      
-    setCount((prev) => prev + 1)
-      setChange(false)
+  useEffect(() => {
+    if (change) {
+      setCount((prev) => prev + 1);
+      setChange(false);
     }
-  },[change])
+  }, [change]);
 
   const [open, setOpen] = useState(false);
 
@@ -78,14 +75,26 @@ const [ count, setCount] = useState(eventData ? eventData.subscribe : 0)
 
   const { subscriberHandler } = useFormHook();
 
-
   const subscribeHook = (e) => {
     subscriberHandler(e)
      handleClose();
      return setChange(true)
-     
+
   }
 
+  // const subscribeHook = async (e) => {
+  //   try {
+  //     await subscriberHandler(e);
+  //     handleClose();
+  //     setChange(true);
+  //   } catch (error) {
+  //     if (error.response && error.response.status === 409) {
+  //       console.log('Error: Subscription already exists.');
+  //     } else {
+  //       console.log('Error: Failed to subscribe.');
+  //     }
+  //   }
+  // };
 
   return (
     <>
