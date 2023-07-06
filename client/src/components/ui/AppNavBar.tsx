@@ -89,7 +89,7 @@ export default function AppNavBar(): JSX.Element {
                     animation: 'gradientAnimation 10s ease infinite',
                   }}
                 >
-                  {user && `Привет, ${user.data.name}!`}
+                  {user && `Добро пожаловать!`}
                 </motion.div>
               )}
             </Typography>
