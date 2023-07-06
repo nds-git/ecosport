@@ -10,7 +10,7 @@ import Avatar from '@mui/material/Avatar';
 import type { IconButtonProps } from '@mui/material/IconButton';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
+import { lime } from '@mui/material/colors';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import PersonIcon from '@mui/icons-material/Person';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -67,8 +67,8 @@ export default function OneEventPage(): JSX.Element {
         <Card sx={{ maxWidth: 1000 }}>
           <CardHeader
             avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                R
+              <Avatar sx={{ bgcolor: lime[500] }} aria-label="recipe">
+                S
               </Avatar>
             }
             action={
