@@ -12,7 +12,7 @@ import { getEventDate } from '../../functions';
 export default function MainArchiveItem({ event }: EventProps): JSX.Element {
   const eventDate = getEventDate(event.date);
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, height: '100%' }}>
       <CardMedia sx={{ height: 140 }} image={`http://localhost:3001/img/${event.img}`} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
