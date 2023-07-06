@@ -68,7 +68,7 @@ export default function AppNavBar(): JSX.Element {
                   style={{ flexGrow: 1, display: 'flex', justifyContent: 'left', height: '40px' }}
                 >
                   <h2>
-                    Уже спасли планету от{' '}
+                    Спасли планету от{' '}
                     <span style={{ color: 'yellow', borderBottom: '1px solid yellow' }}>
                       {garbage}
                     </span>{' '}
@@ -76,24 +76,23 @@ export default function AppNavBar(): JSX.Element {
                   </h2>
                 </div>
               )}
-              
             </Typography>
-            <Typography variant="h4" sx={{ fontFamily: 'FuturaBookC', color: '#fff',  }}>
-      {user.status === 'success' && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          sx={{
-            backgroundImage: 'linear-gradient(45deg, #4ecdc4, #0099ff)',
-            backgroundSize: '200% 200%',
-            animation: 'gradientAnimation 10s ease infinite',
-          }}
-        >
-          {user && `Добро пожаловать, ${user.data.name}!`}
-        </motion.div>
-      )}
-    </Typography>
+            <Typography variant="h4" sx={{ fontFamily: 'FuturaBookC', color: '#fff' }}>
+              {user.status === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1 }}
+                  sx={{
+                    backgroundImage: 'linear-gradient(45deg, #4ecdc4, #0099ff)',
+                    backgroundSize: '200% 200%',
+                    animation: 'gradientAnimation 10s ease infinite',
+                  }}
+                >
+                  {user && `Привет, ${user.data.name}!`}
+                </motion.div>
+              )}
+            </Typography>
             {/* {user.status === 'success' && (
               <Typography variant="h4" sx={{ fontFamily: 'Montserrat', color: '#fff' }}>
                 {user && `Добро пожаловать, ${user.data.name}!`}
