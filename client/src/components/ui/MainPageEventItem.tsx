@@ -43,9 +43,6 @@ export default function MainPageEventItem({ event }: EventProps): JSX.Element {
 
               {event.address}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {event.count_user}
-            </Typography>
           </CardContent>
           <CardActions>
             <Link to={`./events/${event.id}`}>

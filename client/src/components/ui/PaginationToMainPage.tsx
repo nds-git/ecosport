@@ -61,7 +61,7 @@ export default function PaginationToMainPage(): JSX.Element {
       <Container>
         {currentPage && (
           <Pagination
-            count={Math.ceil(count / 3)}
+            count={Math.ceil(count / 6)}
             page={currentPage}
             onChange={(_, num) => setCurrentPage(num)}
             showFirstButton

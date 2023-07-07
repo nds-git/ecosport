@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import {
   Box,
   Button,
@@ -10,15 +10,19 @@ import {
   Modal,
   OutlinedInput,
   TextField,
+  Checkbox,
+  FormControlLabel,
 } from '@mui/material';
 import { Google, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
-import ColorTabs from './ColorTab';
+import { css, keyframes } from '@emotion/react';
+import { color } from 'framer-motion';
+
 import { useAppDispatch, useAppSelector } from '../../../features/redux/reduxHooks';
 import useFormHook from '../../../hooks/useFormHook';
 import { closeModal } from '../../../features/redux/slices/modalSlice';
-import { css, keyframes } from '@emotion/react';
+import CheckBox from '../CheckBox';
 
 const fadeIn = keyframes`
   from {
@@ -32,9 +36,10 @@ const fadeIn = keyframes`
 `;
 
 export default function AuthModal(): JSX.Element {
+  const [isChecked, setIsChecked] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const user = useAppSelector((state) => state.user);
+
   const modalOpen = useAppSelector((state) => state.modal.isOpen);
   const type = useAppSelector((state) => state.modal.modalType);
 
@@ -48,9 +53,14 @@ export default function AuthModal(): JSX.Element {
 
   const { signInHandler, signUpHandler } = useFormHook();
 
-  const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    type === 'signup' ? signUpHandler(e) : signInHandler(e);
+
+    if (type === 'signup') {
+      signUpHandler(e);
+    } else {
+      signInHandler(e);
+    }
 
     dispatch(closeModal());
 
@@ -72,7 +82,7 @@ export default function AuthModal(): JSX.Element {
       <Container maxWidth="xs">
         <Box
           component="form"
-          onSubmit={handleSubmitForm}
+          onSubmit={handleSubmit}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -85,7 +95,7 @@ export default function AuthModal(): JSX.Element {
           }}
         >
           {/* <ColorTabs /> */}
-          <h2>Welcome</h2>
+          <h2 style={{ color: 'green', fontSize: '24px' }}>Регистрация</h2>
           {type === 'signup' && (
             <TextField
               sx={{ m: 1, width: '30ch' }}
@@ -105,7 +115,7 @@ export default function AuthModal(): JSX.Element {
             sx={{ m: 1, width: '30ch' }}
             margin="normal"
             name="email"
-            label="Email address"
+            label="Email"
             type="email"
             placeholder="name@example.com"
             variant="outlined"
@@ -120,6 +130,7 @@ export default function AuthModal(): JSX.Element {
             <OutlinedInput
               id="outlined-adornment-password"
               name="password"
+              label="Password"
               type={showPassword ? 'text' : 'password'}
               endAdornment={
                 <InputAdornment position="end">
@@ -132,7 +143,6 @@ export default function AuthModal(): JSX.Element {
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
               sx={{
                 borderRadius: '20px',
               }}
@@ -146,6 +156,7 @@ export default function AuthModal(): JSX.Element {
             }}
             startIcon={<Google />}
             variant="outlined"
+            disabled={!isChecked}
           >
             Войти через Google
           </Button>
@@ -154,13 +165,16 @@ export default function AuthModal(): JSX.Element {
               m: 1,
               width: '30ch',
               borderRadius: '20px',
+              color: 'greenyellow',
             }}
-            variant="outlined"
+            variant="contained"
             type="submit"
-            // onClick={}
+            disabled={!isChecked}
           >
-            Войти
+            Зарегистрироваться
           </Button>
+          <p style={{ color: 'GrayText' }}>Нажимая кнопку "Зарегистрироваться":</p>
+          <CheckBox isChecked={isChecked} setIsChecked={setIsChecked}/>
         </Box>
       </Container>
     </Modal>

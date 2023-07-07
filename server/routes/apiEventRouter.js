@@ -28,6 +28,7 @@ apiEventRouter.get('/page/:page', async (req, res) => {
   try {
     const events = await Event.findAndCountAll({
       order: [['updatedAt', 'DESC']],
+      where: { event_archive: false },
       limit,
       offset,
     });
@@ -245,12 +246,6 @@ apiEventRouter.patch('/:id', upload.single('file'), async (req, res) => {
 apiEventRouter.patch('/:id/archive', upload.array('file'), async (req, res) => {
   const { id } = req.params;
   const { garbage } = req.body;
-  console.log('===>>>', req.files);
-
-  // if (!id || Number.isNaN(Number(id))) {
-  //   res.status(400).json({ message: 'Bad request id' });
-  //   return;
-  // }
 
   try {
     await Promise.all(

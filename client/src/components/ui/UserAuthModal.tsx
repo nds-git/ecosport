@@ -1,12 +1,13 @@
 import type { FormEvent } from 'react';
 import React, { useEffect, useState } from 'react';
-import { Box, Button, TextField, Container, Modal } from '@mui/material';
+import { Box, Button, TextField, Container, Modal, Checkbox } from '@mui/material';
 
 import '../css/auth.css';
-import useFormHook from '../../hooks/useFormHook';
-import { useAppSelector } from '../../features/redux/reduxHooks';
 import { useNavigate } from 'react-router-dom';
 import { css, keyframes } from '@emotion/react';
+import useFormHook from '../../hooks/useFormHook';
+import { useAppSelector } from '../../features/redux/reduxHooks';
+import CheckBox from './CheckBox';
 
 const fadeIn = keyframes`
   from {
@@ -45,14 +46,14 @@ type UserAuthModalProps = {
 };
 
 export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Element {
+  const [isChecked, setIsChecked] = useState(false);
   const eventData = useAppSelector((state) =>
     state.events.rows?.rows?.find((event) => event.id === eventId),
   );
 
-const [change, setChange] = useState(false)
+  const [change, setChange] = useState(false);
 
-  
-const [ count, setCount] = useState(eventData ? eventData.subscribe : 0)
+  const [count, setCount] = useState(eventData ? eventData.subscribe : 0);
 
   // const count = eventData ? eventData.subscribe : 0;
 
@@ -62,14 +63,12 @@ const [ count, setCount] = useState(eventData ? eventData.subscribe : 0)
 
   const userStatus = useAppSelector((state) => state.user.status);
 
-  useEffect(()=>{
-    if(change) {
-     
-      
-    setCount((prev) => prev + 1)
-      setChange(false)
+  useEffect(() => {
+    if (change) {
+      setCount((prev) => prev + 1);
+      setChange(false);
     }
-  },[change])
+  }, [change]);
 
   const [open, setOpen] = useState(false);
 
@@ -78,14 +77,11 @@ const [ count, setCount] = useState(eventData ? eventData.subscribe : 0)
 
   const { subscriberHandler } = useFormHook();
 
-
   const subscribeHook = (e) => {
-    subscriberHandler(e)
-     handleClose();
-     return setChange(true)
-     
-  }
-
+    subscriberHandler(e);
+    handleClose();
+    return setChange(true);
+  };
 
   return (
     <>
@@ -94,9 +90,9 @@ const [ count, setCount] = useState(eventData ? eventData.subscribe : 0)
         sx={{ marginLeft: 1 }}
         size="small"
         onClick={handleOpen}
-        // disabled={count >= maxSubscribers}
+        disabled={count >= maxSubscribers}
       >
-        Я пойду ({count} / {remainingSubscribers})
+        Я пойду ({count || 0} / {maxSubscribers})
       </Button>
 
       <Modal
@@ -141,9 +137,11 @@ const [ count, setCount] = useState(eventData ? eventData.subscribe : 0)
               sx={{ m: 1, width: '30ch', borderRadius: '20px' }}
               variant="outlined"
               type="submit"
+              disabled={!isChecked}
             >
-              Подтвердить
+              Зарегистрироваться
             </Button>
+            <CheckBox isChecked={isChecked} setIsChecked={setIsChecked}/>
           </Box>
         </Container>
       </Modal>

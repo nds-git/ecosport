@@ -42,7 +42,7 @@ export default function AddFormSponsor({ setOpen }: AddFormSponsorProps): JSX.El
             name="title"
             label="Title"
             placeholder="Title"
-            defaultValue="Abibas карабас"
+            defaultValue="Abibas"
             required
           />
           <TextField name="name" label="Name" placeholder="Name" defaultValue="Abibas" required />
@@ -50,14 +50,14 @@ export default function AddFormSponsor({ setOpen }: AddFormSponsorProps): JSX.El
             name="body"
             label="Body"
             placeholder="Body"
-            defaultValue="никто кроме нас"
+            defaultValue="Понравилось Ваше событие"
             required
           />
           <TextField
             name="message"
             label="Message"
             type="message"
-            defaultValue="хочется стать спонсором"
+            defaultValue="Хочется стать спонсором"
             required
           />
           <TextField
