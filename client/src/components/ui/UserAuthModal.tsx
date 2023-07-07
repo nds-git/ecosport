@@ -1,12 +1,13 @@
 import type { FormEvent } from 'react';
 import React, { useEffect, useState } from 'react';
-import { Box, Button, TextField, Container, Modal } from '@mui/material';
+import { Box, Button, TextField, Container, Modal, Checkbox } from '@mui/material';
 
 import '../css/auth.css';
 import { useNavigate } from 'react-router-dom';
 import { css, keyframes } from '@emotion/react';
 import useFormHook from '../../hooks/useFormHook';
 import { useAppSelector } from '../../features/redux/reduxHooks';
+import CheckBox from './CheckBox';
 
 const fadeIn = keyframes`
   from {
@@ -45,6 +46,7 @@ type UserAuthModalProps = {
 };
 
 export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Element {
+  const [isChecked, setIsChecked] = useState(false);
   const eventData = useAppSelector((state) =>
     state.events.rows?.rows?.find((event) => event.id === eventId),
   );
@@ -76,25 +78,10 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
   const { subscriberHandler } = useFormHook();
 
   const subscribeHook = (e) => {
-    subscriberHandler(e)
-     handleClose();
-     return setChange(true)
-
-  }
-
-  // const subscribeHook = async (e) => {
-  //   try {
-  //     await subscriberHandler(e);
-  //     handleClose();
-  //     setChange(true);
-  //   } catch (error) {
-  //     if (error.response && error.response.status === 409) {
-  //       console.log('Error: Subscription already exists.');
-  //     } else {
-  //       console.log('Error: Failed to subscribe.');
-  //     }
-  //   }
-  // };
+    subscriberHandler(e);
+    handleClose();
+    return setChange(true);
+  };
 
   return (
     <>
@@ -150,9 +137,11 @@ export default function UserAuthModal({ eventId }: UserAuthModalProps): JSX.Elem
               sx={{ m: 1, width: '30ch', borderRadius: '20px' }}
               variant="outlined"
               type="submit"
+              disabled={!isChecked}
             >
-              Подтвердить
+              Зарегистрироваться
             </Button>
+            <CheckBox isChecked={isChecked} setIsChecked={setIsChecked}/>
           </Box>
         </Container>
       </Modal>
